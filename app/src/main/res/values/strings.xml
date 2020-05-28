@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="login">Login</string>
+    <string name="facebook_app_id">572911346989145</string> <string name="fb_login_protocol_scheme">fb572911346989145</string>
+
+    <string name="logout">Log Out</string>
+    <string name="insert">Insert</string>
+    <string name="delete">Delete</string>
+    <string name="update">Update</string>
+    <string name="search">Bố mẹ tìm gì cho con?</string>
+
+    <string name="account">Tài khoản</string>
+    <string name="txt_login">Đăng nhập</string>
+    <string name="txt_register">Chưa có tài khoản</string>
+    <string name="txt_register2">Đăng ký</string>
+    <string name="txt_phone">Số điện thoại</string>
+    <string name="txt_pass">Mật khẩu</string>
+    <string name="txt_pass_miss">Quên mật khẩu</string>
+    <string name="txt_or_login">Hoặc đăng nhập bằng</string>
+</resources>
