@@ -11,6 +11,7 @@
 
     <string name="account">Tài khoản</string>
     <string name="txt_login">Đăng nhập</string>
+    <string name="txt_logout">Đăng xuất</string>
     <string name="txt_register">Chưa có tài khoản</string>
     <string name="txt_register2">Đăng ký</string>
     <string name="txt_phone">Số điện thoại</string>

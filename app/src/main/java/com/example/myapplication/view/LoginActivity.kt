@@ -26,7 +26,7 @@ class LoginActivity : AppCompatActivity() {
         login = Observer { boolean ->
             when(boolean) {
                 true -> {
-                    Utility.saveUser(this,user)
+                   // Utility.saveUser(this,user)
                     val intent = Intent(this,MainActivity::class.java)
                     startActivity(intent)
                 }
