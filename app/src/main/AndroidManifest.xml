@@ -29,6 +29,7 @@
             android:windowSoftInputMode="stateVisible|adjustPan"/>
         <activity android:name=".view.LoginAccountActivity"
             android:windowSoftInputMode="stateVisible|adjustPan"/>
+        <activity android:name=".view.InfoProductActivity"/>
     </application>
 
 </manifest>

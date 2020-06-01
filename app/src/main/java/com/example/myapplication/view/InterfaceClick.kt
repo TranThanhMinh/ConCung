@@ -7,4 +7,8 @@ interface InterfaceClick {
         fun clickItem(student: Student)
         fun clickChooseDelete(check: Boolean)
     }
+
+    interface  Product{
+         fun detailProduct(id:String)
+    }
 }

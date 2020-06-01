@@ -35,6 +35,10 @@ class Product{
     @Expose
     private var idCategory: Int? = null
 
+    @SerializedName("id_trademark")
+    @Expose
+    private var idTrademark: Int? = null
+
     fun getId(): Int? {
         return id
     }
@@ -97,5 +101,13 @@ class Product{
 
     fun setIdCategory(idCategory: Int?) {
         this.idCategory = idCategory
+    }
+
+    fun getIdTrademark(): Int? {
+        return idTrademark
+    }
+
+    fun setIdTrademark(idTrademark: Int?) {
+        this.idTrademark = idTrademark
     }
 }

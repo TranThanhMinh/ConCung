@@ -2,7 +2,9 @@ package com.example.myapplication.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import com.example.myapplication.model.RequestId
 import com.example.myapplication.model.ResultApi
+import com.example.myapplication.model.product.ResultIdProduct
 import com.example.myapplication.model.product.ResultProduct
 import com.example.myapplication.repository.HomeRepository
 import java.lang.reflect.Array
@@ -19,5 +21,9 @@ class HomeViewModel : ViewModel() {
 
     fun getProduct():LiveData<ResultProduct>{
         return homeRopository!!.getProduct()
+    }
+
+    fun getIdProduct(id: RequestId):LiveData<ResultIdProduct>{
+        return homeRopository!!.getIdProduct(id)
     }
 }

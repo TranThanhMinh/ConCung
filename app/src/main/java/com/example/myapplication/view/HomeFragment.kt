@@ -1,7 +1,9 @@
 package com.example.myapplication.view
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +16,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.viewpager.widget.ViewPager
 import com.example.myapplication.R
 import com.example.myapplication.model.Category
+import com.example.myapplication.model.RequestId
 import com.example.myapplication.util.RxSearch
 import com.example.myapplication.view.adapter.CategoryAdapter
 import com.example.myapplication.view.adapter.ImageAdapter
@@ -25,7 +28,7 @@ import rx.android.schedulers.AndroidSchedulers
 import java.util.concurrent.TimeUnit
 
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(),InterfaceClick.Product {
     private var homeViewModel:HomeViewModel?=null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return LayoutInflater.from(context).inflate(R.layout.home_fragment, container, false)
@@ -44,6 +47,7 @@ class HomeFragment : Fragment() {
         getTrademark()
         //list product
         getProduct()
+
     }
     private fun init(){
         RxSearch.fromSearchView(editSearch)
@@ -81,13 +85,15 @@ class HomeFragment : Fragment() {
    private fun getProduct(){
         val layout = GridLayoutManager(context,2)
        rlProduct.layoutManager = layout
-        val adapter = ProductAdapter(context!!)
+        val adapter = ProductAdapter(context!!,this)
         rlProduct.adapter = adapter
         homeViewModel!!.getProduct().observe(this, Observer { list->
             if(list!=null)
                 adapter.loadData(list.getData())
         })
     }
+
+
 
 
     private fun getViewPager(){
@@ -128,5 +134,11 @@ class HomeFragment : Fragment() {
         if (dots.isNotEmpty()) {
             dots[current]!!.setImageResource(R.drawable.shape_circle)
         }
+    }
+
+    override fun detailProduct(id: String) {
+        val intent = Intent(context,InfoProductActivity::class.java)
+         intent.putExtra("id",id)
+         startActivity(intent)
     }
 }

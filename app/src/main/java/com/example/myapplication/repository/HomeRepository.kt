@@ -7,7 +7,9 @@ import androidx.lifecycle.MutableLiveData
 import com.example.myapplication.dagger.Component.DaggerRetrofitComponent
 import com.example.myapplication.dagger.Component.RetrofitComponent
 import com.example.myapplication.model.Category
+import com.example.myapplication.model.RequestId
 import com.example.myapplication.model.ResultApi
+import com.example.myapplication.model.product.ResultIdProduct
 import com.example.myapplication.model.product.ResultProduct
 import com.example.myapplication.retrofit.Api
 import retrofit2.Call
@@ -49,6 +51,22 @@ class HomeRepository{
             }
 
             override fun onResponse(call: Call<ResultProduct>, response: Response<ResultProduct>) {
+                list.value = response.body()
+            }
+
+        })
+        return list
+    }
+
+    fun getIdProduct(id: RequestId):LiveData<ResultIdProduct>{
+        val list:MutableLiveData<ResultIdProduct> = MutableLiveData()
+        val call:Call<ResultIdProduct> = api.getIdProduct(id)
+        call.enqueue(object :Callback<ResultIdProduct>{
+            override fun onFailure(call: Call<ResultIdProduct>, t: Throwable) {
+                list.value = null
+            }
+
+            override fun onResponse(call: Call<ResultIdProduct>, response: Response<ResultIdProduct>) {
                 list.value = response.body()
             }
 
