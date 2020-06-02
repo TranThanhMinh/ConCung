@@ -47,14 +47,19 @@
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/viewPager"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"/>
+                android:layout_height="150dp"/>
             <LinearLayout
                 android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
                 android:orientation="horizontal"
                 android:id="@+id/layout_dots"
                 android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/colorBlack3"/>
             <TextView
                 android:padding="5dp"
                 android:layout_width="match_parent"
@@ -64,6 +69,10 @@
                 android:id="@+id/rlcTrademark"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/colorBlack3"/>
             <TextView
                 android:padding="5dp"
                 android:layout_width="match_parent"

@@ -72,11 +72,11 @@ class HomeFragment : Fragment(),InterfaceClick.Product {
     @SuppressLint("WrongConstant")
     private fun getTrademark(){
         val layout = GridLayoutManager(context,2)
-        layout.orientation = LinearLayout.VERTICAL
+        layout.orientation = LinearLayout.HORIZONTAL
         rlcTrademark.layoutManager = layout
         val adapter = TrademarkAdapter(context!!)
         rlcTrademark.adapter = adapter
-        homeViewModel!!.getData().observe(this, Observer {list->
+        homeViewModel!!.getTrademark().observe(this, Observer {list->
             if(list!=null)
             adapter.loadData(list.getData())
         })

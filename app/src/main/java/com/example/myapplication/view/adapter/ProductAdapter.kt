@@ -21,7 +21,7 @@ class ProductAdapter(var context: Context,var click :InterfaceClick.Product) : R
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return MyViewHolder(LayoutInflater.from(context).inflate(R.layout.item_trademark, parent, false))
+        return MyViewHolder(LayoutInflater.from(context).inflate(R.layout.item_product, parent, false))
     }
 
     fun loadData(list: List<Product>) {

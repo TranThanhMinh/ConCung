@@ -11,6 +11,7 @@ import com.example.myapplication.model.RequestId
 import com.example.myapplication.model.ResultApi
 import com.example.myapplication.model.product.ResultIdProduct
 import com.example.myapplication.model.product.ResultProduct
+import com.example.myapplication.model.trademark.ResultTrademark
 import com.example.myapplication.retrofit.Api
 import retrofit2.Call
 import retrofit2.Callback
@@ -57,6 +58,23 @@ class HomeRepository{
         })
         return list
     }
+
+    fun getTrademark():LiveData<ResultTrademark>{
+        val list:MutableLiveData<ResultTrademark> = MutableLiveData()
+        val call:Call<ResultTrademark> = api.getTrademark()
+        call.enqueue(object :Callback<ResultTrademark>{
+            override fun onFailure(call: Call<ResultTrademark>, t: Throwable) {
+                list.value = null
+            }
+
+            override fun onResponse(call: Call<ResultTrademark>, response: Response<ResultTrademark>) {
+                list.value = response.body()
+            }
+
+        })
+        return list
+    }
+
 
     fun getIdProduct(id: RequestId):LiveData<ResultIdProduct>{
         val list:MutableLiveData<ResultIdProduct> = MutableLiveData()

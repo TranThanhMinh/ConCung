@@ -10,8 +10,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 @Module
 class RetrofitModule {
- //   private val  URL :String  = "https://reqres.in"
-    private val  URL :String  = "http://192.168.1.24"
+ // private val  URL :String  = "https://reqres.in"
+    private val  URL :String  = "http://192.168.1.24/MinhTran/public/api/"
     private var api:Api? = null
     private var retrofit: Retrofit?= null
 
