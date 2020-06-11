@@ -43,6 +43,7 @@ class TrademarkAdapter(var context: Context) : RecyclerView.Adapter<RecyclerView
         init {
             val linearLayout = layout.layoutParams
             linearLayout.width =  Resources.getSystem().displayMetrics.widthPixels / 4 + Resources.getSystem().displayMetrics.widthPixels / 24
+            linearLayout.height =  Resources.getSystem().displayMetrics.heightPixels / 10
             layout.layoutParams = linearLayout
         }
     }

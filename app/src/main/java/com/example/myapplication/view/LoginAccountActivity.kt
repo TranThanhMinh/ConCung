@@ -1,35 +1,32 @@
 package com.example.myapplication.view
 
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Base64
-import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.annotation.UiThread
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.example.myapplication.R
 import com.example.myapplication.data.UserFB
-import com.example.myapplication.util.Utility.Companion.saveUserId
+import com.example.myapplication.model.User
 import com.example.myapplication.viewmodel.ConCungViewModel
+import com.example.myapplication.viewmodel.LoginViewModel
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
 import com.facebook.FacebookSdk
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.account_activity.*
-import java.io.File
-import java.security.MessageDigest
+import kotlinx.android.synthetic.main.account_activity.login_button
 
 
 class LoginAccountActivity:AppCompatActivity(),View.OnClickListener {
     var callbackManager: CallbackManager?=null
     var concung: ConCungViewModel?=null
+    private var loginViewModel: LoginViewModel? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.account_activity)
@@ -38,6 +35,7 @@ class LoginAccountActivity:AppCompatActivity(),View.OnClickListener {
     }
 
     fun init(){
+        loginViewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
      /*   try {
             val packageInfo = packageManager.getPackageInfo("com.example.myapplication", PackageManager.GET_SIGNATURES)
             for (signature in packageInfo.signatures) {
@@ -50,6 +48,8 @@ class LoginAccountActivity:AppCompatActivity(),View.OnClickListener {
         FacebookSdk.sdkInitialize(this)
         imCancel.setOnClickListener(this)
         login_button.setOnClickListener(this)
+        btnLogin.setOnClickListener(this)
+
 
         callbackManager = CallbackManager.Factory.create();
     }
@@ -72,16 +72,8 @@ class LoginAccountActivity:AppCompatActivity(),View.OnClickListener {
                           override fun onSuccess(loginResult: LoginResult?) {
                               // App code
                               val  imageURL = "https://graph.facebook.com/"+loginResult!!.accessToken.userId+"/picture?type=normal";
-                              val userFB = UserFB()
-                              userFB.id = loginResult!!.accessToken.userId
-                              userFB.image = imageURL
-                              concung!!.insert(userFB)
+                              saveData(loginResult!!.accessToken.userId,"Facebook",imageURL)
 
-                              val intent = Intent()
-                              intent.putExtra("id",userFB.id)
-                              intent.putExtra("image",userFB.image)
-                              setResult(2,intent)
-                              finish()
                           }
 
                           override fun onCancel() {
@@ -95,8 +87,30 @@ class LoginAccountActivity:AppCompatActivity(),View.OnClickListener {
                           }
                       })
           }
+          btnLogin->{
+              var user = User(editPhone.text.toString(),editPassWord.text.toString())
+              loginViewModel!!.login(user).observe(this, Observer { item->
+                  if (item != null){
+                      saveData(item.getUser()[0].getIdUser()!!,item.getUser()[0].getNameUser()!!,"https://ifg.onecmscdn.com/2019/07/20/1-15636013176821172647499.jpg")
+                  }
+              })
+          }
 
       }
+    }
+
+    fun saveData(id:String,name_user:String, image:String){
+        val userFB = UserFB()
+        userFB.id = id
+        userFB.image = image
+        concung!!.insert(userFB)
+
+        val intent = Intent()
+        intent.putExtra("id",id)
+        intent.putExtra("image",image)
+        intent.putExtra("name_user",name_user)
+        setResult(2,intent)
+        finish()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

@@ -12,8 +12,8 @@ import com.squareup.picasso.Picasso
 
 
 class ImageAdapter(var context: Context,var list:List<String>) : PagerAdapter() {
-    override fun isViewFromObject(view: View, `object`: Any): Boolean {
-        return view == `object`
+    override fun isViewFromObject(view: View, obj: Any): Boolean {
+        return view == obj
     }
 
     override fun getCount(): Int {
@@ -29,6 +29,7 @@ class ImageAdapter(var context: Context,var list:List<String>) : PagerAdapter() 
     }
 
     override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
-        container.removeView(`object` as View)
+        val view = `object` as View?
+        container.removeView(view)
     }
 }

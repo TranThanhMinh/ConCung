@@ -11,4 +11,9 @@ interface InterfaceClick {
     interface  Product{
          fun detailProduct(id:String)
     }
+
+    interface home{
+        fun openMenu()
+    }
+
 }

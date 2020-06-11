@@ -49,8 +49,8 @@ class LoginActivity : AppCompatActivity() {
 
     fun getUser() {
         val user = Utility.getInfo(this)
-        edtUserName.setText(user.userName)
-        editPassWord.setText(user.passWord)
+        edtUserName.setText(user.id_user)
+        editPassWord.setText(user.pass_user)
         login()
     }
 

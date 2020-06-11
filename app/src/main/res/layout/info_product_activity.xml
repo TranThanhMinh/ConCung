@@ -1,49 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-    <androidx.core.widget.NestedScrollView
-        android:fillViewport="true"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <androidx.appcompat.widget.Toolbar
-                android:background="@color/colorBlack3"
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"/>
+    android:background="#efefef">
 
-            <ImageView
-                android:id="@+id/imageView"
-                android:scaleType="fitXY"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"/>
+    <include layout="@layout/info_product" />
 
-            <TextView
-                android:id="@+id/tvName"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:gravity="center"
-                android:text="@string/txt_register2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
+    <!-- Adding bottom sheet after main content -->
+    <!--<include layout="@layout/bottom_sheet" />-->
 
-    </androidx.core.widget.NestedScrollView>
-
-
-    <ProgressBar
-        android:id="@+id/progress_bar"
-        android:layout_centerInParent="true"
-        android:layout_width="40dp"
-        android:layout_height="40dp"/>
-
-</RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

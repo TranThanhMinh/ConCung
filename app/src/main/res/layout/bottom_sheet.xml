@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:padding="@dimen/size"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorWhite"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="viết đánh giá, đặt câu hỏi"
+        android:textColor="@color/colorBlue"
+        android:textSize="@dimen/size2"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/editComment"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="@dimen/size"
+        android:background="@drawable/border_comment"
+        android:gravity="top"
+        android:hint="chia sẻ bình luận về sản phẩm hoặc gửi câu hỏi của bạn"
+        android:padding="@dimen/size_5" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_5">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nội dung chứa ít nhất 50 ký tự" />
+
+        <TextView
+            android:id="@+id/tvNumberText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="0/4000"
+            android:textColor="@color/colorBlack" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hình ảnh"
+            android:textColor="@color/colorBlack2"
+            android:textSize="@dimen/text2"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/size_5"
+            android:text="(Không bắt buộc)" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="70dp">
+        <ImageView
+            android:id="@+id/imCapture"
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/size"
+            android:src="@drawable/ic_add_image" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rlvImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/btnSend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size2"
+        android:background="@drawable/border_login_btn"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="@string/txt_sen"
+        android:textColor="@color/colorWhite"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/btCancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size2"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="@string/txt_cancel"
+        android:textColor="@color/colorAccent"
+        android:textSize="20sp" />
+</LinearLayout>

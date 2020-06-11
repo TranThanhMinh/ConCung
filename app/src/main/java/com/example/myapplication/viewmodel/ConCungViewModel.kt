@@ -3,6 +3,7 @@ package com.example.myapplication.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.example.myapplication.data.UserFB
+import com.example.myapplication.model.User
 import com.example.myapplication.repository.ConCungRepository
 
 class ConCungViewModel:ViewModel() {
@@ -19,6 +20,7 @@ class ConCungViewModel:ViewModel() {
     fun insert(userFB: UserFB){
         concung!!.insertUserFB(userFB)
     }
+
 
 
     fun deleteUser(userFB: UserFB){

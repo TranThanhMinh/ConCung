@@ -2,4 +2,13 @@
 <resources>
     <dimen name="size">10dp</dimen>
     <dimen name="size2">20dp</dimen>
+    <dimen name="size3">30dp</dimen>
+    <dimen name="size4">40dp</dimen>
+    <dimen name="size5">50dp</dimen>
+    <dimen name="size_5">5dp</dimen>
+
+  <!--size text-->
+    <dimen name="text">10sp</dimen>
+    <dimen name="text_">15sp</dimen>
+    <dimen name="text2">20sp</dimen>
 </resources>

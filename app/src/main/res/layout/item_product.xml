@@ -2,15 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layout"
-    android:padding="10dp"
     android:orientation="vertical">
     <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
+        card_view:cardCornerRadius="4dp"
+        card_view:cardElevation="3dp"
+        card_view:cardUseCompatPadding="true"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageView
             android:id="@+id/imageView"
-            android:scaleType="fitXY"
             android:layout_width="match_parent"
             android:layout_height="150dp"/>
     </androidx.cardview.widget.CardView>

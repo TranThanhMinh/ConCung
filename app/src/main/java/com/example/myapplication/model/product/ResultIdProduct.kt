@@ -1,13 +1,8 @@
 package com.example.myapplication.model.product
 
-import com.example.myapplication.model.Datum
 import com.example.myapplication.model.comment.Comment
-
 import com.google.gson.annotations.Expose
-
 import com.google.gson.annotations.SerializedName
-
-
 
 
 class ResultIdProduct {
@@ -18,6 +13,10 @@ class ResultIdProduct {
     @SerializedName("comment")
     @Expose
     private var comment: List<Comment>? = null
+
+    @SerializedName("promotion")
+    @Expose
+    private var promotion: List<Promotion>? = null
 
     @SerializedName("statusCode")
     @Expose
@@ -42,6 +41,15 @@ class ResultIdProduct {
     fun setComment(comment: List<Comment>) {
         this.comment = comment
     }
+
+    fun getPromotion(): List<Promotion> {
+        return promotion!!
+    }
+
+    fun setPromotion(promotion: List<Promotion>) {
+        this.promotion = promotion
+    }
+
 
     fun getStatusCode(): String? {
         return statusCode

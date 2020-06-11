@@ -1,11 +1,13 @@
 package com.example.myapplication.view.adapter
 
 import android.content.Context
+import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.model.Category
@@ -37,5 +39,10 @@ class CategoryAdapter(var context: Context) : RecyclerView.Adapter<RecyclerView.
     class MyViewHolder(v: View) : RecyclerView.ViewHolder(v) {
          val imView = v.findViewById<ImageView>(R.id.imageView)
          val tvName = v.findViewById<TextView>(R.id.tvName)
+        init {
+            val layout = imView.layoutParams
+            layout.height = Resources.getSystem().displayMetrics.heightPixels/11
+            imView.layoutParams = layout
+        }
     }
 }

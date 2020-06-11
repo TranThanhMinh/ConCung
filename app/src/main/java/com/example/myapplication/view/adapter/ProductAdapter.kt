@@ -1,6 +1,7 @@
 package com.example.myapplication.view.adapter
 
 import android.content.Context
+import android.content.res.Resources
 import android.media.Image
 import android.view.LayoutInflater
 import android.view.View
@@ -47,6 +48,12 @@ class ProductAdapter(var context: Context,var click :InterfaceClick.Product) : R
          val imView = v.findViewById<ImageView>(R.id.imageView)
          val tvName = v.findViewById<TextView>(R.id.tvName)
          val layout = v.findViewById<LinearLayout>(R.id.layout)
+
+     /*   init {
+            val linearLayout = layout.layoutParams
+            linearLayout.height =  Resources.getSystem().displayMetrics.heightPixels / 4
+            layout.layoutParams = linearLayout
+        }*/
     }
 
 }

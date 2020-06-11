@@ -7,7 +7,7 @@
     <string name="insert">Insert</string>
     <string name="delete">Delete</string>
     <string name="update">Update</string>
-    <string name="search">Bố mẹ tìm gì cho con?</string>
+    <string name="search">Bố mẹ tìm gì cho con hôm nay?</string>
 
     <string name="account">Tài khoản</string>
     <string name="txt_login">Đăng nhập</string>
@@ -18,4 +18,13 @@
     <string name="txt_pass">Mật khẩu</string>
     <string name="txt_pass_miss">Quên mật khẩu</string>
     <string name="txt_or_login">Hoặc đăng nhập bằng</string>
+    <string name="txt_or_promotion">Khuyến mãi</string>
+    <string name="txt_infomation">Thông tin sản phẩm</string>
+    <string name="txt_des">Miêu tả</string>
+    <string name="txt_show">Xem chi tiết</string>
+    <string name="txt_hide">Rút gọn</string>
+    <string name="txt_sen">Gửi bình luận</string>
+    <string name="txt_reply">Trả lời</string>
+    <string name="txt_cancel">Bỏ qua</string>
+    <string name="txt_comment">Đánh giá và bình luận</string>
 </resources>

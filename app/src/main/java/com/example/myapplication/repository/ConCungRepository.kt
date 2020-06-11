@@ -7,6 +7,7 @@ import com.example.myapplication.data.RoomData
 import com.example.myapplication.data.Student
 import com.example.myapplication.data.UserFB
 import com.example.myapplication.data.UserFBDao
+import com.example.myapplication.model.User
 
 class ConCungRepository {
 
@@ -28,8 +29,6 @@ class ConCungRepository {
     fun getAllUser(): LiveData<List<UserFB>>{
         return  userFB!!.findAll()
     }
-
-
 
     class InsertUserFB : AsyncTask<UserFB, Void, Void>() {
         override fun doInBackground(vararg params: UserFB?): Void? {

@@ -14,23 +14,27 @@ import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import com.example.myapplication.R
 import com.example.myapplication.data.UserFB
+import com.example.myapplication.model.User
 import com.example.myapplication.util.Utility.Companion.id_user
+import com.example.myapplication.util.Utility.Companion.name_user
 import com.example.myapplication.util.Utility.Companion.url
 import com.example.myapplication.viewmodel.ConCungViewModel
+import com.example.myapplication.viewmodel.LoginViewModel
 import com.facebook.FacebookSdk
 import com.facebook.login.LoginManager
 import kotlinx.android.synthetic.main.concung.*
 
 
-class Concung : AppCompatActivity(), View.OnClickListener,UserFragment.goHome {
+class Concung : AppCompatActivity(), View.OnClickListener,UserFragment.goHome,InterfaceClick.home {
     var ft_add: FragmentTransaction?=null
     var fm: FragmentManager? = null
     var concung: ConCungViewModel? = null
+    var login: LoginViewModel? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.concung)
         concung = ViewModelProviders.of(this).get(ConCungViewModel::class.java)
+        login = ViewModelProviders.of(this).get(LoginViewModel::class.java)
         init()
     }
 
@@ -43,6 +47,7 @@ class Concung : AppCompatActivity(), View.OnClickListener,UserFragment.goHome {
 
         btnAccount.setOnClickListener(this)
         btnHome.setOnClickListener(this)
+
     }
 
     fun getUser(){
@@ -54,14 +59,16 @@ class Concung : AppCompatActivity(), View.OnClickListener,UserFragment.goHome {
                 url = null
                 id_user = null
             }
-         //   Glide.with(this).load(url).error(R.mipmap.ic_launcher).into(imageView)
         })
 
     }
 
+    // replace fragment home
     fun goHome() {
         ft_add = fm!!.beginTransaction()
-        ft_add!!.replace(R.id.fgLayout, HomeFragment())
+        val home = HomeFragment()
+        home.initFragment(this)
+        ft_add!!.replace(R.id.fgLayout,home)
         ft_add!!.commit()
     }
 
@@ -91,8 +98,10 @@ class Concung : AppCompatActivity(), View.OnClickListener,UserFragment.goHome {
 
         if (requestCode == 1 && resultCode == 2) {
             url = data!!.getSerializableExtra("image") as String
-            Log.e("Minh 2", url)
-            Glide.with(this).load(url).into(imageView)
+            id_user = data!!.getSerializableExtra("id") as String
+            name_user = data!!.getSerializableExtra("name_user") as String
+         /*   val user = User(id_user,"123456");
+            login!!.login(user)*/
         }
     }
 
@@ -107,5 +116,9 @@ class Concung : AppCompatActivity(), View.OnClickListener,UserFragment.goHome {
 
         getUser()
         goHome()
+    }
+
+    override fun openMenu() {
+        drawerLayout.openDrawer(navigationView)
     }
 }
