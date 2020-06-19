@@ -64,7 +64,7 @@ class Utility {
             editor.commit()
         }
 
-        fun currencyFormatter(num: String): String? {
+        fun currencyFormatter(num: Int): String? {
             val m = num.toDouble()
             val formatter = DecimalFormat("###,###,###")
             return formatter.format(m)

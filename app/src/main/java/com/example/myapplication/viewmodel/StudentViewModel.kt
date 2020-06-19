@@ -7,7 +7,7 @@ import com.example.myapplication.data.Student
 import com.example.myapplication.repository.StudentRepository
 
 class StudentViewModel(application: Application) : AndroidViewModel(application) {
-    var studentRepository:StudentRepository = StudentRepository(application)
+   private var studentRepository:StudentRepository = StudentRepository(application)
 
     fun insert(student: Student){
         studentRepository.insertStudent(student)

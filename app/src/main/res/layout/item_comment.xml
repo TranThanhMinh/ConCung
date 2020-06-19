@@ -71,17 +71,15 @@
         app:layout_constraintTop_toBottomOf="@+id/rclImage"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginRight="@dimen/size_5"
-        android:textStyle="bold"
         android:textSize="@dimen/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_marginTop="18dp"
         android:id="@+id/rlvReply"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="55dp"
+        android:layout_marginLeft="50dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvReply" />
 

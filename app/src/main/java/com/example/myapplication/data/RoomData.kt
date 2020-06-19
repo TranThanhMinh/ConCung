@@ -6,7 +6,7 @@ import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 
 
-@Database(entities = [Student::class,UserFB::class],version = 2,exportSchema = true)
+@Database(entities = [Student::class,UserFB::class],version = 3,exportSchema = true)
 abstract class RoomData : RoomDatabase() {
     companion object {
         private var INSTANCE: RoomData? = null
@@ -15,6 +15,12 @@ abstract class RoomData : RoomDatabase() {
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.execSQL("CREATE TABLE `user` (`id` text, `image` TEXT, " +
                         "PRIMARY KEY(`id`))")
+            }
+        }
+
+        private  val migration3 = object :Migration(2,3){
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("alter table user_tb add column name_user text")
             }
 
         }
@@ -34,9 +40,11 @@ abstract class RoomData : RoomDatabase() {
 
 
 
+
+
         fun getData(context: Context): RoomData {
             if (INSTANCE == null) {
-                INSTANCE = Room.databaseBuilder(context.applicationContext, RoomData::class.java, "student-database").addMigrations(migration).addMigrations(migration1).addMigrations(migration2).build()
+                INSTANCE = Room.databaseBuilder(context.applicationContext, RoomData::class.java, "student-database").addMigrations(migration).addMigrations(migration1).addMigrations(migration2).addMigrations(migration3).build()
             }
             return INSTANCE!!
         }

@@ -10,6 +10,10 @@
     <string name="search">Bố mẹ tìm gì cho con hôm nay?</string>
 
     <string name="account">Tài khoản</string>
+    <string name="vip">Thẻ VIP</string>
+    <string name="home">Trang chủ</string>
+    <string name="location">Tìm siêu thị</string>
+    <string name="notifi">Thông báo</string>
     <string name="txt_login">Đăng nhập</string>
     <string name="txt_logout">Đăng xuất</string>
     <string name="txt_register">Chưa có tài khoản</string>
@@ -24,7 +28,9 @@
     <string name="txt_show">Xem chi tiết</string>
     <string name="txt_hide">Rút gọn</string>
     <string name="txt_sen">Gửi bình luận</string>
+    <string name="txt_view_cart">Xem giỏ hàng &amp; hàng tất</string>
     <string name="txt_reply">Trả lời</string>
     <string name="txt_cancel">Bỏ qua</string>
+    <string name="txt_choose_more">Chọn thêm sản phẩm khác</string>
     <string name="txt_comment">Đánh giá và bình luận</string>
 </resources>

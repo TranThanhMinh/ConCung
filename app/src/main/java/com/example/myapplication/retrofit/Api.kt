@@ -47,7 +47,8 @@ interface Api {
 
     @Multipart
     @POST("/MinhTran/public/api/upload")
-    fun imageUpload(@Part file: MultipartBody.Part, @Part("name") requestBody: RequestBody,@Part("idComment") idComment: RequestBody):Call<ResultUpload>
+    fun imageUpload(@Part file: MultipartBody.Part, @Part("name") requestBody: RequestBody,@Part("idComment") idComment: RequestBody,
+                    @Part("nameImage") nameImage: RequestBody):Call<ResultUpload>
 
     //check login
     @POST(" /MinhTran/public/api/insert")

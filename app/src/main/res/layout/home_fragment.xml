@@ -29,6 +29,7 @@
             android:layout_toRightOf="@+id/menu"
             android:background="@drawable/border_search"
             android:hint="@string/search"
+            android:textSize="@dimen/text_"
             android:textColorHint="@color/colorWhite" />
 
         <ImageView

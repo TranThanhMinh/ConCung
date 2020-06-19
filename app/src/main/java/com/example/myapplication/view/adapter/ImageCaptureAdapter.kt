@@ -13,7 +13,9 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.PagerAdapter
 import com.example.myapplication.R
 import com.example.myapplication.model.product.Product
+import com.example.myapplication.view.eventbus.CustomEvent
 import com.squareup.picasso.Picasso
+import org.greenrobot.eventbus.EventBus
 import java.io.File
 
 
@@ -38,6 +40,9 @@ class ImageCaptureAdapter(var context: Context) : RecyclerView.Adapter<RecyclerV
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         var item = list!![position]
         Picasso.with(context).load( File(item[position].toString())).into((holder as MyViewHolder).imView);
+        holder.imView.setOnClickListener {
+            EventBus.getDefault().post(CustomEvent(item[position].toString()))
+        }
     }
 
     class MyViewHolder(v: View) : RecyclerView.ViewHolder(v) {

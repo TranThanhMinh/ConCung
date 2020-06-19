@@ -15,6 +15,7 @@ import com.example.myapplication.model.product.ResultProduct
 import com.example.myapplication.model.product.ResultUpload
 import com.example.myapplication.model.trademark.ResultTrademark
 import com.example.myapplication.retrofit.Api
+import com.example.myapplication.util.LogUtils
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -125,6 +126,7 @@ class HomeRepository {
             }
 
             override fun onResponse(call: Call<ResultStatus>, response: Response<ResultStatus>) {
+                //LogUtils.api("",call,"response")
                 list.value = response.body()
             }
 
@@ -142,7 +144,6 @@ class HomeRepository {
             }
 
             override fun onResponse(call: Call<ResultComment>, response: Response<ResultComment>) {
-                //    LogUtils.api("HomeRepository",call,response)
                 list.value = response.body()
             }
 
@@ -159,10 +160,11 @@ class HomeRepository {
         // Create MultipartBody.Part using file request-body,file name and part name
         var part = MultipartBody.Part.createFormData("photo", file.getName(), fileReqBody);
         //Create request body with text description and text media type
-        var description = RequestBody.create(MediaType.parse("text/plain"), "image-type");
+        var description = RequestBody.create(MediaType.parse("text/plain"), "image-type")
         val idComment: RequestBody = RequestBody.create(MediaType.parse("text/plain"), idComment.toString())
+        val nameImage: RequestBody = RequestBody.create(MediaType.parse("text/plain"), System.currentTimeMillis().toString())
         //
-        var call = api.imageUpload(part, description,idComment);
+        var call = api.imageUpload(part, description,idComment,nameImage)
         call.enqueue(object : Callback<ResultUpload> {
             override fun onFailure(call: Call<ResultUpload>, t: Throwable) {
                 list.value = null

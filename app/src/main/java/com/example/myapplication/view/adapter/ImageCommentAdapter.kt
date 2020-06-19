@@ -14,7 +14,9 @@ import androidx.viewpager.widget.PagerAdapter
 import com.example.myapplication.R
 import com.example.myapplication.model.comment.Image
 import com.example.myapplication.model.product.Product
+import com.example.myapplication.view.eventbus.CustomEvent
 import com.squareup.picasso.Picasso
+import org.greenrobot.eventbus.EventBus
 import java.io.File
 
 
@@ -38,7 +40,10 @@ class ImageCommentAdapter(var context: Context) : RecyclerView.Adapter<RecyclerV
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         var item = list!![position]
-        Picasso.with(context).load(item.getImage()).into((holder as MyViewHolder).imView);
+        Picasso.with(context).load(item.getImage()).into((holder as MyViewHolder).imView)
+        holder.imView.setOnClickListener {
+            EventBus.getDefault().post(CustomEvent(item.getImage()!!))
+        }
     }
 
     class MyViewHolder(v: View) : RecyclerView.ViewHolder(v) {

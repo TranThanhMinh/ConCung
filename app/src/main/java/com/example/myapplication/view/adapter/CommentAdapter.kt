@@ -7,29 +7,34 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.model.comment.Comment
 import com.example.myapplication.util.Utility.Companion.convertStringToDateTime
+import com.example.myapplication.view.adapter.diffutil.CommentDiffCallback
 
 
-class CommentAdapter(var context: Context, var click: ReplyComment) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    var list: List<Comment>
+class CommentAdapter(var context: Context, var click: ReplyComment) : RecyclerView.Adapter<RecyclerView.ViewHolder>(),ReplyCommentAdapter.ReplyComment {
 
-    init {
-        list = ArrayList()
-    }
+    var list: ArrayList<Comment> = ArrayList()
 
     interface ReplyComment {
-        fun commentReply(item: Comment)
+        fun commentReply(item: String)
     }
 
-    fun loadData(list: List<Comment>) {
-        this.list = list
-        notifyDataSetChanged()
+    fun loadData(list: ArrayList<Comment>) {
+        val diffCallback = CommentDiffCallback(this.list, list)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
+        this.list.clear()
+        this.list.addAll(list)
+        diffResult.dispatchUpdatesTo(this)
+
     }
+
+
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         var item = list[position]
@@ -37,7 +42,7 @@ class CommentAdapter(var context: Context, var click: ReplyComment) : RecyclerVi
         holder.tvName.text = item.getNameUser()
         holder.tvDateTime.text = convertStringToDateTime(item.getDateTime()!!.toLong())
         holder.tvReply.setOnClickListener {
-            click.commentReply(item)
+            click.commentReply(item.getIdComment()!!)
         }
 
         val adapter = ImageCommentAdapter(context)
@@ -45,9 +50,10 @@ class CommentAdapter(var context: Context, var click: ReplyComment) : RecyclerVi
         adapter.loadData(item.getImage())
 
 
-        val adapter2 = ReplyCommentAdapter(context)
+        val adapter2 = ReplyCommentAdapter(context,this)
         holder.rlvReply.adapter = adapter2
         adapter2.loadData(item.getReply())
+        holder.rlvReply.isNestedScrollingEnabled = false
     }
 
 
@@ -68,8 +74,8 @@ class CommentAdapter(var context: Context, var click: ReplyComment) : RecyclerVi
         val tvComment = v.findViewById<TextView>(R.id.tvComment)
         val tvName = v.findViewById<TextView>(R.id.tvName)
         val tvDateTime = v.findViewById<TextView>(R.id.tvDateTime)
+        val tvReply = v.findViewById<TextView>(R.id.tvReply)
         val rclImage = v.findViewById<RecyclerView>(R.id.rclImage)
-        val tvReply = v.findViewById<RecyclerView>(R.id.tvReply)
         val rlvReply = v.findViewById<RecyclerView>(R.id.rlvReply)
 
         init {
@@ -78,10 +84,14 @@ class CommentAdapter(var context: Context, var click: ReplyComment) : RecyclerVi
             rclImage.layoutManager = layout
 
             val layout2 = LinearLayoutManager(v.context)
-            layout2.orientation = LinearLayout.HORIZONTAL
+            layout2.orientation = LinearLayout.VERTICAL
             rlvReply.layoutManager = layout2
         }
 
+    }
+
+    override fun commentReply(item: String) {
+        click.commentReply(item)
     }
 
 

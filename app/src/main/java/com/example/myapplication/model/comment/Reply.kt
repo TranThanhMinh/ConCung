@@ -9,17 +9,13 @@ import com.google.gson.annotations.SerializedName
 
 class Reply {
 
-    @SerializedName("id")
+    @SerializedName("id_reply")
     @Expose
-    private var id: Int? = null
+    private var idReply: String? = null
 
     @SerializedName("id_comment")
     @Expose
     private var idComment: String? = null
-
-    @SerializedName("id_user")
-    @Expose
-    private var idUser: String? = null
 
     @SerializedName("name_user")
     @Expose
@@ -33,12 +29,16 @@ class Reply {
     @Expose
     private var dateTime: String? = null
 
-    fun getId(): Int? {
-        return id
+    @SerializedName("image")
+    @Expose
+    private var image: List<Image>? = null
+
+    fun getIdReply(): String? {
+        return idReply
     }
 
-    fun setId(id: Int?) {
-        this.id = id
+    fun setIdReply(idReply: String?) {
+        this.idReply = idReply
     }
 
     fun getIdComment(): String? {
@@ -47,14 +47,6 @@ class Reply {
 
     fun setIdComment(idComment: String?) {
         this.idComment = idComment
-    }
-
-    fun getIdUser(): String? {
-        return idUser
-    }
-
-    fun setIdUser(idUser: String?) {
-        this.idUser = idUser
     }
 
     fun getNameUser(): String? {
@@ -81,4 +73,11 @@ class Reply {
         this.dateTime = dateTime
     }
 
+    fun getImage(): List<Image> {
+        return image!!
+    }
+
+    fun setImage(image: List<Image>) {
+        this.image = image
+    }
 }

@@ -13,7 +13,7 @@ class Product{
 
     @SerializedName("price")
     @Expose
-    private var price: String? = null
+    private var price: Int? = null
 
     @SerializedName("image")
     @Expose
@@ -55,11 +55,11 @@ class Product{
         this.name = name
     }
 
-    fun getPrice(): String? {
-        return price
+    fun getPrice(): Int {
+        return price!!
     }
 
-    fun setPrice(price: String?) {
+    fun setPrice(price: Int) {
         this.price = price
     }
 

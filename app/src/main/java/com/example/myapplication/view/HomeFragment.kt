@@ -3,31 +3,20 @@ package com.example.myapplication.view
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.viewpager.widget.ViewPager
 import com.example.myapplication.R
-import com.example.myapplication.model.Category
-import com.example.myapplication.model.RequestId
-import com.example.myapplication.util.RxSearch
 import com.example.myapplication.util.Utility
 import com.example.myapplication.util.Utility.Companion.listNews
 import com.example.myapplication.util.Utility.Companion.listProduct
 import com.example.myapplication.util.Utility.Companion.listTrademark
 import com.example.myapplication.view.adapter.*
-import com.example.myapplication.viewmodel.HomeViewModel
+import com.example.myapplication.view.product.InfoProductActivity
 import kotlinx.android.synthetic.main.home_fragment.*
-import rx.android.schedulers.AndroidSchedulers
-import java.util.concurrent.TimeUnit
 
 
 class HomeFragment : Fragment(),InterfaceClick.Product {
@@ -82,7 +71,7 @@ class HomeFragment : Fragment(),InterfaceClick.Product {
 
 
     override fun detailProduct(id: String) {
-        val intent = Intent(context,InfoProductActivity::class.java)
+        val intent = Intent(context, InfoProductActivity::class.java)
          intent.putExtra("id",id)
          startActivity(intent)
     }

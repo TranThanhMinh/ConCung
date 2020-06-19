@@ -11,7 +11,7 @@ class ResultComment {
 
     @SerializedName("comment")
     @Expose
-    private var comment: List<Comment>? = null
+    private var comment: ArrayList<Comment>? = null
 
     @SerializedName("statusCode")
     @Expose
@@ -21,11 +21,11 @@ class ResultComment {
     @Expose
     private var msg: String? = null
 
-    fun getComment(): List<Comment> {
+    fun getComment(): ArrayList<Comment> {
         return comment!!
     }
 
-    fun setComment(comment: List<Comment>) {
+    fun setComment(comment: ArrayList<Comment>) {
         this.comment = comment
     }
 

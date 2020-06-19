@@ -1,35 +1,37 @@
 package com.example.myapplication.view
 
+import android.annotation.SuppressLint
 import android.content.Intent
-import android.graphics.Rect
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.ViewTreeObserver.OnGlobalLayoutListener
-import android.view.WindowManager
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProviders
-import com.bumptech.glide.Glide
 import com.example.myapplication.R
 import com.example.myapplication.data.UserFB
-import com.example.myapplication.model.User
 import com.example.myapplication.util.Utility.Companion.id_user
 import com.example.myapplication.util.Utility.Companion.name_user
 import com.example.myapplication.util.Utility.Companion.url
+import com.example.myapplication.view.login.LoginAccountActivity
 import com.example.myapplication.viewmodel.ConCungViewModel
 import com.example.myapplication.viewmodel.LoginViewModel
 import com.facebook.FacebookSdk
 import com.facebook.login.LoginManager
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.concung.*
 
 
 class Concung : AppCompatActivity(), View.OnClickListener,UserFragment.goHome,InterfaceClick.home {
-    var ft_add: FragmentTransaction?=null
-    var fm: FragmentManager? = null
-    var concung: ConCungViewModel? = null
-    var login: LoginViewModel? = null
+    private  var ft_add: FragmentTransaction?=null
+    private  var fm: FragmentManager? = null
+    private var concung: ConCungViewModel? = null
+    private var login: LoginViewModel? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.concung)
@@ -38,7 +40,7 @@ class Concung : AppCompatActivity(), View.OnClickListener,UserFragment.goHome,In
         init()
     }
 
-    fun init() {
+    private fun init() {
         fm = supportFragmentManager
         ft_add = fm!!.beginTransaction()
 
@@ -48,23 +50,69 @@ class Concung : AppCompatActivity(), View.OnClickListener,UserFragment.goHome,In
         btnAccount.setOnClickListener(this)
         btnHome.setOnClickListener(this)
 
+        FirebaseInstanceId.getInstance().instanceId
+                .addOnCompleteListener(OnCompleteListener { task ->
+                    if (!task.isSuccessful) {
+                        Log.w("TAG", "getInstanceId failed", task.exception)
+                        return@OnCompleteListener
+                    }
+
+                    // Get new Instance ID token
+                    val token = task.result?.token
+                    // Log and toast
+                    Log.d("TAG", token)
+
+                })
+
     }
 
-    fun getUser(){
+    override fun onStart() {
+        super.onStart()
+        // [START subscribe_topics]
+        FirebaseMessaging.getInstance().subscribeToTopic("news")
+                .addOnCompleteListener { task ->
+                    var msg = "that bai"
+                    if (task.isSuccessful) {
+                        msg = "thanh cong"
+                    }
+                    Log.d("TAG", msg)
+                    Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+                }
+        // [END subscribe_topics]
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        // [START subscribe_topics]
+        FirebaseMessaging.getInstance().unsubscribeFromTopic("news");
+        // [END subscribe_topics]
+    }
+
+    /**
+     * function take information of user login
+     */
+    private fun getUser(){
         concung!!.getUser().observe(this, androidx.lifecycle.Observer { list ->
             if (list.isNotEmpty()) {
                 url = list[0].image
                 id_user = list[0].id
+                name_user = list[0].name_user
             }else {
                 url = null
                 id_user = null
+                name_user = null
             }
         })
 
     }
 
-    // replace fragment home
-    fun goHome() {
+    /**
+     * function move to Home
+     */
+   private fun goHome() {
+        setTextColor()
+        tvAccount.setTextColor(resources.getColor(R.color.colorAccent))
+
         ft_add = fm!!.beginTransaction()
         val home = HomeFragment()
         home.initFragment(this)
@@ -72,6 +120,7 @@ class Concung : AppCompatActivity(), View.OnClickListener,UserFragment.goHome,In
         ft_add!!.commit()
     }
 
+    @SuppressLint("ResourceAsColor")
     override fun onClick(v: View?) {
         when (v) {
             btnAccount -> {
@@ -81,6 +130,8 @@ class Concung : AppCompatActivity(), View.OnClickListener,UserFragment.goHome,In
                     userFragment.init(this)
                     ft_add!!.replace(R.id.fgLayout, userFragment)
                     ft_add!!.commit()
+                    setTextColor()
+                    tvAccount.setTextColor(resources.getColor(R.color.colorAccent))
                 } else {
                     val intent = Intent(this, LoginAccountActivity::class.java)
                     startActivityForResult(intent, 1)
@@ -91,6 +142,19 @@ class Concung : AppCompatActivity(), View.OnClickListener,UserFragment.goHome,In
                 goHome()
             }
         }
+    }
+
+    /**
+     * function set text color
+     */
+    @SuppressLint("ResourceAsColor")
+    private  fun setTextColor(){
+        tvHome.setTextColor(resources.getColor(R.color.colorBlack3))
+        tvAccount.setTextColor(resources.getColor(R.color.colorBlack3))
+        tvVip.setTextColor(resources.getColor(R.color.colorBlack3))
+        tvNotifi.setTextColor(resources.getColor(R.color.colorBlack3))
+        tvSearch.setTextColor(resources.getColor(R.color.colorBlack3))
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -105,13 +169,13 @@ class Concung : AppCompatActivity(), View.OnClickListener,UserFragment.goHome,In
         }
     }
 
-    override fun click() {
+    override fun logOut() {
         val userFB = UserFB()
         userFB.id = id_user
         userFB.image = url
         concung!!.deleteUser(userFB)
 
-        FacebookSdk.sdkInitialize(this);
+        FacebookSdk.sdkInitialize(this)
         LoginManager.getInstance().logOut();
 
         getUser()

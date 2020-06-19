@@ -10,7 +10,11 @@ class UserFB {
     @PrimaryKey
     @NonNull
     @ColumnInfo(name = "id")
-     var id:String?=null
+    var id: String? = null
+
     @ColumnInfo(name = "image")
-     var image:String?=null
+    var image: String? = null
+
+    @ColumnInfo(name = "name_user")
+    var name_user: String? = null
 }

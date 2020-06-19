@@ -7,10 +7,7 @@ import com.example.myapplication.model.login.ResultLoginPhone
 import com.example.myapplication.repository.LoginRepository
 
 class LoginViewModel : ViewModel() {
-    private lateinit var loginRepository: LoginRepository
-    init {
-        loginRepository = LoginRepository()
-    }
+    private var loginRepository: LoginRepository = LoginRepository()
     fun loginUser(user:User) : LiveData<Boolean> {
         return loginRepository.hanldeLogin(user)
     }

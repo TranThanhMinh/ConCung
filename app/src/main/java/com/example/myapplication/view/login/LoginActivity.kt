@@ -1,4 +1,4 @@
-package com.example.myapplication.view
+package com.example.myapplication.view.login
 
 
 import android.content.Intent
@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.example.myapplication.R
 import com.example.myapplication.model.User
 import com.example.myapplication.util.Utility
+import com.example.myapplication.view.MainActivity
 import com.example.myapplication.viewmodel.LoginViewModel
 import kotlinx.android.synthetic.main.login_activity.*
 
@@ -27,7 +28,7 @@ class LoginActivity : AppCompatActivity() {
             when(boolean) {
                 true -> {
                    // Utility.saveUser(this,user)
-                    val intent = Intent(this,MainActivity::class.java)
+                    val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                 }
                 false -> Toast.makeText(this,"Error user or pass",Toast.LENGTH_LONG).show()

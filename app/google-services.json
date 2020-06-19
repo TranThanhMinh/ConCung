@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "926045972145",
+    "firebase_url": "https://concung-e54bf.firebaseio.com",
+    "project_id": "concung-e54bf",
+    "storage_bucket": "concung-e54bf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:926045972145:android:1d04c45996d742534ce490",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "926045972145-1hc3o9hpj7nvdspai4eahchcl3gv5kaj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC37S8R-1MvPfqErYJzW8-gOysMjFZmwws"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "926045972145-1hc3o9hpj7nvdspai4eahchcl3gv5kaj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

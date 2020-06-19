@@ -1,4 +1,4 @@
-package com.example.myapplication.view
+package com.example.myapplication.view.login
 
 import android.content.Intent
 import android.os.Bundle
@@ -102,6 +102,7 @@ class LoginAccountActivity:AppCompatActivity(),View.OnClickListener {
     fun saveData(id:String,name_user:String, image:String){
         val userFB = UserFB()
         userFB.id = id
+        userFB.name_user = name_user
         userFB.image = image
         concung!!.insert(userFB)
 
