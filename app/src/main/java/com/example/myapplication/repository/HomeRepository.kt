@@ -1,9 +1,14 @@
 package com.example.myapplication.repository
 
+import android.os.AsyncTask
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.myapplication.dagger.Component.DaggerRetrofitComponent
 import com.example.myapplication.dagger.Component.RetrofitComponent
+import com.example.myapplication.data.Cart
+import com.example.myapplication.data.CartDao
+import com.example.myapplication.data.RoomData
+import com.example.myapplication.data.StudentDao
 import com.example.myapplication.model.RequestId
 import com.example.myapplication.model.ResultApi
 import com.example.myapplication.model.comment.ResquetComment
@@ -26,6 +31,10 @@ import java.io.File
 import javax.inject.Inject
 
 class HomeRepository {
+    companion object{
+        var db : RoomData?= RoomData.getRoomData()
+        var cartDao: CartDao?= db!!.cartDao()
+    }
 
     @Inject
     lateinit var api: Api
@@ -34,6 +43,8 @@ class HomeRepository {
         val retrofitComponent: RetrofitComponent = DaggerRetrofitComponent.builder().build()
         retrofitComponent.inject(this)
     }
+
+
 
     fun getCategory(): LiveData<ResultApi> {
         val list: MutableLiveData<ResultApi> = MutableLiveData()
@@ -176,5 +187,46 @@ class HomeRepository {
 
         })
         return list
+    }
+
+    fun insertCart(cart: Cart){
+        InsertCart().execute(cart)
+    }
+
+    fun getCart():LiveData<List<Cart>>{
+       return cartDao!!.findAll()
+    }
+
+    fun getIdCart(id:String):LiveData<Cart>{
+        return cartDao!!.findId(id)
+    }
+
+    fun updateCart(cart: Cart){
+        UpdateCart().execute(cart)
+    }
+
+    fun deleteCart(cart: Cart){
+        DeleteCart().execute(cart)
+    }
+
+    class InsertCart: AsyncTask<Cart, Void, Void>() {
+        override fun doInBackground(vararg params: Cart): Void? {
+            cartDao!!.insert(params[0]!!)
+            return null
+        }
+    }
+
+    class UpdateCart: AsyncTask<Cart, Void, Void>() {
+        override fun doInBackground(vararg params: Cart): Void? {
+            cartDao!!.update(params[0]!!)
+            return null
+        }
+    }
+
+    class DeleteCart: AsyncTask<Cart, Void, Void>() {
+        override fun doInBackground(vararg params: Cart): Void? {
+            cartDao!!.delete(params[0]!!)
+            return null
+        }
     }
 }

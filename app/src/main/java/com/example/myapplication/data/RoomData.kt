@@ -6,7 +6,7 @@ import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 
 
-@Database(entities = [Student::class,UserFB::class],version = 3,exportSchema = true)
+@Database(entities = [Student::class,UserFB::class,Cart::class],version = 4,exportSchema = true)
 abstract class RoomData : RoomDatabase() {
     companion object {
         private var INSTANCE: RoomData? = null
@@ -14,6 +14,13 @@ abstract class RoomData : RoomDatabase() {
         private  val migration2 = object :Migration(1,2){
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.execSQL("CREATE TABLE `user` (`id` text, `image` TEXT, " +
+                        "PRIMARY KEY(`id`))")
+            }
+        }
+
+        private  val migration4 = object :Migration(3,4){
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("CREATE TABLE `cart` (`id` text, `name` text,`number` integer, `price` text, `image` text" +
                         "PRIMARY KEY(`id`))")
             }
         }
@@ -40,11 +47,10 @@ abstract class RoomData : RoomDatabase() {
 
 
 
-
-
         fun getData(context: Context): RoomData {
             if (INSTANCE == null) {
-                INSTANCE = Room.databaseBuilder(context.applicationContext, RoomData::class.java, "student-database").addMigrations(migration).addMigrations(migration1).addMigrations(migration2).addMigrations(migration3).build()
+                INSTANCE = Room.databaseBuilder(context.applicationContext, RoomData::class.java, "concung-database").addMigrations(migration)
+                        .addMigrations(migration1).addMigrations(migration2).addMigrations(migration3).addMigrations(migration4).build()
             }
             return INSTANCE!!
         }
@@ -56,4 +62,5 @@ abstract class RoomData : RoomDatabase() {
 
     abstract  fun studentDao (): StudentDao
     abstract  fun userDao (): UserFBDao
+    abstract  fun cartDao (): CartDao
 }

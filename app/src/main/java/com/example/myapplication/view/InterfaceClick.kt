@@ -1,5 +1,6 @@
 package com.example.myapplication.view
 
+import com.example.myapplication.data.Cart
 import com.example.myapplication.data.Student
 
 interface InterfaceClick {
@@ -10,6 +11,10 @@ interface InterfaceClick {
 
     interface  Product{
          fun detailProduct(id:String)
+    }
+
+    interface EventCart{
+        fun deleteProduct(cart: Cart)
     }
 
     interface home{

@@ -12,6 +12,8 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProviders
 import com.example.myapplication.R
+import com.example.myapplication.dagger.Component.DaggerUserComponent
+import com.example.myapplication.dagger.Component.UserComponent
 import com.example.myapplication.data.UserFB
 import com.example.myapplication.util.Utility.Companion.id_user
 import com.example.myapplication.util.Utility.Companion.name_user
@@ -25,6 +27,7 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.concung.*
+import javax.inject.Inject
 
 
 class Concung : AppCompatActivity(), View.OnClickListener,UserFragment.goHome,InterfaceClick.home {
@@ -32,6 +35,11 @@ class Concung : AppCompatActivity(), View.OnClickListener,UserFragment.goHome,In
     private  var fm: FragmentManager? = null
     private var concung: ConCungViewModel? = null
     private var login: LoginViewModel? = null
+    var userComponent: UserComponent? = null
+
+    @Inject
+    lateinit var userFB: UserFB
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.concung)
@@ -43,6 +51,9 @@ class Concung : AppCompatActivity(), View.OnClickListener,UserFragment.goHome,In
     private fun init() {
         fm = supportFragmentManager
         ft_add = fm!!.beginTransaction()
+
+        userComponent = DaggerUserComponent.builder().build()
+        userComponent!!.inject(this)
 
         getUser()
         goHome()
@@ -84,7 +95,7 @@ class Concung : AppCompatActivity(), View.OnClickListener,UserFragment.goHome,In
     override fun onDestroy() {
         super.onDestroy()
         // [START subscribe_topics]
-        FirebaseMessaging.getInstance().unsubscribeFromTopic("news");
+     //   FirebaseMessaging.getInstance().unsubscribeFromTopic("news");
         // [END subscribe_topics]
     }
 
@@ -170,10 +181,10 @@ class Concung : AppCompatActivity(), View.OnClickListener,UserFragment.goHome,In
     }
 
     override fun logOut() {
-        val userFB = UserFB()
-        userFB.id = id_user
-        userFB.image = url
-        concung!!.deleteUser(userFB)
+
+        userFB!!.id = id_user
+        userFB!!.image = url
+        concung!!.deleteUser(userFB!!)
 
         FacebookSdk.sdkInitialize(this)
         LoginManager.getInstance().logOut();

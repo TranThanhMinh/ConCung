@@ -19,6 +19,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.*
@@ -33,6 +34,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.myapplication.R
+import com.example.myapplication.dagger.Component.DaggerProductComponent
+import com.example.myapplication.dagger.Component.ProductComponent
+import com.example.myapplication.dagger.Module.ProductModule
+import com.example.myapplication.data.Cart
 import com.example.myapplication.model.RequestId
 import com.example.myapplication.model.comment.ResquetComment
 import com.example.myapplication.model.product.Promotion
@@ -43,6 +48,7 @@ import com.example.myapplication.util.Utility.Companion.url
 import com.example.myapplication.view.adapter.CommentAdapter
 import com.example.myapplication.view.adapter.ImageCaptureAdapter
 import com.example.myapplication.view.adapter.PromotionAdapter
+import com.example.myapplication.view.cart.CartActivity
 import com.example.myapplication.view.eventbus.CustomEvent
 import com.example.myapplication.view.login.LoginAccountActivity
 import com.example.myapplication.viewmodel.HomeViewModel
@@ -53,14 +59,16 @@ import kotlinx.android.synthetic.main.info_product_activity.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import java.io.ByteArrayOutputStream
+import javax.inject.Inject
 
 
 class InfoProductActivity : AppCompatActivity(), CommentAdapter.ReplyComment, View.OnClickListener {
     private var homeViewModel: HomeViewModel? = null
-    private var id: String? = null //id of product
-    private var nameProduct: String? = null //name of product
-    private var priceProduct: Int? = null //price of product
-    private var imageProduct: String? = null //image of product
+    var id: String? = null //id of product
+    var number: Int = 1 //id of product
+    var nameProduct: String? = null //name of product
+    var priceProduct: Int? = null //price of product
+    var imageProduct: String? = null //image of product
     private var capture: Int = 100
     private var show = false // show/hide description
     private var showComment = false // show/hide comment
@@ -72,6 +80,13 @@ class InfoProductActivity : AppCompatActivity(), CommentAdapter.ReplyComment, Vi
     private val TAKE_PICTURE = 1
     private var imageUri: Uri? = null
     private var imCapture: ImageView? = null
+
+    private var cartExists: Cart? = null
+
+    lateinit var productComponent: ProductComponent
+
+    @Inject
+    lateinit var cart: Cart
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -97,7 +112,7 @@ class InfoProductActivity : AppCompatActivity(), CommentAdapter.ReplyComment, Vi
     }
 
     @Subscribe
-    fun onViewImage(event:CustomEvent){
+    fun onViewImage(event: CustomEvent) {
         viewImage(event.url)
     }
 
@@ -125,6 +140,11 @@ class InfoProductActivity : AppCompatActivity(), CommentAdapter.ReplyComment, Vi
 
     @SuppressLint("WrongConstant")
     fun init() {
+        //progressbar
+        progress_bar.visibility = View.VISIBLE
+        productComponent = DaggerProductComponent.builder().build()
+        productComponent.inject(this)
+
         homeViewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
         id = intent.getSerializableExtra("id") as String
 
@@ -159,6 +179,10 @@ class InfoProductActivity : AppCompatActivity(), CommentAdapter.ReplyComment, Vi
         //order
         llOrder.setOnClickListener(this)
 
+        btnPlus.setOnClickListener(this)
+
+        btnMinus.setOnClickListener(this)
+
 
         // Setup refresh listener which triggers new data loading
 
@@ -176,11 +200,22 @@ class InfoProductActivity : AppCompatActivity(), CommentAdapter.ReplyComment, Vi
 
         // Scheme colors for animation
         swipeContainer.setColorSchemeColors(
-                getResources().getColor(android.R.color.holo_blue_bright),
-                getResources().getColor(android.R.color.holo_green_light),
-                getResources().getColor(android.R.color.holo_orange_light),
-                getResources().getColor(android.R.color.holo_red_light)
-        );
+                resources.getColor(android.R.color.holo_blue_bright),
+                resources.getColor(android.R.color.holo_green_light),
+                resources.getColor(android.R.color.holo_orange_light),
+                resources.getColor(android.R.color.holo_red_light)
+        )
+
+        homeViewModel!!.getIdCart(id!!).observe(this, Observer { item->
+            Log.e("MInh","kkkk")
+            if (item != null){
+                cartExists = item
+                Log.e("MInh","isNotEmpty")
+            }else {
+                cartExists = null
+                Log.e("MInh","isEmpty")
+            }
+        })
     }
 
     /**
@@ -221,8 +256,8 @@ class InfoProductActivity : AppCompatActivity(), CommentAdapter.ReplyComment, Vi
             }
             // button capture camera
             imCapture!!.setOnClickListener {
-              /*  val inten = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                startActivityForResult(inten, capture)*/
+                /*  val inten = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                  startActivityForResult(inten, capture)*/
 
                 val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
                 startActivityForResult(intent, TAKE_PICTURE)
@@ -374,11 +409,20 @@ class InfoProductActivity : AppCompatActivity(), CommentAdapter.ReplyComment, Vi
         adapter.loadData(list)
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_cart,menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
                 finish()
+            }
+            R.id.item_cart->{
+                val intent = Intent(this, CartActivity::class.java)
+                startActivity(intent)
             }
         }
         return super.onOptionsItemSelected(item)
@@ -453,7 +497,11 @@ class InfoProductActivity : AppCompatActivity(), CommentAdapter.ReplyComment, Vi
         val tvPrice = dialog!!.findViewById<TextView>(R.id.tvPrice)
         val tvMultiply = dialog!!.findViewById<TextView>(R.id.tvMultiply)
         val tvAmount = dialog!!.findViewById<TextView>(R.id.tvAmount)
+        val tvDelete = dialog!!.findViewById<TextView>(R.id.tvDelete)
         val imProduct = dialog!!.findViewById<ImageView>(R.id.imProduct)
+        val btnCart = dialog!!.findViewById<TextView>(R.id.btnCart)
+
+        tvDelete!!.visibility = View.GONE
 
         tvMultiply!!.text = "x${tvNumber.text}"
         tvName!!.text = nameProduct
@@ -468,16 +516,28 @@ class InfoProductActivity : AppCompatActivity(), CommentAdapter.ReplyComment, Vi
 
         dialog!!.show()
 
+        cart.id = id
+        cart.name = nameProduct
+        cart.price = priceProduct.toString()
+        cart.image = imageProduct
+        cart.number = tvNumber.text.toString().toInt()
+
+
+        if (cartExists != null){
+            cart.number = cartExists!!.number!! + cart.number!!
+            homeViewModel!!.updateCart(cart)
+        }else {
+            homeViewModel!!.insertCart(cart)
+        }
+        btnCart!!.setOnClickListener {
+            dialog!!.cancel()
+            val intent = Intent(this, CartActivity::class.java)
+            startActivity(intent)
+        }
 
     }
 
-    fun viewImage(url:String) {
-/*        dialogImage = Dialog(this)
-        dialogImage!!.setContentView(R.layout.view_iamge)
-        val imageView = dialogImage!!.findViewById<ImageView>(R.id.imageView)
-        Picasso.with(this).load(url).into(imageView)
-        dialogImage!!.show()*/
-
+    fun viewImage(url: String) {
         val dialogBuilder: AlertDialog.Builder = AlertDialog.Builder(this)
         val inflater: LayoutInflater = this.layoutInflater
         val dialogView: View = inflater.inflate(R.layout.view_iamge, null)
@@ -535,6 +595,19 @@ class InfoProductActivity : AppCompatActivity(), CommentAdapter.ReplyComment, Vi
                     startActivityForResult(intent, 1)
                 }
             }
+            btnPlus -> {
+                if (number > 1){
+                    number -= 1
+                    tvNumber.text = number.toString()
+                }
+            }
+            btnMinus->{
+                number += 1
+                tvNumber.text = number.toString()
+            }
         }
     }
+
+
+
 }

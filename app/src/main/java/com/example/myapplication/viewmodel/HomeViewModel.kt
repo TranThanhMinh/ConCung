@@ -2,6 +2,7 @@ package com.example.myapplication.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import com.example.myapplication.data.Cart
 import com.example.myapplication.model.RequestId
 import com.example.myapplication.model.ResultApi
 import com.example.myapplication.model.comment.ResultStatus
@@ -51,5 +52,26 @@ class HomeViewModel : ViewModel() {
 
     fun getComment(id: RequestId): LiveData<ResultComment> {
         return homeRopository!!.getComment(id)
+    }
+
+    fun insertCart(cart: Cart){
+        return homeRopository!!.insertCart(cart)
+    }
+
+    fun updateCart(cart: Cart){
+        return homeRopository!!.updateCart(cart)
+    }
+
+
+    fun deleteCart(cart: Cart){
+        return homeRopository!!.deleteCart(cart)
+    }
+
+    fun getCart():LiveData<List<Cart>>{
+        return homeRopository!!.getCart()
+    }
+
+    fun getIdCart(id:String):LiveData<Cart>{
+        return homeRopository!!.getIdCart(id)
     }
 }

@@ -33,4 +33,11 @@
     <string name="txt_cancel">Bỏ qua</string>
     <string name="txt_choose_more">Chọn thêm sản phẩm khác</string>
     <string name="txt_comment">Đánh giá và bình luận</string>
+    <string name="fcm_message">Thông báo</string>
+    <string name="txt_product">Sản phẩm</string>
+    <string name="txt_continue">Tiếp tục</string>
+    <string name="txt_cart">Giỏ hàng</string>
+    <string name="txt_delete">Xóa</string>
+
+    <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
 </resources>
