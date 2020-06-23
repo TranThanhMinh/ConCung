@@ -37,7 +37,9 @@
     <string name="txt_product">Sản phẩm</string>
     <string name="txt_continue">Tiếp tục</string>
     <string name="txt_cart">Giỏ hàng</string>
+    <string name="txt_cart_2">Không có sản phẩm nào trong giỏ hàng của bạn</string>
     <string name="txt_delete">Xóa</string>
+    <string name="txt_value">đ</string>
 
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
 </resources>

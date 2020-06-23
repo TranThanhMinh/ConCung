@@ -94,7 +94,6 @@ class InfoProductActivity : AppCompatActivity(), CommentAdapter.ReplyComment, Vi
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true);
         supportActionBar!!.title = getString(R.string.txt_infomation);
-
         //init
         init()
         checkPermission()
@@ -379,7 +378,7 @@ class InfoProductActivity : AppCompatActivity(), CommentAdapter.ReplyComment, Vi
                 imageProduct = list.getData()[0].getImage()
                 Picasso.with(this).load(list.getData()[0].getImage()).into(imageView)
                 tvName.text = list.getData()[0].getName()
-                tvPrice.text = currencyFormatter(list.getData()[0].getPrice()) + "đ"
+                tvPrice.text = currencyFormatter(list.getData()[0].getPrice()) + resources.getString(R.string.txt_value)
                 getPromotion(list.getPromotion()!!)
 
                 tvDescription.requestFocus();
@@ -508,7 +507,7 @@ class InfoProductActivity : AppCompatActivity(), CommentAdapter.ReplyComment, Vi
         tvPrice!!.text = currencyFormatter(priceProduct!!)
         Picasso.with(this).load(imageProduct).into(imProduct)
         val amount = priceProduct!! * tvNumber.text.toString().toInt()
-        tvAmount!!.text = " = ${currencyFormatter(amount)}"
+        tvAmount!!.text = " = ${currencyFormatter(amount)}"+resources.getString(R.string.txt_value)
 
         val layout = imProduct!!.layoutParams
         layout.height = Resources.getSystem().displayMetrics.widthPixels / 4 - Resources.getSystem().displayMetrics.widthPixels / 20

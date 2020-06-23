@@ -35,10 +35,10 @@ class CartAdapter(var context: Context,var delete:InterfaceClick.EventCart) : Re
        var item = list!![position]
         (holder as MyViewHolder ).tvMultiply.text = "x${item.number}"
         holder.tvName.text = item.name
-        holder.tvPrice.text = item.price!!
+        holder.tvPrice.text =  Utility.currencyFormatter( item.price!!.toInt())
         Picasso.with(context).load(item.image).into(holder.imProduct)
         val amount = item.price!!.toInt() * item.number!!
-        holder.tvAmount.text = " = ${Utility.currencyFormatter(amount)}"
+        holder.tvAmount.text = " = ${Utility.currencyFormatter(amount)}"+context.resources.getString(R.string.txt_value)
 
         holder.tvDelete.setOnClickListener {
             delete.deleteProduct(item)

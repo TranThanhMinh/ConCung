@@ -3,14 +3,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
+        android:background="@color/colorAccent"
         android:id="@+id/toolbar"
+        app:titleTextColor="@color/colorWhite"
+        app:theme="@style/ToolbarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/nslProduct"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
 
@@ -154,4 +160,43 @@
                 android:textSize="20sp" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+
+    <LinearLayout
+        android:id="@+id/llNoProduct"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size5"
+            android:src="@drawable/ic_cart_2"/>
+        <TextView
+            android:layout_marginRight="@dimen/text"
+            android:layout_marginLeft="@dimen/text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/txt_cart_2"/>
+        <TextView
+            android:id="@+id/btnContinue2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="@dimen/size2"
+            android:layout_marginBottom="@dimen/size2"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/border_login_btn"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="@string/txt_continue"
+            android:textColor="@color/colorWhite"
+            android:textSize="20sp" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/colorBlack4" />
+
+    </LinearLayout>
 </LinearLayout>

@@ -10,6 +10,8 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
+        app:theme="@style/ToolbarStyle2"
+        app:titleTextColor="@color/colorAccent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -116,6 +118,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/border_promotion"
+                    tools:listitem="@layout/item_promotion"
+                    tools:itemCount="3"
                     android:padding="@dimen/size" />
 
                 <TextView
@@ -187,7 +191,9 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rlvComment"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        tools:listitem="@layout/item_comment"
+                        tools:itemCount="3"/>
 
                     <TextView
                         android:id="@+id/btnShowComment"
@@ -211,7 +217,6 @@
         android:id="@+id/progress_bar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/bottom"
         android:background="@color/colorWhite"
         android:visibility="gone">
 

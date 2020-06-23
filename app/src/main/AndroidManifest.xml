@@ -7,8 +7,8 @@
     <uses-permission android:name="android.permission.CALL_PHONE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-feature android:name="android.hardware.camera" />
-    <uses-feature android:name="android.hardware.sensor.compass"
+    <uses-feature android:name="android.hardware.sensor.compass"/>
+    <uses-feature android:name="android.hardware.camera" android:required="false"></uses-feature>
         android:required="true" />
     <application
         android:allowBackup="true"
@@ -48,7 +48,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.Concung"
-            android:windowSoftInputMode="stateVisible|adjustPan"/>
+            android:windowSoftInputMode="stateAlwaysHidden" />
 
         <activity android:name=".view.MainActivity"
             android:windowSoftInputMode="stateVisible|adjustPan"/>

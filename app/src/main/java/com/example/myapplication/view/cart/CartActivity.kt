@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -17,6 +18,8 @@ import com.example.myapplication.view.adapter.CartAdapter
 import com.example.myapplication.viewmodel.HomeViewModel
 import kotlinx.android.synthetic.main.cart_activity.*
 import kotlinx.android.synthetic.main.cart_activity.toolbar
+import kotlinx.android.synthetic.main.cart_activity.tvPrice
+import kotlinx.android.synthetic.main.info_product.*
 
 
 class CartActivity : AppCompatActivity(), InterfaceClick.EventCart {
@@ -34,7 +37,6 @@ class CartActivity : AppCompatActivity(), InterfaceClick.EventCart {
     fun init() {
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-
         homeViewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
 
         //
@@ -54,17 +56,22 @@ class CartActivity : AppCompatActivity(), InterfaceClick.EventCart {
     fun getCart(){
         homeViewModel.getCart().observe(this, Observer { list->
             if (list.isNotEmpty()){
+                nslProduct.visibility = View.VISIBLE
+                llNoProduct.visibility = View.GONE
                 adapter.loadData(list)
                 supportActionBar!!.title = getString(R.string.txt_cart) +"(${list.size})"
                 var price = 0
                 for (item in list){
                     price += item.price!!.toInt() * item.number!!
                 }
-                tvPrice.text = Utility.currencyFormatter(price)+"đ"
-                tvDiscount.text = Utility.currencyFormatter(discount)+"đ"
-                tvTotal.text = Utility.currencyFormatter(price-discount)+"đ"
+                tvPrice.text = Utility.currencyFormatter(price)+resources.getString(R.string.txt_value)
+                tvDiscount.text = Utility.currencyFormatter(discount)+resources.getString(R.string.txt_value)
+                tvTotal.text = Utility.currencyFormatter(price-discount)+resources.getString(R.string.txt_value)
+            }else{
+                nslProduct.visibility = View.GONE
+                llNoProduct.visibility = View.VISIBLE
+                supportActionBar!!.title = getString(R.string.txt_cart)
             }
-
         })
     }
 

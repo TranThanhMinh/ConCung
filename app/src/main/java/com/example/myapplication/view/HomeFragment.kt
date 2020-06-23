@@ -15,6 +15,7 @@ import com.example.myapplication.util.Utility.Companion.listNews
 import com.example.myapplication.util.Utility.Companion.listProduct
 import com.example.myapplication.util.Utility.Companion.listTrademark
 import com.example.myapplication.view.adapter.*
+import com.example.myapplication.view.cart.CartActivity
 import com.example.myapplication.view.product.InfoProductActivity
 import kotlinx.android.synthetic.main.home_fragment.*
 
@@ -51,6 +52,12 @@ class HomeFragment : Fragment(),InterfaceClick.Product {
         menu.setOnClickListener {
             click!!.openMenu()
         }
+
+        cart.setOnClickListener {
+            val intent = Intent(context, CartActivity::class.java)
+            startActivity(intent)
+        }
+
     }
 
     @SuppressLint("WrongConstant")
