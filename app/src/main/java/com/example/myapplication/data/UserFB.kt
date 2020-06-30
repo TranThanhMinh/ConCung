@@ -17,4 +17,7 @@ class UserFB {
 
     @ColumnInfo(name = "name_user")
     var name_user: String? = null
+
+    @ColumnInfo(name = "image_user")
+    var image_user: String? = null
 }

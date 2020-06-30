@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/size"
+    android:orientation="horizontal">
+  <CheckBox
+      android:id="@+id/tvType"
+      android:layout_marginLeft="@dimen/size_5"
+      android:enabled="false"
+      android:button="@drawable/select_address_default"
+      android:checked="false"
+      android:text=""
+      android:textColor="@color/colorGreen"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"/>
+  <RelativeLayout
+      android:layout_marginLeft="@dimen/size"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+
+    <TextView
+
+        android:id="@+id/tvName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorBlack"
+        android:textStyle="bold"
+        android:textSize="17sp"
+        android:text="Trần Thanh Minh"/>
+
+    <ImageView
+
+        android:id="@+id/imEdit"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical= "true"
+        android:src="@drawable/ic_edit"/>
+
+    <TextView
+        android:id="@+id/tvAddress"
+        android:layout_below="@+id/tvName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_address2"/>
+    <TextView
+        android:id="@+id/tvAddress2"
+        android:layout_below="@+id/tvName"
+        android:layout_marginLeft="@dimen/size_5"
+        android:layout_toRightOf="@+id/tvAddress"
+        android:layout_toLeftOf="@+id/imEdit"
+        android:textColor="@color/colorBlack"
+        android:layout_marginRight="@dimen/size_5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="big c đà nẵng, 257 hùng vương, Phường Vĩnh Trung, Quận Thanh Khê, Đà Nẵng"/>
+    <TextView
+        android:id="@+id/tvPhone"
+        android:layout_below="@+id/tvAddress2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_phone2"/>
+    <TextView
+        android:id="@+id/tvPhone2"
+        android:layout_below="@+id/tvAddress2"
+        android:layout_marginLeft="@dimen/size_5"
+        android:layout_toRightOf="@+id/tvPhone"
+        android:textColor="@color/colorBlack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" 0355406448"/>
+
+    <View
+        android:layout_below="@+id/tvPhone2"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="@dimen/size"
+        android:background="@color/colorBlack4"/>
+
+  </RelativeLayout>
+</LinearLayout>
+

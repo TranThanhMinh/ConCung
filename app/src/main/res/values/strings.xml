@@ -19,6 +19,7 @@
     <string name="txt_register">Chưa có tài khoản</string>
     <string name="txt_register2">Đăng ký</string>
     <string name="txt_phone">Số điện thoại</string>
+    <string name="txt_phone2">Điện thoại: </string>
     <string name="txt_pass">Mật khẩu</string>
     <string name="txt_pass_miss">Quên mật khẩu</string>
     <string name="txt_or_login">Hoặc đăng nhập bằng</string>
@@ -36,10 +37,36 @@
     <string name="fcm_message">Thông báo</string>
     <string name="txt_product">Sản phẩm</string>
     <string name="txt_continue">Tiếp tục</string>
+    <string name="txt_order">Đặt hàng</string>
     <string name="txt_cart">Giỏ hàng</string>
     <string name="txt_cart_2">Không có sản phẩm nào trong giỏ hàng của bạn</string>
     <string name="txt_delete">Xóa</string>
     <string name="txt_value">đ</string>
+    <string name="txt_manager">Quản lý tài khoản</string>
+    <string name="txt_category">Danh mục sản phẩm</string>
+    <string name="txt_confirm">Xác nhận</string>
+    <string name="txt_insert">Thêm mới</string>
+    <string name="txt_update">Sửa thông tin địa chỉ </string>
+    <string name="txt_title">Địa chỉ nhận hàng </string>
+    <string name="txt_manager_order">Quản lý đơn hàng</string>
+    <string name="txt_news">Tin tức</string>
+    <string name="txt_phone_1">1800 6609</string>
+    <string name="txt_phone_2">1800 6703</string>
+    <string name="txt_notification">Thông báo của tôi</string>
+    <string name="txt_information_user">Thông tin tài khoản</string>
+    <string name="txt_product_love">Sản phẩm yêu thích</string>
+    <string name="txt_address">Địa chỉ giao hàng</string>
+    <string name="txt_address2">Địa chỉ: </string>
+    <string name="txt_product_view">Sản phẩm đã xem</string>
+    <string name="txt_comments">Nhân xét của tôi</string>
+    <string name="txt_address_default">Địa chỉ mặt định</string>
+    <string name="txt_name">Nhập họ &amp; tên người nhận</string>
+    <string name="txt_phone3">Nhập số điện thoại nhận hàng</string>
+    <string name="txt_address3">Nhập địa chỉ nhận hàng</string>
+    <string name="txt_address4">Địa chỉ mặt định</string>
+    <string name="txt_address5">Địa chỉ công ty</string>
+    <string name="txt_address6">Danh sách địa chỉ</string>
+    <string name="txt_buy">Đặt hàng &amp; thanh toán</string>
 
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
 </resources>

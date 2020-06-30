@@ -1,58 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
     <RelativeLayout
+        android:id="@+id/rlSearch"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/colorPrimary">
 
         <ImageView
-            android:layout_marginTop="15dp"
             android:id="@+id/menu"
             android:layout_width="50dp"
             android:layout_height="20dp"
+            android:layout_marginTop="15dp"
             android:src="@drawable/ic_menu" />
 
         <EditText
             android:id="@+id/editSearch"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:paddingLeft="@dimen/size"
-            android:paddingRight="@dimen/size"
             android:layout_centerInParent="true"
             android:layout_toLeftOf="@+id/cart"
             android:layout_toRightOf="@+id/menu"
             android:background="@drawable/border_search"
             android:hint="@string/search"
-            android:textSize="@dimen/text_"
-            android:textColorHint="@color/colorWhite" />
+            android:paddingLeft="@dimen/size"
+            android:paddingRight="@dimen/size"
+            android:textColorHint="@color/colorWhite"
+            android:textSize="@dimen/text_" />
 
         <ImageView
-            android:layout_marginTop="15dp"
-            android:layout_toLeftOf="@+id/cart"
-            android:layout_marginRight="@dimen/size_5"
-            android:src="@drawable/ic_search"
             android:layout_width="20dp"
-            android:layout_height="20dp"/>
+            android:layout_height="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="@dimen/size_5"
+            android:layout_toLeftOf="@+id/cart"
+            android:src="@drawable/ic_search" />
 
         <ImageView
-            android:layout_marginTop="15dp"
             android:id="@+id/cart"
             android:layout_width="50dp"
             android:layout_height="20dp"
             android:layout_alignParentRight="true"
+            android:layout_marginTop="15dp"
             android:src="@drawable/ic_cart" />
 
     </RelativeLayout>
-    <androidx.core.widget.NestedScrollView
+    <FrameLayout
+        android:id="@+id/flHome"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+<!--    <androidx.core.widget.NestedScrollView
         android:background="@color/colorWhite"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcvHome"
             android:layout_width="match_parent"
@@ -60,7 +64,7 @@
             android:clickable="true"
             android:focusable="true"
             />
-    </androidx.core.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>-->
     <!-- <androidx.core.widget.NestedScrollView
          android:layout_width="match_parent"
          android:layout_height="match_parent">

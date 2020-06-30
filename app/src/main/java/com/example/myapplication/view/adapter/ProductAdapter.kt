@@ -13,10 +13,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.model.Category
 import com.example.myapplication.model.product.Product
+import com.example.myapplication.util.Utility
 import com.example.myapplication.view.InterfaceClick
 import com.squareup.picasso.Picasso
 
-class ProductAdapter(var context: Context,var click :InterfaceClick.Product) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ProductAdapter(var context: Context,var click :InterfaceClick.EventProduct) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var list: List<Product> = ArrayList()
 
@@ -38,8 +39,9 @@ class ProductAdapter(var context: Context,var click :InterfaceClick.Product) : R
        var item = list!![position]
         Picasso.with(context).load(item.getImage()).into(  (holder as MyViewHolder).imView)
         holder.tvName.text = item.getName()
+        holder.tvPrice.text = Utility.currencyFormatter(item.getPrice()) + context.resources.getString(R.string.txt_value)
         holder.layout.setOnClickListener {
-            click.detailProduct(item.getId().toString())
+            click.detailProduct(item)
         }
 
     }
@@ -48,12 +50,7 @@ class ProductAdapter(var context: Context,var click :InterfaceClick.Product) : R
          val imView = v.findViewById<ImageView>(R.id.imageView)
          val tvName = v.findViewById<TextView>(R.id.tvName)
          val layout = v.findViewById<LinearLayout>(R.id.layout)
-
-     /*   init {
-            val linearLayout = layout.layoutParams
-            linearLayout.height =  Resources.getSystem().displayMetrics.heightPixels / 4
-            layout.layoutParams = linearLayout
-        }*/
+        val tvPrice = v.findViewById<TextView>(R.id.tvPrice)
     }
 
 }

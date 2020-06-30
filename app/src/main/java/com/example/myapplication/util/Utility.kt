@@ -2,15 +2,17 @@ package com.example.myapplication.util
 
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
+import com.example.myapplication.R
 import com.example.myapplication.model.Category
-import com.example.myapplication.model.ResultApi
 import com.example.myapplication.model.User
 import com.example.myapplication.model.news.News
 import com.example.myapplication.model.product.Product
 import com.example.myapplication.model.trademark.Trademark
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
-import java.util.*
 import kotlin.collections.ArrayList
 
 
@@ -19,10 +21,14 @@ class Utility {
          var url: String? = null
          var id_user: String? = null
          var name_user: String? = null
+         var image_user: String? = null
         var listCategory:List<Category> = ArrayList()
         var listTrademark:List<Trademark> = ArrayList()
         var listProduct:List<Product> = ArrayList()
         var listNews:List<News> = ArrayList()
+
+        private var ft_add: FragmentTransaction? = null
+        private var fm: FragmentManager? = null
 
         fun saveUser(context: Context,user:User){
             val sharedPreferences  = context.getSharedPreferences("User", Context.MODE_PRIVATE)
@@ -73,6 +79,29 @@ class Utility {
         fun convertStringToDateTime(time:Long):String{
             val sdf = SimpleDateFormat("hh:mm dd-MM-yyyy")
             return  sdf.format(time)
+        }
+
+        fun replaceFragment(fm: FragmentManager,layout:Fragment){
+            ft_add = fm!!.beginTransaction()
+            ft_add!!.replace(R.id.fgLayout, layout).addToBackStack(null)
+            ft_add!!.commit()
+        }
+        fun replaceHomeFragment(fm: FragmentManager,layout:Fragment){
+            ft_add = fm!!.beginTransaction()
+            ft_add!!.replace(R.id.flHome, layout).addToBackStack(null)
+            ft_add!!.commit()
+        }
+
+        fun replaceProductFragment(fm: FragmentManager,layout:Fragment){
+            ft_add = fm!!.beginTransaction()
+            ft_add!!.replace(R.id.flProduct, layout).addToBackStack(null)
+            ft_add!!.commit()
+        }
+
+        fun addProductFragment(fm: FragmentManager,layout:Fragment){
+            ft_add = fm!!.beginTransaction()
+            ft_add!!.add(R.id.flProduct, layout).addToBackStack(null)
+            ft_add!!.commit()
         }
     }
 

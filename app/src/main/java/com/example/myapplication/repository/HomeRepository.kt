@@ -5,12 +5,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.myapplication.dagger.Component.DaggerRetrofitComponent
 import com.example.myapplication.dagger.Component.RetrofitComponent
-import com.example.myapplication.data.Cart
-import com.example.myapplication.data.CartDao
-import com.example.myapplication.data.RoomData
-import com.example.myapplication.data.StudentDao
+import com.example.myapplication.data.*
 import com.example.myapplication.model.RequestId
 import com.example.myapplication.model.ResultApi
+import com.example.myapplication.model.category.ResultCategory
+import com.example.myapplication.model.User
 import com.example.myapplication.model.comment.ResquetComment
 import com.example.myapplication.model.comment.ResultComment
 import com.example.myapplication.model.comment.ResultStatus
@@ -19,8 +18,9 @@ import com.example.myapplication.model.product.ResultIdProduct
 import com.example.myapplication.model.product.ResultProduct
 import com.example.myapplication.model.product.ResultUpload
 import com.example.myapplication.model.trademark.ResultTrademark
+import com.example.myapplication.model.user.Address
+import com.example.myapplication.model.user.ResultAddress
 import com.example.myapplication.retrofit.Api
-import com.example.myapplication.util.LogUtils
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -34,6 +34,7 @@ class HomeRepository {
     companion object{
         var db : RoomData?= RoomData.getRoomData()
         var cartDao: CartDao?= db!!.cartDao()
+        var productwatchedDao: ProductWatchedDao?= db!!.productwatchedDao()
     }
 
     @Inject
@@ -46,15 +47,15 @@ class HomeRepository {
 
 
 
-    fun getCategory(): LiveData<ResultApi> {
-        val list: MutableLiveData<ResultApi> = MutableLiveData()
-        val call: Call<ResultApi> = api.getCategory()
-        call.enqueue(object : Callback<ResultApi> {
-            override fun onFailure(call: Call<ResultApi>, t: Throwable) {
+    fun getCategory(): LiveData<ResultCategory> {
+        val list: MutableLiveData<ResultCategory> = MutableLiveData()
+        val call: Call<ResultCategory> = api.getCategory()
+        call.enqueue(object : Callback<ResultCategory> {
+            override fun onFailure(call: Call<ResultCategory>, t: Throwable) {
                 list.value = null
             }
 
-            override fun onResponse(call: Call<ResultApi>, response: Response<ResultApi>) {
+            override fun onResponse(call: Call<ResultCategory>, response: Response<ResultCategory>) {
                 list.value = response.body()
             }
 
@@ -162,6 +163,23 @@ class HomeRepository {
         return list
     }
 
+
+    fun getAddress(id: User): LiveData<ResultAddress> {
+        val list: MutableLiveData<ResultAddress> = MutableLiveData()
+        var call: Call<ResultAddress> = api.getAddress(id)
+        call.enqueue(object : Callback<ResultAddress> {
+            override fun onFailure(call: Call<ResultAddress>, t: Throwable) {
+                list.value = null
+            }
+
+            override fun onResponse(call: Call<ResultAddress>, response: Response<ResultAddress>) {
+                list.value = response.body()
+            }
+
+        })
+        return list
+    }
+
     fun imageUpLoad(filePath: String,idComment:Int): LiveData<ResultUpload> {
         val list: MutableLiveData<ResultUpload> = MutableLiveData()
         //Create a file object using file path
@@ -209,12 +227,53 @@ class HomeRepository {
         DeleteCart().execute(cart)
     }
 
+    fun productExist(id: String):LiveData<List<ProductWatched>>{
+        return  productwatchedDao!!.findId(id)
+    }
+
+    fun insertProduct(product: ProductWatched){
+         InsertProduct().execute(product)
+    }
+
+    fun updateProduct(product: ProductWatched){
+        UpdateProduct().execute(product)
+    }
+
+    fun getProductWatched():LiveData<List<ProductWatched>>{
+        return productwatchedDao!!.findAll()
+    }
+
+    fun getProductLove():LiveData<List<ProductWatched>>{
+        return productwatchedDao!!.findProductLove()
+    }
+
+    /**
+     * function update Or Insert of Address
+     */
+    fun updateOrInsert(address: Address):LiveData<ResultApi>{
+        val list: MutableLiveData<ResultApi> = MutableLiveData()
+        var call: Call<ResultApi> = api.updateOrInsert(address)
+        call.enqueue(object : Callback<ResultApi> {
+            override fun onFailure(call: Call<ResultApi>, t: Throwable) {
+                list.value = null
+            }
+
+            override fun onResponse(call: Call<ResultApi>, response: Response<ResultApi>) {
+                list.value = response.body()
+            }
+
+        })
+        return list
+    }
+
     class InsertCart: AsyncTask<Cart, Void, Void>() {
         override fun doInBackground(vararg params: Cart): Void? {
             cartDao!!.insert(params[0]!!)
             return null
         }
     }
+
+
 
     class UpdateCart: AsyncTask<Cart, Void, Void>() {
         override fun doInBackground(vararg params: Cart): Void? {
@@ -226,6 +285,20 @@ class HomeRepository {
     class DeleteCart: AsyncTask<Cart, Void, Void>() {
         override fun doInBackground(vararg params: Cart): Void? {
             cartDao!!.delete(params[0]!!)
+            return null
+        }
+    }
+
+    class InsertProduct: AsyncTask<ProductWatched, Void, Void>() {
+        override fun doInBackground(vararg params: ProductWatched): Void? {
+            productwatchedDao!!.insert(params[0]!!)
+            return null
+        }
+    }
+
+    class UpdateProduct: AsyncTask<ProductWatched, Void, Void>() {
+        override fun doInBackground(vararg params: ProductWatched): Void? {
+            productwatchedDao!!.update(params[0]!!)
             return null
         }
     }

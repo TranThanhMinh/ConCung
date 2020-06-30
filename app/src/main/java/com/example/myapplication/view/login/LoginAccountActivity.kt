@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.example.myapplication.R
 import com.example.myapplication.data.UserFB
 import com.example.myapplication.model.User
+import com.example.myapplication.util.Utility
 import com.example.myapplication.viewmodel.ConCungViewModel
 import com.example.myapplication.viewmodel.LoginViewModel
 import com.facebook.CallbackManager
@@ -20,7 +21,6 @@ import com.facebook.FacebookSdk
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import kotlinx.android.synthetic.main.account_activity.*
-import kotlinx.android.synthetic.main.account_activity.login_button
 
 
 class LoginAccountActivity:AppCompatActivity(),View.OnClickListener {
@@ -47,7 +47,7 @@ class LoginAccountActivity:AppCompatActivity(),View.OnClickListener {
         }*/
         FacebookSdk.sdkInitialize(this)
         imCancel.setOnClickListener(this)
-        login_button.setOnClickListener(this)
+        login_fb.setOnClickListener(this)
         btnLogin.setOnClickListener(this)
 
 
@@ -66,7 +66,7 @@ class LoginAccountActivity:AppCompatActivity(),View.OnClickListener {
               setResult(3, Intent())
               finish()
           }
-          login_button->{
+          login_fb->{
               LoginManager.getInstance().registerCallback(callbackManager,
                       object : FacebookCallback<LoginResult?> {
                           override fun onSuccess(loginResult: LoginResult?) {
@@ -91,7 +91,7 @@ class LoginAccountActivity:AppCompatActivity(),View.OnClickListener {
               var user = User(editPhone.text.toString(),editPassWord.text.toString())
               loginViewModel!!.login(user).observe(this, Observer { item->
                   if (item != null){
-                      saveData(item.getUser()[0].getIdUser()!!,item.getUser()[0].getNameUser()!!,"https://ifg.onecmscdn.com/2019/07/20/1-15636013176821172647499.jpg")
+                      saveData(item.getUser()[0].getIdUser()!!,item.getUser()[0].getNameUser()!!,item.getUser()[0].getImage()!!)
                   }
               })
           }
@@ -104,12 +104,14 @@ class LoginAccountActivity:AppCompatActivity(),View.OnClickListener {
         userFB.id = id
         userFB.name_user = name_user
         userFB.image = image
+        userFB.image_user = image
         concung!!.insert(userFB)
 
         val intent = Intent()
         intent.putExtra("id",id)
         intent.putExtra("image",image)
         intent.putExtra("name_user",name_user)
+        intent.putExtra("image",image)
         setResult(2,intent)
         finish()
     }

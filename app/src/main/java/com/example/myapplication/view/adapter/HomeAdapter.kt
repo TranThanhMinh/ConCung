@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.example.myapplication.R
+import com.example.myapplication.data.ProductWatched
 import com.example.myapplication.model.Category
 import com.example.myapplication.model.news.News
 import com.example.myapplication.model.product.Product
@@ -20,7 +21,7 @@ import com.example.myapplication.model.trademark.Trademark
 import com.example.myapplication.view.InterfaceClick
 import kotlinx.android.synthetic.main.home_fragment.*
 
-class HomeAdapter(var context: Context,var click :InterfaceClick.Product) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), InterfaceClick.Product {
+class HomeAdapter(var context: Context,var click :InterfaceClick.EventProduct) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), InterfaceClick.EventProduct {
 
     private var listCategory: List<Category> = ArrayList()
     private var listTrademark: List<Trademark> = ArrayList()
@@ -174,7 +175,11 @@ class HomeAdapter(var context: Context,var click :InterfaceClick.Product) : Recy
         val driverLine = v.findViewById<View>(R.id.driverLine)
     }
 
-    override fun detailProduct(id: String) {
-        click.detailProduct(id)
+    override fun detailProduct(product : Product) {
+        click.detailProduct(product)
+    }
+
+    override fun detailProductWatch(id: ProductWatched) {
+
     }
 }

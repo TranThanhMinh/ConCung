@@ -10,10 +10,10 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        app:theme="@style/ToolbarStyle2"
-        app:titleTextColor="@color/colorAccent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        app:theme="@style/ToolbarStyle2"
+        app:titleTextColor="@color/colorAccent" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -26,185 +26,232 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/colorBlack4"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp">
-
-                <ImageView
-                    android:id="@+id/imageView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:id="@+id/tvName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/size"
-                    android:layout_marginBottom="@dimen/size"
-                    android:textColor="@color/colorBlack"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/tvPrice"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="@dimen/size3"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/size"
-                    android:layout_marginBottom="@dimen/size"
-                    android:gravity="center"
-                    android:orientation="horizontal">
+                    android:layout_height="match_parent"
+                    android:background="@color/colorWhite"
+                    android:orientation="vertical"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp">
+
+                    <ImageView
+                        android:id="@+id/imageView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
 
                     <TextView
-                        android:id="@+id/btnPlus"
-                        android:layout_width="@dimen/size3"
-                        android:layout_height="@dimen/size3"
-                        android:background="@drawable/border_minus"
-                        android:gravity="center"
-                        android:text="-"
-                        android:textColor="@color/colorAccent" />
-
-                    <TextView
-                        android:id="@+id/tvNumber"
-                        android:layout_width="@dimen/size3"
-                        android:layout_height="@dimen/size3"
-                        android:layout_marginLeft="@dimen/size"
-                        android:layout_marginRight="@dimen/size"
-                        android:background="@drawable/border_number"
-                        android:gravity="center"
-                        android:text="1" />
-
-                    <TextView
-                        android:id="@+id/btnMinus"
-                        android:layout_width="@dimen/size3"
-                        android:layout_height="@dimen/size3"
-                        android:background="@drawable/border_minus"
-                        android:gravity="center"
-                        android:text="+"
-                        android:textColor="@color/colorAccent" />
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/size"
-                    android:layout_marginBottom="@dimen/size"
-                    android:text="@string/txt_or_promotion"
-                    android:textColor="@color/colorBlue"
-                    android:textSize="@dimen/size2"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rlvPromotion"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/border_promotion"
-                    tools:listitem="@layout/item_promotion"
-                    tools:itemCount="3"
-                    android:padding="@dimen/size" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/size"
-                    android:layout_marginBottom="@dimen/size"
-                    android:text="@string/txt_des"
-                    android:textColor="@color/colorBlue"
-                    android:textSize="@dimen/size2"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <LinearLayout
-                    android:id="@+id/llDescription"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <WebView
-                        android:id="@+id/tvDescription"
+                        android:id="@+id/tvName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        tools:ignore="WebViewLayout" />
+                        android:layout_marginTop="@dimen/size"
+                        android:layout_marginBottom="@dimen/size"
+                        android:textColor="@color/colorBlack"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/btnShow"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/tvPrice"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/border_promotion"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="@dimen/text3"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/imLove"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
                         android:padding="@dimen/size_5"
-                        android:text="@string/txt_show"
-                        android:textColor="@color/colorAccent" />
+                        android:src="@drawable/status_image"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/size"
+                        android:layout_marginBottom="@dimen/size"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/btnPlus"
+                            android:layout_width="@dimen/size3"
+                            android:layout_height="@dimen/size3"
+                            android:background="@drawable/border_minus"
+                            android:gravity="center"
+                            android:text="-"
+                            android:textColor="@color/colorAccent" />
+
+                        <TextView
+                            android:id="@+id/tvNumber"
+                            android:layout_width="@dimen/size3"
+                            android:layout_height="@dimen/size3"
+                            android:layout_marginLeft="@dimen/size"
+                            android:layout_marginRight="@dimen/size"
+                            android:background="@drawable/border_number"
+                            android:gravity="center"
+                            android:text="1" />
+
+                        <TextView
+                            android:id="@+id/btnMinus"
+                            android:layout_width="@dimen/size3"
+                            android:layout_height="@dimen/size3"
+                            android:background="@drawable/border_minus"
+                            android:gravity="center"
+                            android:text="+"
+                            android:textColor="@color/colorAccent" />
+                    </LinearLayout>
                 </LinearLayout>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/size"
-                    android:layout_marginBottom="@dimen/size"
-                    android:text="@string/txt_comment"
-                    android:textColor="@color/colorBlue"
-                    android:textSize="@dimen/size2"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/editComment"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/border_comment"
-                    android:drawableRight="@drawable/ic_send"
-                    android:hint="chia sẻ bình luận hoặc gửi câu hỏi của bạn"
-                    android:padding="@dimen/size"
-                    android:paddingLeft="@dimen/size" />
-
                 <LinearLayout
-                    android:id="@+id/llComment"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="vertical">
+                    android:layout_height="match_parent"
+                    android:background="@color/colorWhite"
+                    android:orientation="vertical"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/size"
+                        android:layout_marginBottom="@dimen/size"
+                        android:text="@string/txt_or_promotion"
+                        android:textColor="@color/colorBlue"
+                        android:textSize="@dimen/size2"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rlvComment"
+                        android:id="@+id/rlvPromotion"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        tools:listitem="@layout/item_comment"
-                        tools:itemCount="3"/>
+                        android:background="@drawable/border_promotion"
+                        android:padding="@dimen/size"
+                        android:layout_marginBottom="@dimen/size"
+                        tools:itemCount="3"
+                        tools:listitem="@layout/item_promotion" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/size_5"
+                    android:layout_marginBottom="@dimen/size_5"
+                    android:background="@color/colorWhite"
+                    android:orientation="vertical"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp">
 
                     <TextView
-                        android:id="@+id/btnShowComment"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:visibility="gone"
                         android:layout_marginTop="@dimen/size"
-                        android:background="@drawable/border_promotion"
-                        android:padding="@dimen/size_5"
-                        android:text="@string/txt_show"
-                        android:textColor="@color/colorAccent" />
+                        android:layout_marginBottom="@dimen/size"
+                        android:text="@string/txt_des"
+                        android:textColor="@color/colorBlue"
+                        android:textSize="@dimen/size2"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <LinearLayout
+                        android:id="@+id/llDescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <WebView
+                            android:id="@+id/tvDescription"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            tools:ignore="WebViewLayout" />
+
+                        <TextView
+                            android:id="@+id/btnShow"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/border_promotion"
+                            android:padding="@dimen/size_5"
+                            android:layout_marginBottom="@dimen/size"
+                            android:text="@string/txt_show"
+                            android:textColor="@color/colorAccent" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorWhite"
+                    android:orientation="vertical"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/size"
+                        android:layout_marginBottom="@dimen/size"
+                        android:text="@string/txt_comment"
+                        android:textColor="@color/colorBlue"
+                        android:textSize="@dimen/size2"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/editComment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/border_comment"
+                        android:drawableRight="@drawable/ic_send"
+                        android:hint="chia sẻ bình luận hoặc gửi câu hỏi của bạn"
+                        android:padding="@dimen/size"
+                        android:paddingLeft="@dimen/size" />
+
+                    <LinearLayout
+                        android:id="@+id/llComment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rlvComment"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            tools:itemCount="3"
+                            tools:listitem="@layout/item_comment" />
+
+                        <TextView
+                            android:id="@+id/btnShowComment"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/size"
+                            android:background="@drawable/border_promotion"
+                            android:padding="@dimen/size_5"
+                            android:text="@string/txt_show"
+                            android:textColor="@color/colorAccent"
+                            android:visibility="gone" />
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
 
@@ -248,9 +295,9 @@
                 android:background="@color/colorBlack3" />
 
             <ImageView
-                android:layout_marginTop="@dimen/size_5"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:layout_marginTop="@dimen/size_5"
                 android:src="@drawable/ic_phone" />
 
             <TextView
@@ -277,9 +324,9 @@
                 android:background="@color/colorBlack3" />
 
             <ImageView
-                android:layout_marginTop="@dimen/size_5"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:layout_marginTop="@dimen/size_5"
                 android:src="@drawable/ic_location" />
 
             <TextView
@@ -292,31 +339,33 @@
                 android:textSize="@dimen/size" />
         </LinearLayout>
 
-      
+
         <LinearLayout
             android:id="@+id/llOrder"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_marginTop="5dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guideline2"
-            app:layout_constraintTop_toTopOf="parent"
-            android:orientation="horizontal"
             android:background="@color/colorBlue"
             android:gravity="center_horizontal"
-            android:layout_width="0dp"
-            android:layout_height="match_parent">
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintTop_toTopOf="parent">
+
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="match_parent"
-                android:src="@drawable/ic_cart"/>
+                android:src="@drawable/ic_cart" />
+
             <TextView
-                android:layout_marginLeft="@dimen/size_5"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/size"
                 android:gravity="center_vertical"
                 android:text="Chọn mua"
-                android:textStyle="bold"
                 android:textColor="@color/colorWhite"
-                android:textSize="@dimen/size3"
+                android:textSize="@dimen/text2_5"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/guideline2"
                 app:layout_constraintTop_toTopOf="parent" />

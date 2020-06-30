@@ -35,7 +35,6 @@ import java.util.concurrent.TimeUnit
 
 class MainFragment : Fragment(), View.OnClickListener,InterfaceClick.Adapter {
 
-
     private lateinit var exampleViewModel: ExampleViewModel
     private lateinit var studentViewModel: StudentViewModel
     private lateinit var ex: Observer<Example>
@@ -66,10 +65,7 @@ class MainFragment : Fragment(), View.OnClickListener,InterfaceClick.Adapter {
                 btnInsert.text = resources.getString(R.string.update)
             }
         }
-
     }
-
-
 
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onClick(v: View?) {

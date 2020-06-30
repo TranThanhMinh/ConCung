@@ -1,6 +1,7 @@
 package com.example.myapplication.retrofit
 
 import com.example.myapplication.model.*
+import com.example.myapplication.model.category.ResultCategory
 import com.example.myapplication.model.comment.ResquetComment
 import com.example.myapplication.model.comment.ResultComment
 import com.example.myapplication.model.comment.ResultStatus
@@ -10,6 +11,8 @@ import com.example.myapplication.model.product.ResultIdProduct
 import com.example.myapplication.model.product.ResultProduct
 import com.example.myapplication.model.product.ResultUpload
 import com.example.myapplication.model.trademark.ResultTrademark
+import com.example.myapplication.model.user.Address
+import com.example.myapplication.model.user.ResultAddress
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -22,7 +25,7 @@ interface Api {
 
     //get category
     @GET("/MinhTran/public/api/category")
-    fun  getCategory() :Call<ResultApi>
+    fun  getCategory() :Call<ResultCategory>
 
     //get all product
     @GET("/MinhTran/public/api/product")
@@ -51,10 +54,20 @@ interface Api {
                     @Part("nameImage") nameImage: RequestBody):Call<ResultUpload>
 
     //check login
-    @POST(" /MinhTran/public/api/insert")
+    @POST("/MinhTran/public/api/insert")
     fun  getInsertComment(@Body user: ResquetComment) :Call<ResultStatus>
 
     //get comment
-    @POST(" /MinhTran/public/api/comment")
+    @POST("/MinhTran/public/api/comment")
     fun  getComment(@Body id: RequestId) :Call<ResultComment>
+
+
+
+    //get Address
+    @POST("/MinhTran/public/api/address")
+    fun  getAddress(@Body id: User) :Call<ResultAddress>
+
+    //update or insert Address
+    @POST("/MinhTran/public/api/updateorinsert")
+    fun  updateOrInsert(@Body address: Address) :Call<ResultApi>
 }

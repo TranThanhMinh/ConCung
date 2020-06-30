@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
+        app:theme="@style/ToolbarStyle"
+        app:titleTextColor="@color/colorWhite" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nslProduct"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:fillViewport="true"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/txt_product"
+                    android:textColor="@color/colorBlue"
+                    android:textSize="@dimen/size2" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rlvCart"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:itemCount="5"
+                    tools:listitem="@layout/item_cart" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/driverLine"
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:layout_marginTop="@dimen/size_5"
+                android:layout_marginBottom="@dimen/size_5"
+                android:background="@color/colorBlack4" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="@dimen/size_5"
+                android:layout_marginRight="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Tiền hàng"
+                    android:textColor="@color/colorBlack" />
+
+                <TextView
+                    android:id="@+id/tvPrice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="0đ"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/text2" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="@dimen/size_5"
+                android:layout_marginRight="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Giảm giá sản phẩm"
+                    android:textColor="@color/colorBlack" />
+
+                <TextView
+                    android:id="@+id/tvDiscount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="0đ"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/text2" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="@dimen/size_5"
+                android:layout_marginRight="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Phí vận chuyển"
+                    android:textColor="@color/colorBlack" />
+
+                <TextView
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="0đ"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/text2" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.4dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="@dimen/size_5"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="@dimen/size_5"
+                android:background="@color/colorBlack" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="@dimen/size_5"
+                android:layout_marginRight="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="Thành tiền"
+                    android:textColor="@color/colorBlack"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvTotal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:text="0đ"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="@dimen/text3"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:layout_marginTop="@dimen/size_5"
+                android:layout_marginBottom="@dimen/size_5"
+                android:background="@color/colorBlack4" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Thông tin giao hàng"
+                    android:textColor="@color/colorBlue"
+                    android:textSize="@dimen/size2" />
+                <LinearLayout
+                    android:layout_marginTop="@dimen/size_5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/border_info"
+                    android:padding="@dimen/size"
+                    android:orientation="horizontal">
+                    <CheckBox
+                        android:id="@+id/tvType"
+                        android:layout_marginLeft="@dimen/size_5"
+                        android:enabled="false"
+                        android:button="@drawable/select_address_default"
+                        android:checked="true"
+                        android:text=""
+                        android:textColor="@color/colorGreen"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <RelativeLayout
+                        android:layout_marginLeft="@dimen/size"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/tvName2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/colorBlack"
+                            android:text="Minh Tran"
+                            android:textStyle="bold"
+                            android:textSize="17sp" />
+
+                        <ImageView
+
+                            android:id="@+id/imEdit"
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical= "true"
+                            android:src="@drawable/ic_edit"/>
+
+                        <TextView
+                            android:id="@+id/tvAddress"
+                            android:layout_below="@+id/tvName2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/txt_address2"/>
+                        <TextView
+                            android:id="@+id/tvAddress2"
+                            android:layout_below="@+id/tvName2"
+                            android:layout_marginLeft="@dimen/size_5"
+                            android:layout_toRightOf="@+id/tvAddress"
+                            android:layout_toLeftOf="@+id/imEdit"
+                            android:textColor="@color/colorBlack"
+                            android:layout_marginRight="@dimen/size_5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="big c đà nẵng, 257 hùng vương, Phường Vĩnh Trung, Quận Thanh Khê, Đà Nẵng"/>
+                        <TextView
+                            android:id="@+id/tvPhone"
+                            android:layout_below="@+id/tvAddress2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/txt_phone2"/>
+                        <TextView
+                            android:id="@+id/tvPhone2"
+                            android:layout_below="@+id/tvAddress2"
+                            android:layout_marginLeft="@dimen/size_5"
+                            android:layout_toRightOf="@+id/tvPhone"
+                            android:textColor="@color/colorBlack"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="123456789"/>
+
+                    </RelativeLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/btnContinue"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="@dimen/size2"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="@dimen/size2"
+                android:background="@drawable/border_login_btn"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="@string/txt_order"
+                android:textColor="@color/colorWhite"
+                android:textSize="20sp" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
+</LinearLayout>

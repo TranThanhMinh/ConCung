@@ -1,8 +1,9 @@
 package com.example.myapplication.model.product
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
-class Product{
+class Product : Serializable{
     @SerializedName("id")
     @Expose
     private var id: Int? = null

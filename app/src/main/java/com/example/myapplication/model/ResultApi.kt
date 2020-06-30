@@ -8,10 +8,9 @@ import com.google.gson.annotations.SerializedName
 
 
 class ResultApi {
-
     @SerializedName("data")
     @Expose
-    private var data: List<Category>? = null
+    private var data: Boolean? = null
 
     @SerializedName("statusCode")
     @Expose
@@ -21,11 +20,11 @@ class ResultApi {
     @Expose
     private var msg: String? = null
 
-    fun getData(): List<Category> {
-        return data!!
+    fun getData(): Boolean? {
+        return data
     }
 
-    fun setData(data: List<Category>) {
+    fun setData(data: Boolean?) {
         this.data = data
     }
 
@@ -44,4 +43,5 @@ class ResultApi {
     fun setMsg(msg: String?) {
         this.msg = msg
     }
+
 }

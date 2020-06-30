@@ -3,8 +3,11 @@ package com.example.myapplication.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.example.myapplication.data.Cart
+import com.example.myapplication.data.ProductWatched
 import com.example.myapplication.model.RequestId
 import com.example.myapplication.model.ResultApi
+import com.example.myapplication.model.category.ResultCategory
+import com.example.myapplication.model.User
 import com.example.myapplication.model.comment.ResultStatus
 import com.example.myapplication.model.comment.ResquetComment
 import com.example.myapplication.model.comment.ResultComment
@@ -13,6 +16,8 @@ import com.example.myapplication.model.product.ResultIdProduct
 import com.example.myapplication.model.product.ResultProduct
 import com.example.myapplication.model.product.ResultUpload
 import com.example.myapplication.model.trademark.ResultTrademark
+import com.example.myapplication.model.user.Address
+import com.example.myapplication.model.user.ResultAddress
 import com.example.myapplication.repository.HomeRepository
 
 class HomeViewModel : ViewModel() {
@@ -21,7 +26,7 @@ class HomeViewModel : ViewModel() {
     init {
         homeRopository = HomeRepository()
     }
-    fun getData():LiveData<ResultApi>{
+    fun getData():LiveData<ResultCategory>{
         return homeRopository!!.getCategory()
     }
 
@@ -43,6 +48,10 @@ class HomeViewModel : ViewModel() {
 
     fun getNews():LiveData<ResultNews>{
         return homeRopository!!.getNews()
+    }
+
+    fun getAddress(id: User): LiveData<ResultAddress> {
+        return homeRopository!!.getAddress(id)
     }
 
 
@@ -73,5 +82,30 @@ class HomeViewModel : ViewModel() {
 
     fun getIdCart(id:String):LiveData<Cart>{
         return homeRopository!!.getIdCart(id)
+    }
+
+    fun updateOrInsert(address: Address):LiveData<ResultApi>{
+        return homeRopository!!.updateOrInsert(address)
+    }
+
+    fun insertProduct(product: ProductWatched){
+        return homeRopository!!.insertProduct(product)
+    }
+
+
+    fun updateProduct(product: ProductWatched){
+        return homeRopository!!.updateProduct(product)
+    }
+
+    fun productExist(id: String):LiveData<List<ProductWatched>>{
+        return homeRopository!!.productExist(id)
+    }
+
+    fun getProductWatched():LiveData<List<ProductWatched>>{
+        return homeRopository!!.getProductWatched()
+    }
+
+    fun getProductLove():LiveData<List<ProductWatched>>{
+        return homeRopository!!.getProductLove()
     }
 }

@@ -33,6 +33,11 @@ class User {
      @Expose
      private var address: String? = null
 
+     @SerializedName("image")
+     @Expose
+     private var image: String? = null
+
+
      fun getId(): Int? {
           return id
      }
@@ -79,6 +84,14 @@ class User {
 
      fun setAddress(address: String?) {
           this.address = address
+     }
+
+     fun getImage(): String? {
+          return image
+     }
+
+     fun setImage(image: String?) {
+          this.image = image
      }
 
 }

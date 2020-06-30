@@ -1,6 +1,8 @@
 package com.example.myapplication.view.adapter
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.View
@@ -28,20 +30,35 @@ class CartAdapter(var context: Context,var delete:InterfaceClick.EventCart) : Re
     }
 
     override fun getItemCount(): Int {
-        return list!!.size
+        return list.size
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-       var item = list!![position]
+       var item = list[position]
         (holder as MyViewHolder ).tvMultiply.text = "x${item.number}"
         holder.tvName.text = item.name
         holder.tvPrice.text =  Utility.currencyFormatter( item.price!!.toInt())
         Picasso.with(context).load(item.image).into(holder.imProduct)
         val amount = item.price!!.toInt() * item.number!!
-        holder.tvAmount.text = " = ${Utility.currencyFormatter(amount)}"+context.resources.getString(R.string.txt_value)
+        holder.tvAmount.text = " = ${Utility.currencyFormatter(amount)} ${context.resources.getString(R.string.txt_value)}"
 
         holder.tvDelete.setOnClickListener {
-            delete.deleteProduct(item)
+            val builder: AlertDialog.Builder = AlertDialog.Builder(context)
+
+            builder.setTitle("Xác nhận")
+            builder.setMessage("Bạn có muốn xóa sản phẩm?")
+
+            builder.setPositiveButton("Có") { dialog, _ -> // Do nothing but close the dialog
+                delete.deleteProduct(item)
+                dialog.dismiss()
+            }
+
+            builder.setNegativeButton("Không") { dialog, _ -> // Do nothing
+                dialog.dismiss()
+            }
+
+            val alert: AlertDialog = builder.create()
+            alert.show()
         }
 
     }
@@ -56,7 +73,7 @@ class CartAdapter(var context: Context,var delete:InterfaceClick.EventCart) : Re
         init {
             val layout = imProduct!!.layoutParams
             layout.height = Resources.getSystem().displayMetrics.widthPixels / 4 - Resources.getSystem().displayMetrics.widthPixels / 20
-            imProduct!!.layoutParams = layout
+            imProduct.layoutParams = layout
         }
     }
 
