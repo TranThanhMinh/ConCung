@@ -1,6 +1,9 @@
 package com.example.myapplication.retrofit
 
 import com.example.myapplication.model.*
+import com.example.myapplication.model.cart.OrderAddress
+import com.example.myapplication.model.cart.ResultGetOrder
+import com.example.myapplication.model.cart.ResultNewOrder
 import com.example.myapplication.model.category.ResultCategory
 import com.example.myapplication.model.comment.ResquetComment
 import com.example.myapplication.model.comment.ResultComment
@@ -61,8 +64,6 @@ interface Api {
     @POST("/MinhTran/public/api/comment")
     fun  getComment(@Body id: RequestId) :Call<ResultComment>
 
-
-
     //get Address
     @POST("/MinhTran/public/api/address")
     fun  getAddress(@Body id: User) :Call<ResultAddress>
@@ -70,4 +71,12 @@ interface Api {
     //update or insert Address
     @POST("/MinhTran/public/api/updateorinsert")
     fun  updateOrInsert(@Body address: Address) :Call<ResultApi>
+
+    //new order
+    @POST("/MinhTran/public/api/order")
+    fun  newOrder(@Body order: OrderAddress) :Call<ResultNewOrder>
+
+    //get all order
+    @POST("/MinhTran/public/api/getorder")
+    fun  getOrder(@Body user: User) :Call<ResultGetOrder>
 }

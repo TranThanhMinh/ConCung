@@ -9,7 +9,7 @@ import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.example.myapplication.R
-import com.example.myapplication.view.Concung
+import com.example.myapplication.view.ConcungActivity
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
@@ -101,7 +101,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
      * @param messageBody FCM message body received.
      */
     private fun sendNotification(messageBody: String) {
-        val intent = Intent(this, Concung::class.java)
+        val intent = Intent(this, ConcungActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         val pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT)

@@ -8,6 +8,9 @@ import com.example.myapplication.model.RequestId
 import com.example.myapplication.model.ResultApi
 import com.example.myapplication.model.category.ResultCategory
 import com.example.myapplication.model.User
+import com.example.myapplication.model.cart.OrderAddress
+import com.example.myapplication.model.cart.ResultGetOrder
+import com.example.myapplication.model.cart.ResultNewOrder
 import com.example.myapplication.model.comment.ResultStatus
 import com.example.myapplication.model.comment.ResquetComment
 import com.example.myapplication.model.comment.ResultComment
@@ -107,5 +110,13 @@ class HomeViewModel : ViewModel() {
 
     fun getProductLove():LiveData<List<ProductWatched>>{
         return homeRopository!!.getProductLove()
+    }
+
+    fun newOrder(address: OrderAddress):LiveData<ResultNewOrder>{
+        return homeRopository!!.newOrder(address)
+    }
+
+    fun getOrder(user: User):LiveData<ResultGetOrder>{
+        return homeRopository!!.getOrder(user)
     }
 }

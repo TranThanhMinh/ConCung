@@ -26,15 +26,15 @@ import com.example.myapplication.util.Utility.Companion.image_user
 import com.example.myapplication.util.Utility.Companion.name_user
 import com.example.myapplication.util.Utility.Companion.url
 import com.example.myapplication.view.adapter.PolicyAdapter
-import com.example.myapplication.view.login.LoginAccountActivity
+import com.example.myapplication.view.login.LoginActivity
 import com.example.myapplication.view.menu.PolicyFragment
-import com.example.myapplication.view.user.AddressFragment
+import com.example.myapplication.view.tablayout.HomeFragment
+import com.example.myapplication.view.tablayout.UserFragment
 import com.example.myapplication.viewmodel.ConCungViewModel
 import com.example.myapplication.viewmodel.LoginViewModel
 import com.facebook.FacebookSdk
 import com.facebook.login.LoginManager
 import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.material.tabs.TabLayout
 import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.messaging.FirebaseMessaging
 import com.squareup.picasso.Picasso
@@ -42,7 +42,7 @@ import kotlinx.android.synthetic.main.concung.*
 import javax.inject.Inject
 
 
-class Concung : AppCompatActivity(), View.OnClickListener, UserFragment.goHome, InterfaceClick.home,PolicyAdapter.ViewWeb,InterfaceClick.OnBack{
+class ConcungActivity : AppCompatActivity(), View.OnClickListener, UserFragment.goHome, InterfaceClick.home,PolicyAdapter.ViewWeb,InterfaceClick.OnBack{
     lateinit var fm: FragmentManager
     private var concung: ConCungViewModel? = null
     private var login: LoginViewModel? = null
@@ -267,7 +267,7 @@ class Concung : AppCompatActivity(), View.OnClickListener, UserFragment.goHome, 
             setTextColor()
             tvAccount.setTextColor(resources.getColor(R.color.colorAccent))
         } else {
-            val intent = Intent(this, LoginAccountActivity::class.java)
+            val intent = Intent(this, LoginActivity::class.java)
             startActivityForResult(intent, 1)
         }
     }
@@ -379,7 +379,6 @@ class Concung : AppCompatActivity(), View.OnClickListener, UserFragment.goHome, 
                 drawerLayout.openDrawer(navigationView)
             }
         }
-
     }
 
     override fun closeMenu() {
@@ -392,12 +391,11 @@ class Concung : AppCompatActivity(), View.OnClickListener, UserFragment.goHome, 
         try {
             Thread.sleep(500)
             page = !page
-          //  menu.setImageDrawable(resources.getDrawable(R.drawable.ic_back))
             val home = PolicyFragment()
             val bundle = Bundle()
             bundle.putString("url", url)
             home.arguments = bundle
-            Utility.replaceFragment(fm!!,home)
+            Utility.replaceHomeFragment(fm!!,home)
         }catch (ex:Exception){
             ex.printStackTrace()
         }

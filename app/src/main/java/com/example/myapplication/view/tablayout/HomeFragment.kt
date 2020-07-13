@@ -1,4 +1,4 @@
-package com.example.myapplication.view
+package com.example.myapplication.view.tablayout
 
 
 import android.content.Intent
@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.example.myapplication.R
 import com.example.myapplication.util.Utility.Companion.replaceHomeFragment
+import com.example.myapplication.view.InterfaceClick
 import com.example.myapplication.view.product.InfoProductActivity
 import kotlinx.android.synthetic.main.home_fragment.*
 
@@ -34,8 +35,9 @@ class HomeFragment : Fragment() {
     private fun init() {
         fm = activity!!.supportFragmentManager
 
-        menu.setOnClickListener {
+        imMenu.setOnClickListener {
             click!!.openMenu()
+            imMenu.setImageDrawable(resources.getDrawable(R.drawable.ic_back))
         }
 
         cart.setOnClickListener {
@@ -44,7 +46,7 @@ class HomeFragment : Fragment() {
             startActivity(intent)
         }
 
-        replaceHomeFragment(fm,Home2Fragment())
+        replaceHomeFragment(fm, HomeFragment2())
 
     }
 

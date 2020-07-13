@@ -1,4 +1,4 @@
-package com.example.myapplication.view
+package com.example.myapplication.view.tablayout
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,6 +11,7 @@ import com.example.myapplication.R
 import com.example.myapplication.util.Utility
 import com.example.myapplication.util.Utility.Companion.replaceFragment
 import com.example.myapplication.view.user.AddressFragment
+import com.example.myapplication.view.user.ListOrderFragment
 import com.example.myapplication.view.user.ProductLoveFragment
 import com.example.myapplication.view.user.ProductWatchedFragment
 import com.example.myapplication.viewmodel.ConCungViewModel
@@ -50,6 +51,7 @@ class UserFragment : Fragment(),View.OnClickListener  {
         llAddress.setOnClickListener(this)
         llProductWatched.setOnClickListener(this)
         llProductLove.setOnClickListener(this)
+        llOrder.setOnClickListener(this)
 
     }
 
@@ -80,6 +82,9 @@ class UserFragment : Fragment(),View.OnClickListener  {
 
            btnLogOut->{
                mHome!!.logOut()
+           }
+           llOrder->{
+               replaceFragment(fmUser,ListOrderFragment())
            }
        }
     }

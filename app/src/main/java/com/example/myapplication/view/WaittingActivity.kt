@@ -1,17 +1,11 @@
 package com.example.myapplication.view
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.drawable.Drawable
-import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.myapplication.R
@@ -20,7 +14,6 @@ import com.example.myapplication.util.Utility.Companion.listNews
 import com.example.myapplication.util.Utility.Companion.listProduct
 import com.example.myapplication.util.Utility.Companion.listTrademark
 import com.example.myapplication.viewmodel.HomeViewModel
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.waitting_activity.*
 
 
@@ -95,7 +88,7 @@ class WaittingActivity : AppCompatActivity() {
 
             try {
                 Thread.sleep(1000)
-                startActivity(Intent(this, Concung::class.java))
+                startActivity(Intent(this, ConcungActivity::class.java))
                 finish()
             } catch (e: InterruptedException) {
                 e.printStackTrace()

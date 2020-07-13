@@ -50,9 +50,8 @@ import com.example.myapplication.view.adapter.CommentAdapter
 import com.example.myapplication.view.adapter.ImageCaptureAdapter
 import com.example.myapplication.view.adapter.PromotionAdapter
 import com.example.myapplication.view.cart.CartFragment
-import com.example.myapplication.view.cart.OrderFragment
 import com.example.myapplication.view.eventbus.CustomEvent
-import com.example.myapplication.view.login.LoginAccountActivity
+import com.example.myapplication.view.login.LoginActivity
 import com.example.myapplication.viewmodel.HomeViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.squareup.picasso.Picasso
@@ -291,7 +290,7 @@ class InfoProductFragment : Fragment(), CommentAdapter.ReplyComment, View.OnClic
 
             })
         } else {
-            val intent = Intent(context, LoginAccountActivity::class.java)
+            val intent = Intent(context, LoginActivity::class.java)
             startActivityForResult(intent, 1)
         }
     }
@@ -632,7 +631,7 @@ class InfoProductFragment : Fragment(), CommentAdapter.ReplyComment, View.OnClic
                 if (id_user != null) {
                     dialogCart()
                 } else {
-                    val intent = Intent(context, LoginAccountActivity::class.java)
+                    val intent = Intent(context, LoginActivity::class.java)
                     startActivityForResult(intent, 1)
                 }
             }

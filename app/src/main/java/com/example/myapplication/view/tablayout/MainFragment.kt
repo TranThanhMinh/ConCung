@@ -1,18 +1,14 @@
-package com.example.myapplication.view
+package com.example.myapplication.view.tablayout
 
 import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -21,19 +17,19 @@ import com.example.myapplication.R
 import com.example.myapplication.data.Student
 import com.example.myapplication.model.Example
 import com.example.myapplication.util.RxSearch
+import com.example.myapplication.view.InterfaceClick
 import com.example.myapplication.view.adapter.AdapterStudent
 import com.example.myapplication.viewmodel.ExampleViewModel
 import com.example.myapplication.viewmodel.StudentViewModel
 import rx.android.schedulers.AndroidSchedulers;
 import kotlinx.android.synthetic.main.fragment_main.*
 
-import java.util.*
 import kotlin.collections.ArrayList
 import java.util.concurrent.TimeUnit
 
 
 
-class MainFragment : Fragment(), View.OnClickListener,InterfaceClick.Adapter {
+class MainFragment : Fragment(), View.OnClickListener, InterfaceClick.Adapter {
 
     private lateinit var exampleViewModel: ExampleViewModel
     private lateinit var studentViewModel: StudentViewModel
@@ -42,7 +38,6 @@ class MainFragment : Fragment(), View.OnClickListener,InterfaceClick.Adapter {
     private lateinit var adapter: AdapterStudent
     private lateinit var observerList:  Observer<List<Student>>
     private lateinit var observerLoadData:  Observer<List<Student>>
-    private var timer: Timer = Timer()
 
     @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
     override fun clickChooseDelete(check: Boolean) {

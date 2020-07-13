@@ -1,3 +1,4 @@
+/*
 package com.example.myapplication.view
 
 import androidx.appcompat.app.AppCompatActivity
@@ -28,3 +29,4 @@ class MainActivity : AppCompatActivity() {
         }
     }
 }
+*/

@@ -10,6 +10,9 @@ import com.example.myapplication.model.RequestId
 import com.example.myapplication.model.ResultApi
 import com.example.myapplication.model.category.ResultCategory
 import com.example.myapplication.model.User
+import com.example.myapplication.model.cart.OrderAddress
+import com.example.myapplication.model.cart.ResultGetOrder
+import com.example.myapplication.model.cart.ResultNewOrder
 import com.example.myapplication.model.comment.ResquetComment
 import com.example.myapplication.model.comment.ResultComment
 import com.example.myapplication.model.comment.ResultStatus
@@ -247,6 +250,37 @@ class HomeRepository {
         return productwatchedDao!!.findProductLove()
     }
 
+    fun newOrder(address: OrderAddress):LiveData<ResultNewOrder>{
+          val list:MutableLiveData<ResultNewOrder> = MutableLiveData()
+          val call:Call<ResultNewOrder> =api.newOrder(address)
+              call.enqueue(object : Callback<ResultNewOrder>{
+                  override fun onFailure(call: Call<ResultNewOrder>, t: Throwable) {
+                      list.value = null
+                  }
+
+                  override fun onResponse(call: Call<ResultNewOrder>, response: Response<ResultNewOrder>) {
+                      list.value = response.body()
+                  }
+
+              })
+        return list
+    }
+
+    fun getOrder(user: User):LiveData<ResultGetOrder>{
+        val list:MutableLiveData<ResultGetOrder> = MutableLiveData()
+        val call:Call<ResultGetOrder> =api.getOrder(user)
+        call.enqueue(object : Callback<ResultGetOrder>{
+            override fun onFailure(call: Call<ResultGetOrder>, t: Throwable) {
+                list.value = null
+            }
+
+            override fun onResponse(call: Call<ResultGetOrder>, response: Response<ResultGetOrder>) {
+                list.value = response.body()
+            }
+
+        })
+        return list
+    }
     /**
      * function update Or Insert of Address
      */

@@ -1,4 +1,4 @@
-package com.example.myapplication.view
+package com.example.myapplication.view.tablayout
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -20,13 +20,14 @@ import com.example.myapplication.util.Utility
 import com.example.myapplication.util.Utility.Companion.listNews
 import com.example.myapplication.util.Utility.Companion.listProduct
 import com.example.myapplication.util.Utility.Companion.listTrademark
+import com.example.myapplication.view.InterfaceClick
 import com.example.myapplication.view.adapter.*
 import com.example.myapplication.view.product.InfoProductActivity
 import com.example.myapplication.viewmodel.HomeViewModel
 import kotlinx.android.synthetic.main.home_fragment_2.*
 
 
-class Home2Fragment : Fragment(), InterfaceClick.EventProduct {
+class HomeFragment2 : Fragment(), InterfaceClick.EventProduct {
     private var homeViewModel: HomeViewModel? = null
     private var love: String = "0"
 

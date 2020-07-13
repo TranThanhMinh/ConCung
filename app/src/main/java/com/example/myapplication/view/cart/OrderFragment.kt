@@ -3,8 +3,10 @@ package com.example.myapplication.view.cart
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -13,9 +15,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.R
 import com.example.myapplication.data.Cart
 import com.example.myapplication.model.User
+import com.example.myapplication.model.cart.ListProduct
+import com.example.myapplication.model.cart.OrderAddress
+import com.example.myapplication.model.user.Address
 import com.example.myapplication.util.Utility
 import com.example.myapplication.view.InterfaceClick
 import com.example.myapplication.view.adapter.CartAdapter
+import com.example.myapplication.view.adapter.ListOrderAdapter
 import com.example.myapplication.viewmodel.HomeViewModel
 import kotlinx.android.synthetic.main.order_fragment.*
 import kotlinx.android.synthetic.main.order_fragment.rlvCart
@@ -23,8 +29,9 @@ import kotlinx.android.synthetic.main.order_fragment.tvDiscount
 import kotlinx.android.synthetic.main.order_fragment.tvTotal
 
 
-class OrderFragment : Fragment(), InterfaceClick.EventCart {
+class OrderFragment : Fragment(), InterfaceClick.EventCart{
     lateinit var list: List<Cart>
+    lateinit var address: Address
     lateinit var homeViewModel: HomeViewModel
     lateinit var adapter: CartAdapter
     var activity_: AppCompatActivity? = null
@@ -68,6 +75,25 @@ class OrderFragment : Fragment(), InterfaceClick.EventCart {
         getCart()
         getAddress()
 
+        btnContinue.setOnClickListener {
+            val orderAddress = OrderAddress()
+            orderAddress.setIdUser(Utility.id_user)
+            orderAddress.setName(address.getName())
+            orderAddress.setPhone(address.getPhone())
+            orderAddress.setAddress(address.getAddress())
+            orderAddress.setDateTime(System.currentTimeMillis())
+            orderAddress.setList(list)
+            homeViewModel.newOrder(orderAddress).observe(this, Observer {item->
+                if (item != null){
+                    Toast.makeText(context,"Đặt hàng thành công!",Toast.LENGTH_LONG).show()
+                    for (item in list){
+                        homeViewModel.deleteCart(item)
+                    }
+                    back.onBackHome()
+                }
+            })
+        }
+
     }
 
    private fun getAddress() {
@@ -75,8 +101,10 @@ class OrderFragment : Fragment(), InterfaceClick.EventCart {
         homeViewModel!!.getAddress(user).observe(this, Observer { list ->
 
             if (list != null) {
+
                 for (item in list.getData()) {
                     if (item.getType() == 1) {
+                        address = item
                         tvName2.text = item.getName()
                         tvAddress2.text = item.getAddress()
                         tvPhone2.text = item.getPhone()
@@ -125,4 +153,5 @@ class OrderFragment : Fragment(), InterfaceClick.EventCart {
         homeViewModel.deleteCart(cart)
         getCart()
     }
+
 }
