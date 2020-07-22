@@ -144,7 +144,6 @@ class HomeRepository {
                 //LogUtils.api("",call,"response")
                 list.value = response.body()
             }
-
         })
         return list
     }

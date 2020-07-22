@@ -1,6 +1,7 @@
 package com.example.myapplication.view.tablayout
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -9,12 +10,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.R
 import com.example.myapplication.data.ProductWatched
+import com.example.myapplication.model.Category
 import com.example.myapplication.model.product.Product
 import com.example.myapplication.util.Utility
 import com.example.myapplication.util.Utility.Companion.listNews
@@ -22,15 +25,20 @@ import com.example.myapplication.util.Utility.Companion.listProduct
 import com.example.myapplication.util.Utility.Companion.listTrademark
 import com.example.myapplication.view.InterfaceClick
 import com.example.myapplication.view.adapter.*
+import com.example.myapplication.view.category.CategoryFragment
 import com.example.myapplication.view.product.InfoProductActivity
 import com.example.myapplication.viewmodel.HomeViewModel
 import kotlinx.android.synthetic.main.home_fragment_2.*
 
 
-class HomeFragment2 : Fragment(), InterfaceClick.EventProduct {
+class HomeFragment2 : Fragment(), InterfaceClick.EventProduct,InterfaceClick.EventCategory {
     private var homeViewModel: HomeViewModel? = null
     private var love: String = "0"
+    lateinit var fm: FragmentManager
 
+    fun onAttach() {
+
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         homeViewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
@@ -40,9 +48,8 @@ class HomeFragment2 : Fragment(), InterfaceClick.EventProduct {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         //all list
+        fm = activity!!.supportFragmentManager
         getHome()
-
-
     }
 
     @SuppressLint("WrongConstant")
@@ -55,7 +62,7 @@ class HomeFragment2 : Fragment(), InterfaceClick.EventProduct {
         val layout = LinearLayoutManager(context)
         layout.orientation = LinearLayout.VERTICAL
         rcvHome.layoutManager = layout
-        val adapter = HomeAdapter(context!!, this)
+        val adapter = HomeAdapter(context!!, this,this)
         rcvHome.adapter = adapter
         rcvHome.isNestedScrollingEnabled = false
         adapter.loadData(Utility.listCategory, listTrademark, listProduct, listNews, list)
@@ -68,10 +75,10 @@ class HomeFragment2 : Fragment(), InterfaceClick.EventProduct {
             list ->
             if(viewLifecycleOwner.lifecycle.currentState== Lifecycle.State.RESUMED) {
                 val productWatched = ProductWatched()
-                productWatched.id = product!!.getId().toString()
-                productWatched.name = product!!.getName()
-                productWatched.price = product!!.getPrice().toString()
-                productWatched.image = product!!.getImage()
+                productWatched.id = product.getId().toString()
+                productWatched.name = product.getName()
+                productWatched.price = product.getPrice().toString()
+                productWatched.image = product.getImage()
                 if (list.isNotEmpty()) {
                     Log.e("MInh2", "isNotEmpty")
                     love = list[0].love
@@ -97,5 +104,9 @@ class HomeFragment2 : Fragment(), InterfaceClick.EventProduct {
 
     override fun detailProductWatch(id: ProductWatched) {
 
+    }
+
+    override fun gotoCategory(category: Category) {
+        Utility.replaceHomeFragment(fm, CategoryFragment())
     }
 }

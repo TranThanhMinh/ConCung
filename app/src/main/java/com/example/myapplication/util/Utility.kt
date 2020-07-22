@@ -2,6 +2,9 @@ package com.example.myapplication.util
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -102,6 +105,23 @@ class Utility {
             ft_add = fm!!.beginTransaction()
             ft_add!!.add(R.id.flProduct, layout).addToBackStack(null)
             ft_add!!.commit()
+        }
+
+        fun addBottomDots(layout_dots: LinearLayout, size: Int, current: Int,context: Context) {
+            val dots: Array<ImageView?> = arrayOfNulls<ImageView>(size)
+            layout_dots.removeAllViews()
+            for (i in dots.indices) {
+                dots[i] = ImageView(context)
+                val width_height = 20
+                val params = LinearLayout.LayoutParams(ViewGroup.LayoutParams(width_height, width_height))
+                params.setMargins(10, 10, 10, 10)
+                dots[i]!!.layoutParams = params
+                dots[i]!!.setImageResource(R.drawable.shape_circle_outline)
+                layout_dots.addView(dots[i])
+            }
+            if (dots.isNotEmpty()) {
+                dots[current]!!.setImageResource(R.drawable.shape_circle)
+            }
         }
     }
 

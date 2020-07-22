@@ -45,7 +45,7 @@ class HomeFragment : Fragment() {
             intent.putExtra("type","cart")
             startActivity(intent)
         }
-
+         val homeFragment2 = HomeFragment2()
         replaceHomeFragment(fm, HomeFragment2())
 
     }

@@ -18,10 +18,11 @@ import com.example.myapplication.model.Category
 import com.example.myapplication.model.news.News
 import com.example.myapplication.model.product.Product
 import com.example.myapplication.model.trademark.Trademark
+import com.example.myapplication.util.Utility
 import com.example.myapplication.view.InterfaceClick
 import kotlinx.android.synthetic.main.home_fragment.*
 
-class HomeAdapter(var context: Context,var click :InterfaceClick.EventProduct) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), InterfaceClick.EventProduct {
+class HomeAdapter(var context: Context,var click :InterfaceClick.EventProduct,var click2:InterfaceClick.EventCategory) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), InterfaceClick.EventProduct,InterfaceClick.EventCategory{
 
     private var listCategory: List<Category> = ArrayList()
     private var listTrademark: List<Trademark> = ArrayList()
@@ -65,9 +66,9 @@ class HomeAdapter(var context: Context,var click :InterfaceClick.EventProduct) :
             }
             1 -> {
 
-                val adapter = ImageAdapter(context!!,list!!)
+                val adapter = ImageAdapter(context,list!!)
                 (holder as MyImageViewHolder).viewPager.adapter = adapter
-                addBottomDots(holder.layout_dots,list!!.size,0)
+                Utility.addBottomDots(holder.layout_dots,list!!.size,0,context)
                 holder.viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
 
                     override fun onPageScrollStateChanged(state: Int) {
@@ -77,7 +78,7 @@ class HomeAdapter(var context: Context,var click :InterfaceClick.EventProduct) :
 
                     }
                     override fun onPageSelected(position: Int) {
-                        addBottomDots(holder.layout_dots,list!!.size,position)
+                        Utility.addBottomDots(holder.layout_dots,list!!.size,position,context)
                     }
 
                 })
@@ -105,7 +106,7 @@ class HomeAdapter(var context: Context,var click :InterfaceClick.EventProduct) :
         layout.orientation = LinearLayout.VERTICAL
 
         rlCategory.layoutManager = layout
-        val adapter = CategoryAdapter(context!!)
+        val adapter = CategoryAdapter(context,this)
         rlCategory.adapter = adapter
         rlCategory.isNestedScrollingEnabled = false
         adapter.loadData(listCategory)
@@ -116,7 +117,7 @@ class HomeAdapter(var context: Context,var click :InterfaceClick.EventProduct) :
         layout.orientation = LinearLayout.HORIZONTAL
         rlcTrademark.setHasFixedSize(true)
         rlcTrademark.layoutManager = layout
-        val adapter = TrademarkAdapter(context!!)
+        val adapter = TrademarkAdapter(context)
         rlcTrademark.adapter = adapter
         rlcTrademark.isNestedScrollingEnabled = false
         adapter.loadData(listTrademark)
@@ -126,7 +127,7 @@ class HomeAdapter(var context: Context,var click :InterfaceClick.EventProduct) :
         val layout = GridLayoutManager(context,2)
         rlProduct.setHasFixedSize(true)
         rlProduct.layoutManager = layout
-        val adapter = ProductAdapter(context!!,this)
+        val adapter = ProductAdapter(context,this)
         rlProduct.adapter = adapter
         rlProduct.isNestedScrollingEnabled = false
         adapter.loadData(listProduct)
@@ -139,29 +140,10 @@ class HomeAdapter(var context: Context,var click :InterfaceClick.EventProduct) :
         rlvNews.setHasFixedSize(true)
 
         rlvNews.layoutManager = layout
-        val adapter = NewsAdapter(context!!)
+        val adapter = NewsAdapter(context)
         rlvNews.adapter = adapter
         rlvNews.isNestedScrollingEnabled = false
         adapter.loadData(listNews)
-    }
-
-
-
-    private fun addBottomDots(layout_dots:LinearLayout, size: Int, current: Int) {
-        val dots: Array<ImageView?> = arrayOfNulls<ImageView>(size)
-        layout_dots.removeAllViews()
-        for (i in dots.indices) {
-            dots[i] = ImageView(context)
-            val width_height = 20
-            val params = LinearLayout.LayoutParams(ViewGroup.LayoutParams(width_height, width_height))
-            params.setMargins(10, 10, 10, 10)
-            dots[i]!!.layoutParams = params
-            dots[i]!!.setImageResource(R.drawable.shape_circle_outline)
-            layout_dots.addView(dots[i])
-        }
-        if (dots.isNotEmpty()) {
-            dots[current]!!.setImageResource(R.drawable.shape_circle)
-        }
     }
 
     class MyImageViewHolder(v: View) : RecyclerView.ViewHolder(v) {
@@ -179,7 +161,14 @@ class HomeAdapter(var context: Context,var click :InterfaceClick.EventProduct) :
         click.detailProduct(product)
     }
 
+
     override fun detailProductWatch(id: ProductWatched) {
 
     }
+
+    override fun gotoCategory(category: Category) {
+        click2.gotoCategory(category)
+    }
+
+
 }

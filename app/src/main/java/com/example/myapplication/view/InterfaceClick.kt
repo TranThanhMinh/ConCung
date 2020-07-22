@@ -3,6 +3,7 @@ package com.example.myapplication.view
 import com.example.myapplication.data.Cart
 import com.example.myapplication.data.ProductWatched
 import com.example.myapplication.data.Student
+import com.example.myapplication.model.Category
 import com.example.myapplication.model.product.Product
 import com.example.myapplication.model.user.Address
 
@@ -15,6 +16,10 @@ interface InterfaceClick {
     interface  EventProduct{
          fun detailProduct(id:Product)
          fun detailProductWatch(id:ProductWatched)
+    }
+
+    interface EventCategory{
+        fun gotoCategory(category: Category)
     }
 
     interface EventCart{
