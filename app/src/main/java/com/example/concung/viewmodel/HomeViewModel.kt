@@ -9,6 +9,7 @@ import com.example.concung.model.home.ResultApi
 import com.example.concung.model.category.ResultCategory
 import com.example.concung.model.home.User
 import com.example.concung.model.cart.OrderAddress
+import com.example.concung.model.cart.RequestStatus
 import com.example.concung.model.cart.ResultGetOrder
 import com.example.concung.model.cart.ResultNewOrder
 import com.example.concung.model.comment.ResultStatus
@@ -122,5 +123,9 @@ class HomeViewModel : ViewModel() {
 
     fun getCategory(id: RequestId): LiveData<ResultCategory> {
         return homeRopository!!.getCategory(id)
+    }
+
+    fun updateStatus(requestStatus : RequestStatus): LiveData<ResultApi> {
+        return homeRopository!!.updateStatus(requestStatus)
     }
 }

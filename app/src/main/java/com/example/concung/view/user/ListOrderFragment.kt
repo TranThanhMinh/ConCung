@@ -30,6 +30,8 @@ class ListOrderFragment : Fragment(), ListOrderAdapter.ListOrder  {
     private var id2:Int?=null
     private var type2:Int?=null
     lateinit var fmUser: FragmentManager
+    lateinit var list:List<Order>
+    lateinit var listSort:List<Order>
 
 
     override fun onAttach(context: Context?) {
@@ -64,14 +66,45 @@ class ListOrderFragment : Fragment(), ListOrderAdapter.ListOrder  {
         getOrder()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        super.onCreateOptionsMenu(menu, inflater)
+        return inflater!!.inflate(R.menu.menu_sort_order,menu)
+    }
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
                 back.onBack()
             }
+            R.id.item_canceled->{
+                sortOrder(0)
+            }
+            R.id.item_ok->{
+                sortOrder(1)
+            }
+            R.id.item_finished->{
+                sortOrder(2)
+            }
+            R.id.item_all->{
+                adapter!!.loadData(list as ArrayList<Order>)
+            }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    /**
+     * function sort list order
+     * @param type: type of order
+     */
+    private fun sortOrder(type:Int){
+        listSort = ArrayList()
+        for (i in list) {
+            if (i.getStatus() == type) {
+                (listSort as ArrayList).add(i)
+            }
+        }
+        adapter!!.loadData(listSort as ArrayList<Order>)
     }
 
 
@@ -80,99 +113,14 @@ class ListOrderFragment : Fragment(), ListOrderAdapter.ListOrder  {
         homeViewModel!!.getOrder(user).observe(this, Observer { list ->
             progress_bar.visibility = View.GONE
             if (list != null) {
-                adapter!!.loadData(list.getData() as ArrayList<Order>)
+                this.list = list.getData()
+                adapter!!.loadData(this.list as ArrayList<Order>)
             }
         })
     }
 
-    private fun dialogAddress(item: Address) {
-        val dialog = AlertDialog.Builder(context)
-        var dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_address, null)
-        dialog.setView(dialogView)
 
-        val alertDialog = dialog.create()
-        alertDialog.show()
-
-        val tvName = dialogView.findViewById<TextView>(R.id.tvName)
-        val tvAddress = dialogView.findViewById<TextView>(R.id.tvAddress)
-        val rbAddress1 = dialogView.findViewById<RadioButton>(R.id.rbAddress1)
-        val rbAddress2 = dialogView.findViewById<RadioButton>(R.id.rbAddress2)
-        val rgAddress = dialogView.findViewById<RadioGroup>(R.id.rgAddress)
-        val tvPhone = dialogView.findViewById<TextView>(R.id.tvPhone)
-        val tvConfirm = dialogView.findViewById<TextView>(R.id.tvConfirm)
-        val tvTitle = dialogView.findViewById<TextView>(R.id.tvTitle)
-        val imCancel = dialogView.findViewById<ImageView>(R.id.imCancel)
-
-        if (item.getId() == null){
-            tvTitle.text = resources.getString(R.string.txt_title)
-            tvConfirm.text = resources.getString(R.string.txt_insert)
-        }
-
-
-        tvName.text = item.getName()
-        tvAddress.text = item.getAddress()
-        tvPhone.text = item.getPhone()
-
-        when (item.getType()) {
-            1 -> {
-                rbAddress1.isChecked = true
-            }
-            0 -> {
-                rbAddress2.isChecked = true
-            }
-        }
-
-        var typeAddress = item.getType()
-        if (typeAddress == 0) {
-            rgAddress.setOnCheckedChangeListener { group, checkedId ->
-                when (checkedId) {
-                    R.id.rbAddress1 -> {
-                        typeAddress = 1
-                    }
-                    R.id.rbAddress2 -> {
-                        typeAddress = 0
-                    }
-                }
-            }
-        }
-
-        imCancel.setOnClickListener {
-            alertDialog.dismiss()
-        }
-
-
-        tvConfirm.setOnClickListener {
-            if (tvName.text.toString().isEmpty()){
-                tvName.error = resources.getString(R.string.txt_name)
-            }else if (tvPhone.text.toString().isEmpty()){
-                tvPhone.error = resources.getString(R.string.txt_phone3)
-            }else if (tvAddress.text.toString().isEmpty()){
-                tvAddress.error = resources.getString(R.string.txt_address3)
-            }else {
-                val address = Address()
-                address.setId(item.getId())
-                address.setIdUser(Utility.id_user)
-                address.setName(tvName.text.toString())
-                address.setPhone(tvPhone.text.toString())
-                address.setAddress(tvAddress.text.toString())
-                address.setType(typeAddress!!)
-                //update id have type 1
-                address.setId2(id2)
-                address.setType2(type2)
-
-                homeViewModel!!.updateOrInsert(address).observe(this, Observer { item ->
-                    if (item != null) {
-                        alertDialog.dismiss()
-                        getOrder()
-                    }
-                })
-            }
-        }
-    }
     override fun viewList(order: Order) {
-    /*    for (item in list){
-
-        }*/
         val detail = DetailOrderFragment()
         val bundle = Bundle()
         bundle.putSerializable("order",order as Serializable)

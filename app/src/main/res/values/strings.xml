@@ -44,6 +44,11 @@
     <string name="txt_product">Sản phẩm</string>
     <string name="txt_continue">Tiếp tục</string>
     <string name="txt_order">Đặt hàng</string>
+    <string name="txt_order_ok">Đã đặt hàng</string>
+    <string name="txt_order_finished">Đã giao hàng</string>
+    <string name="txt_order_cancel">Hủy đặt hàng</string>
+    <string name="txt_order_canceled">Đã hủy</string>
+    <string name="txt_all">Tất cả</string>
     <string name="txt_cart">Giỏ hàng</string>
     <string name="txt_cart_2">Không có sản phẩm nào trong giỏ hàng của bạn</string>
     <string name="txt_delete">Xóa</string>

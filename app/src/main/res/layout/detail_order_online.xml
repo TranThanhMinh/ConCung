@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
@@ -16,10 +15,11 @@
         app:theme="@style/ToolbarStyle"
         app:titleTextColor="@color/colorWhite" />
 
-    <androidx.core.widget.NestedScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
-
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/btnCancel"
+        android:layout_below="@+id/toolbar"
         android:fillViewport="true"
         android:scrollbars="none">
 
@@ -27,7 +27,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-
             <include layout="@layout/item_order" />
 
             <LinearLayout
@@ -171,6 +170,23 @@
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-</LinearLayout>
+
+    <TextView
+        android:id="@+id/btnCancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="@dimen/size"
+        android:layout_marginTop="@dimen/size_5"
+        android:layout_marginRight="@dimen/size"
+        android:layout_marginBottom="@dimen/size2"
+        android:background="@drawable/border_login_btn"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="@string/txt_order_cancel"
+        android:textColor="@color/colorWhite"
+        android:textSize="20sp"
+        android:visibility="gone" />
+</RelativeLayout>
 
 

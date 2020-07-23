@@ -12,11 +12,12 @@
         android:background="@color/colorBlack4"/>
     <TextView
         android:id="@+id/tvTitle"
-        android:textSize="@dimen/text2"
-        android:textColor="@color/colorAccent"
-        android:padding="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/text2"
+        android:textColor="@color/colorBlue"
+        android:padding="5dp"
+        android:textStyle="bold"
         android:text="Deal online moi ngay"/>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list_item"

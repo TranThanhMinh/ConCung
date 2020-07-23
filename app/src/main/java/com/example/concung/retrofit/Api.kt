@@ -1,6 +1,7 @@
 package com.example.concung.retrofit
 
 import com.example.concung.model.cart.OrderAddress
+import com.example.concung.model.cart.RequestStatus
 import com.example.concung.model.cart.ResultGetOrder
 import com.example.concung.model.cart.ResultNewOrder
 import com.example.concung.model.category.ResultCategory
@@ -79,8 +80,11 @@ interface Api {
     @POST("/MinhTran/public/api/getorder")
     fun  getOrder(@Body user: User) :Call<ResultGetOrder>
 
-
     //get comment
     @POST("/MinhTran/public/api/typecategory")
     fun  getTypeCategory(@Body id: RequestId) :Call<ResultCategory>
+
+    //update status of order
+    @POST("/MinhTran/public/api/updatestatus")
+    fun  updateStatus(@Body requestStatus : RequestStatus) :Call<ResultApi>
 }

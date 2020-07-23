@@ -13,6 +13,7 @@ import com.example.concung.R
 import com.example.concung.model.cart.Order
 import com.example.concung.util.Utility
 import com.example.concung.view.adapter.diffutil.OrderDiffCallback
+import kotlinx.android.synthetic.main.item_order.*
 
 
 class ListOrderAdapter(var context: Context,var click: ListOrder) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -29,11 +30,8 @@ class ListOrderAdapter(var context: Context,var click: ListOrder) : RecyclerView
     }
 
     fun loadData(list: ArrayList<Order>) {
-        val diffCallback = OrderDiffCallback(list,this.list)
-        val diffResult = DiffUtil.calculateDiff(diffCallback)
-        this.list.clear()
-        this.list.addAll(list)
-        diffResult.dispatchUpdatesTo(this)
+        this.list = list
+        notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int {
@@ -41,7 +39,7 @@ class ListOrderAdapter(var context: Context,var click: ListOrder) : RecyclerView
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        var item = list!![position]
+        var item = list!![list.size - position - 1]
         (holder as MyViewHolder).tvCode2.text = item.getIdOrder()
         holder.tvDateTime2.text = Utility.convertStringToDateTime(item.getDateTime()!!)
         holder.tvNumber2.text = item.getListProduct()!!.size.toString()
@@ -60,16 +58,16 @@ class ListOrderAdapter(var context: Context,var click: ListOrder) : RecyclerView
 
         when(item.getStatus()){
             0->{
-                holder.tvStatus.text = "Đã hủy"
+                holder.tvStatus.text = context.getString(R.string.txt_order_canceled)
                 holder.tvStatus.setTextColor(Color.RED)
             }
             1->{
-                holder.tvStatus.text = "Đã đặt hàng"
+                holder.tvStatus.text = context.getString(R.string.txt_order_ok)
                 holder.tvStatus.setTextColor(Color.BLACK)
             }
             2->{
-                holder.tvStatus.text = "Đã gia hàng"
-                holder.tvStatus.setTextColor(Color.BLACK)
+                holder.tvStatus.text = context.getString(R.string.txt_order_finished)
+                holder.tvStatus.setTextColor(Color.BLUE)
             }
         }
 

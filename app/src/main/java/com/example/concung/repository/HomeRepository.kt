@@ -11,6 +11,7 @@ import com.example.concung.model.home.ResultApi
 import com.example.concung.model.category.ResultCategory
 import com.example.concung.model.home.User
 import com.example.concung.model.cart.OrderAddress
+import com.example.concung.model.cart.RequestStatus
 import com.example.concung.model.cart.ResultGetOrder
 import com.example.concung.model.cart.ResultNewOrder
 import com.example.concung.model.comment.ResquetComment
@@ -263,6 +264,22 @@ class HomeRepository {
 
     fun getProductLove():LiveData<List<ProductWatched>>{
         return productwatchedDao!!.findProductLove()
+    }
+
+    fun updateStatus(requestStatus : RequestStatus): LiveData<ResultApi> {
+        val list: MutableLiveData<ResultApi> = MutableLiveData()
+        val call: Call<ResultApi> = api.updateStatus(requestStatus)
+        call.enqueue(object : Callback<ResultApi> {
+            override fun onFailure(call: Call<ResultApi>, t: Throwable) {
+                list.value = null
+            }
+
+            override fun onResponse(call: Call<ResultApi>, response: Response<ResultApi>) {
+                list.value = response.body()
+            }
+
+        })
+        return list
     }
 
     fun newOrder(address: OrderAddress):LiveData<ResultNewOrder>{
