@@ -1,134 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-    <RelativeLayout
-        android:id="@+id/rlSearch"
+    android:background="@color/colorWhite">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcvHome"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/colorPrimary">
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:focusable="true" />
+</androidx.core.widget.NestedScrollView>
 
-        <ImageView
-            android:id="@+id/imMenu"
-            android:layout_width="50dp"
-            android:layout_height="20dp"
-            android:layout_marginTop="15dp"
-            android:src="@drawable/ic_menu" />
-
-        <EditText
-            android:id="@+id/editSearch"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_centerInParent="true"
-            android:layout_toLeftOf="@+id/cart"
-            android:layout_toRightOf="@+id/imMenu"
-            android:background="@drawable/border_search"
-            android:hint="@string/search"
-            android:paddingLeft="@dimen/size"
-            android:paddingRight="@dimen/size"
-            android:textColorHint="@color/colorWhite"
-            android:textSize="@dimen/text_" />
-
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginRight="@dimen/size_5"
-            android:layout_toLeftOf="@+id/cart"
-            android:src="@drawable/ic_search" />
-
-        <ImageView
-            android:id="@+id/cart"
-            android:layout_width="50dp"
-            android:layout_height="20dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="15dp"
-            android:src="@drawable/ic_cart" />
-
-    </RelativeLayout>
-    <FrameLayout
-        android:id="@+id/flHome"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-<!--    <androidx.core.widget.NestedScrollView
-        android:background="@color/colorWhite"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rcvHome"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clickable="true"
-            android:focusable="true"
-            />
-    </androidx.core.widget.NestedScrollView>-->
-    <!-- <androidx.core.widget.NestedScrollView
-         android:layout_width="match_parent"
-         android:layout_height="match_parent">
-         <LinearLayout
-             android:orientation="vertical"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
-             <androidx.recyclerview.widget.RecyclerView
-                 android:id="@+id/rlCategory"
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"/>
-             <androidx.viewpager.widget.ViewPager
-                 android:id="@+id/viewPager"
-                 android:layout_width="match_parent"
-                 android:layout_height="150dp"/>
-             <LinearLayout
-                 android:layout_marginTop="5dp"
-                 android:layout_marginBottom="5dp"
-                 android:orientation="horizontal"
-                 android:id="@+id/layout_dots"
-                 android:gravity="center"
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"/>
-
-             <View
-                 android:layout_width="match_parent"
-                 android:layout_height="2dp"
-                 android:background="@color/colorBlack3"/>
-             <TextView
-                 android:padding="5dp"
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
-                 android:text="Mua theo thuong hieu"/>
-             <androidx.recyclerview.widget.RecyclerView
-                 android:id="@+id/rlcTrademark"
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"/>
-             <View
-                 android:layout_width="match_parent"
-                 android:layout_height="2dp"
-                 android:background="@color/colorBlack3"/>
-             <TextView
-                 android:padding="5dp"
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
-                 android:text="Deal online moi ngay"/>
-             <androidx.recyclerview.widget.RecyclerView
-                 android:id="@+id/rlProduct"
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"/>
-             <View
-                 android:layout_width="match_parent"
-                 android:layout_height="2dp"
-                 android:background="@color/colorBlack3"/>
-             <TextView
-                 android:padding="5dp"
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
-                 android:text="Tin tuc"/>
-             <androidx.recyclerview.widget.RecyclerView
-                 android:id="@+id/rlvNews"
-                 android:layout_width="match_parent"
-                 android:layout_height="wrap_content"/>
-         </LinearLayout>
-     </androidx.core.widget.NestedScrollView>-->
-
-</LinearLayout>

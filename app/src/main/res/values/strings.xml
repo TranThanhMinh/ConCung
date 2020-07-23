@@ -74,6 +74,8 @@
     <string name="txt_address6">Danh sách địa chỉ</string>
     <string name="txt_buy">Đặt hàng &amp; thanh toán</string>
     <string name="txt_detail_order">Chi tiết đơn hàng online</string>
+    <string name="txt_create_comment">Vui lòng viết bình luận của bạn!</string>
+
 
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
 </resources>
