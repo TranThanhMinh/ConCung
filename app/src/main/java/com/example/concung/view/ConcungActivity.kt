@@ -145,7 +145,7 @@ class ConcungActivity : AppCompatActivity(), View.OnClickListener, UserFragment.
 
                 // Nếu không có quyền, cần nhắc người dùng cho phép.
                 requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.CALL_PHONE ),
+                        Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.CALL_PHONE,Manifest.permission.CAMERA ),
                         1
                 )
             }
