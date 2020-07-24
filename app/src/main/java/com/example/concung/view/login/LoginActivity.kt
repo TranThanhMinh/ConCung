@@ -1,7 +1,10 @@
 package com.example.concung.view.login
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Base64
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -20,6 +23,8 @@ import com.facebook.FacebookSdk
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import kotlinx.android.synthetic.main.account_activity.*
+import java.security.MessageDigest
+import java.util.*
 
 
 class LoginActivity:AppCompatActivity(),View.OnClickListener {
@@ -35,7 +40,7 @@ class LoginActivity:AppCompatActivity(),View.OnClickListener {
 
     fun init(){
         loginViewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java)
-     /*   try {
+        try {
             val packageInfo = packageManager.getPackageInfo("com.example.myapplication", PackageManager.GET_SIGNATURES)
             for (signature in packageInfo.signatures) {
                 val messageDigest: MessageDigest = MessageDigest.getInstance("SHA")
@@ -43,7 +48,7 @@ class LoginActivity:AppCompatActivity(),View.OnClickListener {
                 Log.e("KeyHash", Base64.encodeToString(messageDigest.digest(), Base64.DEFAULT))
             }
         } catch (e: Exception) {
-        }*/
+        }
         FacebookSdk.sdkInitialize(this)
         imCancel.setOnClickListener(this)
         login_fb.setOnClickListener(this)

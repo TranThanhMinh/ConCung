@@ -28,6 +28,7 @@ import com.example.concung.util.Utility.Companion.url
 import com.example.concung.view.adapter.PolicyAdapter
 import com.example.concung.view.login.LoginActivity
 import com.example.concung.view.menu.PolicyFragment
+import com.example.concung.view.shop.MapShopsFragment
 import com.example.concung.view.tablayout.MainFragment
 import com.example.concung.view.tablayout.UserFragment
 import com.example.concung.viewmodel.ConCungViewModel
@@ -111,6 +112,7 @@ class ConcungActivity : AppCompatActivity(), View.OnClickListener, UserFragment.
         rlUser.setOnClickListener(this)
         rlCall.setOnClickListener(this)
         rlCall2.setOnClickListener(this)
+        llMap.setOnClickListener(this)
 
         FirebaseInstanceId.getInstance().instanceId
                 .addOnCompleteListener(OnCompleteListener { task ->
@@ -140,12 +142,18 @@ class ConcungActivity : AppCompatActivity(), View.OnClickListener, UserFragment.
                     Manifest.permission.READ_EXTERNAL_STORAGE)
             val writePermission = ActivityCompat.checkSelfPermission(this,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            val locationPermission = ActivityCompat.checkSelfPermission(this,
+                    Manifest.permission.ACCESS_FINE_LOCATION)
+            val locationPermission2 = ActivityCompat.checkSelfPermission(this,
+                    Manifest.permission.ACCESS_COARSE_LOCATION)
             if (writePermission != PackageManager.PERMISSION_GRANTED || callPermission != PackageManager.PERMISSION_GRANTED ||
-                    readPermission != PackageManager.PERMISSION_GRANTED || cameraPermission != PackageManager.PERMISSION_GRANTED) {
+                    readPermission != PackageManager.PERMISSION_GRANTED || cameraPermission != PackageManager.PERMISSION_GRANTED
+                    || locationPermission != PackageManager.PERMISSION_GRANTED || locationPermission2 != PackageManager.PERMISSION_GRANTED) {
 
                 // Nếu không có quyền, cần nhắc người dùng cho phép.
                 requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.CALL_PHONE,Manifest.permission.CAMERA ),
+                        Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.CALL_PHONE,Manifest.permission.CAMERA,
+                        Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION),
                         1
                 )
             }
@@ -239,7 +247,7 @@ class ConcungActivity : AppCompatActivity(), View.OnClickListener, UserFragment.
         val layout =LinearLayoutManager(this)
         layout.orientation = LinearLayout.VERTICAL
         rlvConCung.layoutManager = layout
-       val adapter = PolicyAdapter(this,this)
+        val adapter = PolicyAdapter(this,this)
         rlvConCung.adapter = adapter
 
         adapter.loadData(list)
@@ -282,6 +290,9 @@ class ConcungActivity : AppCompatActivity(), View.OnClickListener, UserFragment.
 
             btnHome -> {
                 goHome()
+            }
+            llMap->{
+                Utility.replaceHomeFragment(fm!!,MapShopsFragment())
             }
 
            /* menu->{
