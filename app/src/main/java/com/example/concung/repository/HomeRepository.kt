@@ -21,6 +21,7 @@ import com.example.concung.model.news.ResultNews
 import com.example.concung.model.product.ResultIdProduct
 import com.example.concung.model.product.ResultProduct
 import com.example.concung.model.product.ResultUpload
+import com.example.concung.model.shop.ResultShop
 import com.example.concung.model.trademark.ResultTrademark
 import com.example.concung.model.user.Address
 import com.example.concung.model.user.ResultAddress
@@ -295,6 +296,25 @@ class HomeRepository {
                   }
 
               })
+        return list
+    }
+
+    /**
+     * function get all address of shop
+     */
+    fun getShop(): LiveData<ResultShop> {
+        val list:MutableLiveData<ResultShop> = MutableLiveData()
+        val call:Call<ResultShop> =api.getShop()
+        call.enqueue(object : Callback<ResultShop>{
+            override fun onFailure(call: Call<ResultShop>, t: Throwable) {
+                list.value = null
+            }
+
+            override fun onResponse(call: Call<ResultShop>, response: Response<ResultShop>) {
+                list.value = response.body()
+            }
+
+        })
         return list
     }
 

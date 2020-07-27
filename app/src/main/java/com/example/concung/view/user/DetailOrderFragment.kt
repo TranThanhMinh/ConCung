@@ -115,6 +115,9 @@ class DetailOrderFragment : Fragment() {
         adapter.loadData(order.getListProduct())
     }
 
+    /**
+     * function update status of order
+     */
     fun updateStatus(){
         val request = RequestStatus()
         request.id_order = order.getIdOrder()

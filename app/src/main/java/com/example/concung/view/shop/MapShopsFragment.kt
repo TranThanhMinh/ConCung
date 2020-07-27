@@ -13,9 +13,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import com.example.concung.R
+import com.example.concung.model.shop.AddressShop
+import com.example.concung.viewmodel.HomeViewModel
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.android.gms.location.LocationListener
@@ -25,10 +30,11 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.PolylineOptions
+import kotlinx.android.synthetic.main.map_shop_fragment.*
 import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.IOException
@@ -36,23 +42,31 @@ import java.io.InputStream
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
+import java.text.DecimalFormat
 import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.math.asin
+import kotlin.math.cos
+import kotlin.math.sin
+import kotlin.math.sqrt
 
 
 class MapShopsFragment : Fragment(), OnMapReadyCallback,
         LocationListener, GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener {
-    var mLastLocation: Location? = null
-    var mCurrLocationMarker: Marker? = null
+
     var mGoogleApiClient: GoogleApiClient? = null
     var mLocationRequest: LocationRequest? = null
-
+    private val distance = arrayOf("10", "20", "100", "200")
     var location2: LatLng? = null
     var current: LatLng? = null
-    private val LOWER_MANHATTAN = LatLng(40.722543,
-            -73.998585)
-    private val TIMES_SQUARE = LatLng(40.7577, -73.9857)
-    private val BROOKLYN_BRIDGE = LatLng(40.7057, -73.9964)
+
+    var number = 0
+    var dis = 10
+
+    private var listShop: List<AddressShop>? = null
+
+    var homeViewModel: HomeViewModel? = null
 
     companion object {
         private var mMap: GoogleMap? = null
@@ -67,6 +81,8 @@ class MapShopsFragment : Fragment(), OnMapReadyCallback,
         // Get the SupportMapFragment and request notification when the map is ready to be used.
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as? SupportMapFragment
         mapFragment?.getMapAsync(this)
+
+        homeViewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
     }
 
     override fun onMapReady(googleMap: GoogleMap?) {
@@ -114,63 +130,113 @@ class MapShopsFragment : Fragment(), OnMapReadyCallback,
     }
 
     override fun onLocationChanged(location: Location?) {
-        // Set default position
-        // Add a marker in Sydney and move the camera
-        location2 = getLocationFromAddress("81 Quang Trung, Hải Châu I, Hải Châu District, Da Nang")
-        val vietnam2 = LatLng(location2!!.latitude, location2!!.longitude) // 14.0583° N, 108.2772° E
+        //Creating the ArrayAdapter instance having the country list
+        val aa = ArrayAdapter(context!!, android.R.layout.simple_spinner_item, distance)
+        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        //Setting the ArrayAdapter data on the Spinner
+        //Setting the ArrayAdapter data on the Spinner
+        spDistance.adapter = aa
 
-        mMap!!.addMarker(MarkerOptions().position(vietnam2).title("81 Quang Trung, Hải Châu I, Hải Châu District, Da Nang"))
-        // mMap!!.animateCamera(CameraUpdateFactory.newLatLngZoom(vietnam,15f))
+        spDistance.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                dis = distance[position].toInt()
+                if (listShop != null) {
+                    distanceShop(location!!)
+                }
+            }
 
 
-        current = LatLng(location!!.latitude, location!!.longitude) // 14.0583° N, 108.2772° E
+        }
 
-        mMap!!.addMarker(MarkerOptions().position(current!!).title("Current Position"))
-        mMap!!.animateCamera(CameraUpdateFactory.newLatLngZoom(current, 15f))
+        homeViewModel!!.getShop().observe(this, androidx.lifecycle.Observer { item ->
+            if (item != null) {
+                listShop = item.getData()!!
+                distanceShop(location!!)
+            }
+        })
 
-        /*  mLastLocation = location
-          if (mCurrLocationMarker != null) {
-              mCurrLocationMarker!!.remove()
-          }
-          //Place current location marker
-          //Place current location marker
-          val latLng = LatLng(location!!.latitude, location!!.longitude)
-          val markerOptions = MarkerOptions()
-          markerOptions.position(latLng)
-          markerOptions.title("Current Position")
-          markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
-          mCurrLocationMarker = mMap!!.addMarker(markerOptions)*/
-
-        //move map camera
-
-        //move map camera
-        /* mMap!!.moveCamera(CameraUpdateFactory.newLatLng(latLng))
-         mMap!!.animateCamera(CameraUpdateFactory.zoomTo(15f))*/
 
         //stop location updates
         if (mGoogleApiClient != null) {
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this)
         }
 
-        //addLines()
 
         // Getting URL to the Google Directions API
-        val url: String = getDirectionsUrl(current!!, location2!!)
+        //  val url: String = getDirectionsUrl(current!!, location2!!)
 
-        val downloadTask = DownloadTask()
-
-        // Start downloading json data from Google Directions API
+        //   val downloadTask = DownloadTask()
 
         // Start downloading json data from Google Directions API
-        downloadTask.execute(url)
+
+        // Start downloading json data from Google Directions API
+        //   downloadTask.execute(url)
     }
 
-    private fun addLines() {
-        mMap!!.addPolyline(PolylineOptions()
-                .add(current, location2).width(5f).color(Color.BLUE)
-                .geodesic(true))
-        // move camera to zoom on map
-        mMap!!.moveCamera(CameraUpdateFactory.newLatLngZoom(current, 13f))
+    /**
+     * function show address to maps
+     */
+    fun distanceShop(location:Location) {
+        // Set default position
+        current = LatLng(location!!.latitude, location!!.longitude) // 14.0583° N, 108.2772° E
+        val markerOptions = MarkerOptions()
+        markerOptions.position(current!!)
+        markerOptions.title(getNameCurrent(current!!))
+        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
+        mMap!!.addMarker(markerOptions)
+        mMap!!.animateCamera(CameraUpdateFactory.newLatLngZoom(current, 13f))
+
+        number = 0
+            for (i in listShop!!) {
+                location2 = getLocationFromAddress(i.getAddress())
+                if (calculationByDistance(current!!, location2!!) <= dis) {//shops in about 10km
+                    number += 1
+                    val vietnam2 = LatLng(location2!!.latitude, location2!!.longitude) // 14.0583° N, 108.2772° E
+                    mMap!!.addMarker(MarkerOptions().position(vietnam2).title(i.getAddress()))
+                }
+            }
+            tvNumber.text = "$number Siêu thị gần nhất"
+    }
+
+    private fun getNameCurrent(current: LatLng): String {
+        val gc = Geocoder(context)
+
+        if (Geocoder.isPresent()) {
+            val list = gc.getFromLocation(current.latitude, current.longitude, 1)
+            val address = list[0]
+            val str = StringBuffer()
+            str.append("""${address.getAddressLine(0)}""".trimIndent())
+            return str.toString()
+        }
+        return ""
+    }
+
+    private fun calculationByDistance(StartP: LatLng, EndP: LatLng): Double {
+        val radius = 6371 // radius of earth in Km
+        val lat1 = StartP.latitude
+        val lat2 = EndP.latitude
+        val lon1 = StartP.longitude
+        val lon2 = EndP.longitude
+        val dLat = Math.toRadians(lat2 - lat1)
+        val dLon = Math.toRadians(lon2 - lon1)
+        val a = (sin(dLat / 2) * sin(dLat / 2)
+                + (cos(Math.toRadians(lat1))
+                * cos(Math.toRadians(lat2)) * sin(dLon / 2)
+                * sin(dLon / 2)))
+        val c = 2 * asin(sqrt(a))
+        val valueResult = radius * c
+        val km = valueResult / 1
+        val newFormat = DecimalFormat("####")
+        val kmInDec: Int = Integer.valueOf(newFormat.format(km))
+        val meter = valueResult % 1000
+        val meterInDec: Int = Integer.valueOf(newFormat.format(meter))
+        Log.e("Radius Value", "" + valueResult + "   KM  " + kmInDec
+                + " Meter   " + meterInDec)
+        return radius * c
     }
 
 

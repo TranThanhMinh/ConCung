@@ -19,6 +19,7 @@ import com.example.concung.model.news.ResultNews
 import com.example.concung.model.product.ResultIdProduct
 import com.example.concung.model.product.ResultProduct
 import com.example.concung.model.product.ResultUpload
+import com.example.concung.model.shop.ResultShop
 import com.example.concung.model.trademark.ResultTrademark
 import com.example.concung.model.user.Address
 import com.example.concung.model.user.ResultAddress
@@ -127,5 +128,9 @@ class HomeViewModel : ViewModel() {
 
     fun updateStatus(requestStatus : RequestStatus): LiveData<ResultApi> {
         return homeRopository!!.updateStatus(requestStatus)
+    }
+
+    fun getShop(): LiveData<ResultShop> {
+        return homeRopository!!.getShop()
     }
 }

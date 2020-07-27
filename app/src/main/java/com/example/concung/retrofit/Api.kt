@@ -16,6 +16,7 @@ import com.example.concung.model.news.ResultNews
 import com.example.concung.model.product.ResultIdProduct
 import com.example.concung.model.product.ResultProduct
 import com.example.concung.model.product.ResultUpload
+import com.example.concung.model.shop.ResultShop
 import com.example.concung.model.trademark.ResultTrademark
 import com.example.concung.model.user.Address
 import com.example.concung.model.user.ResultAddress
@@ -87,4 +88,8 @@ interface Api {
     //update status of order
     @POST("/MinhTran/public/api/updatestatus")
     fun  updateStatus(@Body requestStatus : RequestStatus) :Call<ResultApi>
+
+    //get all address of shop
+    @GET("/MinhTran/public/api/shop")
+    fun  getShop() :Call<ResultShop>
 }

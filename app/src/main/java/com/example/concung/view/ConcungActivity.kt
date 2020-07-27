@@ -12,6 +12,7 @@ import android.view.View
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -44,7 +45,7 @@ import kotlinx.android.synthetic.main.main_fragment.*
 import javax.inject.Inject
 
 
-class ConcungActivity : AppCompatActivity(), View.OnClickListener, UserFragment.goHome, InterfaceClick.home,PolicyAdapter.ViewWeb,InterfaceClick.OnBack{
+class ConcungActivity : AppCompatActivity(), View.OnClickListener, UserFragment.goHome, InterfaceClick.home, PolicyAdapter.ViewWeb, InterfaceClick.OnBack {
     lateinit var fm: FragmentManager
     private var concung: ConCungViewModel? = null
     private var login: LoginViewModel? = null
@@ -66,34 +67,35 @@ class ConcungActivity : AppCompatActivity(), View.OnClickListener, UserFragment.
     }
 
     private fun init() {
-       /* tabLayout.addTab(tabLayout.newTab().setText(resources.getString(R.string.home)).setIcon(R.drawable.ic_home))
-        tabLayout.addTab(tabLayout.newTab().setText(resources.getString(R.string.account)).setIcon(R.drawable.ic_account))
-        tabLayout.addTab(tabLayout.newTab().setText(resources.getString(R.string.vip)).setIcon(R.drawable.ic_vip))
-        tabLayout.addTab(tabLayout.newTab().setText(resources.getString(R.string.notifi)).setIcon(R.drawable.ic_notification))
-        tabLayout.addTab(tabLayout.newTab().setText(resources.getString(R.string.location)).setIcon(R.drawable.ic_location))
+        /* tabLayout.addTab(tabLayout.newTab().setText(resources.getString(R.string.home)).setIcon(R.drawable.ic_home))
+         tabLayout.addTab(tabLayout.newTab().setText(resources.getString(R.string.account)).setIcon(R.drawable.ic_account))
+         tabLayout.addTab(tabLayout.newTab().setText(resources.getString(R.string.vip)).setIcon(R.drawable.ic_vip))
+         tabLayout.addTab(tabLayout.newTab().setText(resources.getString(R.string.notifi)).setIcon(R.drawable.ic_notification))
+         tabLayout.addTab(tabLayout.newTab().setText(resources.getString(R.string.location)).setIcon(R.drawable.ic_location))
 
-        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
-            override fun onTabReselected(p0: TabLayout.Tab?) {
+         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
+             override fun onTabReselected(p0: TabLayout.Tab?) {
 
-            }
+             }
 
-            override fun onTabUnselected(p0: TabLayout.Tab?) {
+             override fun onTabUnselected(p0: TabLayout.Tab?) {
 
-            }
+             }
 
-            override fun onTabSelected(p0: TabLayout.Tab?) {
-              when(p0!!.position){
-                  0->{
-                     goHome()
-                  }
-                  1->{
-                      goUser()
-                  }
-              }
-            }
+             override fun onTabSelected(p0: TabLayout.Tab?) {
+               when(p0!!.position){
+                   0->{
+                      goHome()
+                   }
+                   1->{
+                       goUser()
+                   }
+               }
+             }
 
-        })*/
+         })*/
 
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
 
         fm = supportFragmentManager
 
@@ -107,12 +109,13 @@ class ConcungActivity : AppCompatActivity(), View.OnClickListener, UserFragment.
         getPolicy()
         btnAccount.setOnClickListener(this)
         btnHome.setOnClickListener(this)
-    /*    menu.setOnClickListener(this)
-        cart.setOnClickListener(this)*/
+        /*    menu.setOnClickListener(this)
+            cart.setOnClickListener(this)*/
         rlUser.setOnClickListener(this)
         rlCall.setOnClickListener(this)
         rlCall2.setOnClickListener(this)
         llMap.setOnClickListener(this)
+        llClose.setOnClickListener(this)
 
         FirebaseInstanceId.getInstance().instanceId
                 .addOnCompleteListener(OnCompleteListener { task ->
@@ -130,6 +133,9 @@ class ConcungActivity : AppCompatActivity(), View.OnClickListener, UserFragment.
 
     }
 
+    /**
+     * function check permission
+     */
     fun checkPermission() {
         // Với Android Level >= 23 bạn phải hỏi người dùng cho phép ghi dữ liệu vào thiết bị.
         if (Build.VERSION.SDK_INT >= 23) {
@@ -152,7 +158,7 @@ class ConcungActivity : AppCompatActivity(), View.OnClickListener, UserFragment.
 
                 // Nếu không có quyền, cần nhắc người dùng cho phép.
                 requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.CALL_PHONE,Manifest.permission.CAMERA,
+                        Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CALL_PHONE, Manifest.permission.CAMERA,
                         Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION),
                         1
                 )
@@ -209,7 +215,7 @@ class ConcungActivity : AppCompatActivity(), View.OnClickListener, UserFragment.
     fun getPolicy() {
         val list = ArrayList<Policy>()
 
-       val policy = Policy()
+        val policy = Policy()
         policy.name = "Giới thiệu về Concung.com"
         policy.url = "https://concung.com/gioi-thieu.html"
         list.add(policy)
@@ -244,13 +250,22 @@ class ConcungActivity : AppCompatActivity(), View.OnClickListener, UserFragment.
         policy7.url = "https://concung.com/dieu-khoan-su-dung.html"
         list.add(policy7)
 
-        val layout =LinearLayoutManager(this)
+        val layout = LinearLayoutManager(this)
         layout.orientation = LinearLayout.VERTICAL
         rlvConCung.layoutManager = layout
-        val adapter = PolicyAdapter(this,this)
+        val adapter = PolicyAdapter(this, this)
         rlvConCung.adapter = adapter
 
         adapter.loadData(list)
+    }
+
+    /**
+     * function move to Maps
+     */
+    fun goMapShops() {
+        setTextColor()
+        tvSearch.setTextColor(resources.getColor(R.color.colorAccent))
+        Utility.replaceFragment(fm!!, MapShopsFragment())
     }
 
     /**
@@ -262,17 +277,17 @@ class ConcungActivity : AppCompatActivity(), View.OnClickListener, UserFragment.
 
         val home = MainFragment()
         home.initClick(this)
-        Utility.replaceFragment(fm!!,home)
+        Utility.replaceFragment(fm!!, home)
     }
 
     /**
      * function move to layout User
      */
-    private fun goUser(){
+    private fun goUser() {
         if (id_user != null) {
             val userFragment = UserFragment()
             userFragment.init(this)
-            Utility.replaceFragment(fm!!,userFragment)
+            Utility.replaceFragment(fm!!, userFragment)
             setTextColor()
             tvAccount.setTextColor(resources.getColor(R.color.colorAccent))
         } else {
@@ -291,35 +306,37 @@ class ConcungActivity : AppCompatActivity(), View.OnClickListener, UserFragment.
             btnHome -> {
                 goHome()
             }
-            llMap->{
-                Utility.replaceHomeFragment(fm!!,MapShopsFragment())
+            llMap -> {
+                goMapShops()
             }
-
-           /* menu->{
-                when(page){
-                    true->{
-                        page = !page
-                        goHome()
-                    }
-                    false->{
-                        openMenu()
-                    }
-                }
-
+            llClose->{
+                drawerLayout.closeDrawer(navigationView)
             }
-            cart->{
-                val intent = Intent(this, CartActivity::class.java)
-                startActivity(intent)
-            }*/
-            rlUser->{
+            /* menu->{
+                 when(page){
+                     true->{
+                         page = !page
+                         goHome()
+                     }
+                     false->{
+                         openMenu()
+                     }
+                 }
+
+             }
+             cart->{
+                 val intent = Intent(this, CartActivity::class.java)
+                 startActivity(intent)
+             }*/
+            rlUser -> {
                 closeMenu()
                 goUser()
             }
-            rlCall->{
+            rlCall -> {
                 callPhone(resources.getString(R.string.txt_phone_1))
             }
 
-            rlCall2->{
+            rlCall2 -> {
                 callPhone(resources.getString(R.string.txt_phone_2))
             }
         }
@@ -347,8 +364,7 @@ class ConcungActivity : AppCompatActivity(), View.OnClickListener, UserFragment.
             name_user = data!!.getSerializableExtra("name_user") as String
             image_user = data!!.getSerializableExtra("image") as String
             setInformationUser()
-        }
-        else  if (resultCode == 100) { //click home on toolbar
+        } else if (resultCode == 100) { //click home on toolbar
             goHome()
         }
     }
@@ -356,12 +372,12 @@ class ConcungActivity : AppCompatActivity(), View.OnClickListener, UserFragment.
     /**
      * function set information user
      */
-    private fun setInformationUser(){
-        if(name_user != null) {
+    private fun setInformationUser() {
+        if (name_user != null) {
             Picasso.with(this).load(image_user).error(R.drawable.ic_user).into(imUser)
             tvName1.text = name_user
             tvName2.text = resources.getString(R.string.txt_manager)
-        }else {
+        } else {
             Picasso.with(this).load(R.drawable.ic_user).into(imUser)
             tvName1.text = resources.getString(R.string.txt_login)
             tvName2.text = resources.getString(R.string.txt_logout)
@@ -376,25 +392,24 @@ class ConcungActivity : AppCompatActivity(), View.OnClickListener, UserFragment.
 
         FacebookSdk.sdkInitialize(this)
         LoginManager.getInstance().logOut();
-
         getUser()
         goHome()
     }
 
     override fun openMenu() {
-        when(menu){
-            true->{
+        when (menu) {
+            true -> {
                 menu = !menu
                 goHome()
             }
-            false->{
+            false -> {
                 drawerLayout.openDrawer(navigationView)
             }
         }
     }
 
     override fun closeMenu() {
-        imMenu.setImageDrawable(resources.getDrawable(R.drawable.ic_back))
+            imMenu.setImageDrawable(resources.getDrawable(R.drawable.ic_back))
         drawerLayout.closeDrawer(navigationView)
     }
 
@@ -408,14 +423,14 @@ class ConcungActivity : AppCompatActivity(), View.OnClickListener, UserFragment.
             val bundle = Bundle()
             bundle.putString("url", url)
             home.arguments = bundle
-            Utility.replaceHomeFragment(fm!!,home)
-        }catch (ex:Exception){
+            Utility.replaceHomeFragment(fm!!, home)
+        } catch (ex: Exception) {
             ex.printStackTrace()
         }
 
     }
 
-   private fun callPhone(phone:String){
+    private fun callPhone(phone: String) {
         val intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:$phone"))
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
             return

@@ -78,7 +78,9 @@ class AddressFragment : Fragment(), InterfaceClick.EventAddress {
         return super.onOptionsItemSelected(item)
     }
 
-
+    /**
+     * function get all list address of account
+     */
     fun getAddress() {
         val user = User(Utility.id_user, null)
         homeViewModel!!.getAddress(user).observe(this, Observer { list ->
@@ -89,6 +91,9 @@ class AddressFragment : Fragment(), InterfaceClick.EventAddress {
         })
     }
 
+    /**
+     * function show information address or update information address
+     */
     private fun dialogAddress(item: Address) {
         val dialog = AlertDialog.Builder(context)
         var dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_address, null)

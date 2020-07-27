@@ -107,7 +107,9 @@ class ListOrderFragment : Fragment(), ListOrderAdapter.ListOrder  {
         adapter!!.loadData(listSort as ArrayList<Order>)
     }
 
-
+    /**
+     * function get all list order
+     */
     fun getOrder() {
         val user = User(Utility.id_user, null)
         homeViewModel!!.getOrder(user).observe(this, Observer { list ->
@@ -119,7 +121,9 @@ class ListOrderFragment : Fragment(), ListOrderAdapter.ListOrder  {
         })
     }
 
-
+    /**
+     * function click item to detail order
+     */
     override fun viewList(order: Order) {
         val detail = DetailOrderFragment()
         val bundle = Bundle()
