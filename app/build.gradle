@@ -8,7 +8,7 @@ android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
     defaultConfig {
-        applicationId "com.example.myapplication"
+        applicationId "com.example.concung"
         minSdkVersion 19
         targetSdkVersion 29
         versionCode 1
@@ -84,7 +84,6 @@ dependencies {
     implementation 'org.greenrobot:eventbus:3.0.0'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
 
-    implementation 'com.google.firebase:firebase-iid:20.2.0'
     implementation 'com.google.firebase:firebase-messaging:20.2.0'
     // For an optimal experience using FCM, add the Firebase SDK
     // for Google Analytics. This is recommended, but not required.
@@ -93,8 +92,10 @@ dependencies {
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation 'com.google.android.gms:play-services-location:15.0.1'
     implementation 'com.google.android.gms:play-services-auth:16.0.1'
-    implementation 'com.google.android.gms:play-services-gcm:15.0.1'
+  //  implementation 'com.google.android.gms:play-services-gcm:15.0.1'
     implementation 'com.google.maps.android:android-maps-utils:0.5'
+   //gmail
+    implementation 'com.google.android.gms:play-services-auth:18.1.0'
 
 }
 repositories {

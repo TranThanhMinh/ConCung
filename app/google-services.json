@@ -1,34 +1,42 @@
 {
   "project_info": {
-    "project_number": "926045972145",
-    "firebase_url": "https://concung-e54bf.firebaseio.com",
-    "project_id": "concung-e54bf",
-    "storage_bucket": "concung-e54bf.appspot.com"
+    "project_number": "615709267943",
+    "firebase_url": "https://login-1598337416885.firebaseio.com",
+    "project_id": "logingmail-1598337416885",
+    "storage_bucket": "logingmail-1598337416885.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:926045972145:android:1d04c45996d742534ce490",
+        "mobilesdk_app_id": "1:615709267943:android:7728602efd855ce810cf42",
         "android_client_info": {
-          "package_name": "com.example.myapplication"
+          "package_name": "com.example.concung"
         }
       },
       "oauth_client": [
         {
-          "client_id": "926045972145-1hc3o9hpj7nvdspai4eahchcl3gv5kaj.apps.googleusercontent.com",
+          "client_id": "615709267943-0vfn81r4d1ihtv1ckmmvcq3d71tbfj12.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.concung",
+            "certificate_hash": "1ee864d6d3a52ace77411a38ff312decd6c0b0f0"
+          }
+        },
+        {
+          "client_id": "615709267943-cugbr3o83rvs8ie6ddp5d5on6b5qdf00.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC37S8R-1MvPfqErYJzW8-gOysMjFZmwws"
+          "current_key": "AIzaSyBzCy79PuXnKJ0VJCKatpoRTF25bLp9bs4"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "926045972145-1hc3o9hpj7nvdspai4eahchcl3gv5kaj.apps.googleusercontent.com",
+              "client_id": "615709267943-cugbr3o83rvs8ie6ddp5d5on6b5qdf00.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

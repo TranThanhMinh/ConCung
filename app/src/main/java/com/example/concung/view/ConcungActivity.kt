@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.LinearLayout
+import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -20,6 +21,7 @@ import com.example.concung.R
 import com.example.concung.dagger.Component.DaggerUserComponent
 import com.example.concung.dagger.Component.UserComponent
 import com.example.concung.data.UserFB
+import com.example.concung.data.sharedpreference.TypeLogin.Companion.getLogin
 import com.example.concung.model.home.Policy
 import com.example.concung.util.Utility
 import com.example.concung.util.Utility.Companion.id_user
@@ -36,7 +38,11 @@ import com.example.concung.viewmodel.ConCungViewModel
 import com.example.concung.viewmodel.LoginViewModel
 import com.facebook.FacebookSdk
 import com.facebook.login.LoginManager
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.Task
 import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.messaging.FirebaseMessaging
 import com.squareup.picasso.Picasso
@@ -51,6 +57,7 @@ class ConcungActivity : AppCompatActivity(), View.OnClickListener, UserFragment.
     private var login: LoginViewModel? = null
     var userComponent: UserComponent? = null
     var menu = false
+    private var mGoogleSignInClient: GoogleSignInClient? = null
 
     @Inject
     lateinit var userFB: UserFB
@@ -94,6 +101,12 @@ class ConcungActivity : AppCompatActivity(), View.OnClickListener, UserFragment.
              }
 
          })*/
+
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build()
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
+
 
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
 
@@ -390,8 +403,24 @@ class ConcungActivity : AppCompatActivity(), View.OnClickListener, UserFragment.
         userFB!!.image = url
         concung!!.deleteUser(userFB!!)
 
-        FacebookSdk.sdkInitialize(this)
-        LoginManager.getInstance().logOut();
+
+
+        when(getLogin(this)){
+            0->{//number phone
+
+            }
+            1->{//facebook
+                FacebookSdk.sdkInitialize(this)
+                LoginManager.getInstance().logOut()
+            }
+            2->{//mail
+                mGoogleSignInClient!!.signOut()
+                        .addOnCompleteListener(this) {
+                           Log.e("Minh","Logout gmail")
+                        }
+            }
+        }
+
         getUser()
         goHome()
     }
