@@ -9,10 +9,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.example.concung.R
 import com.example.concung.util.Utility.Companion.replaceHomeFragment
 import com.example.concung.view.InterfaceClick
 import com.example.concung.view.product.InfoProductActivity
+import com.example.concung.viewmodel.HomeViewModel
 import kotlinx.android.synthetic.main.main_fragment.*
 
 
@@ -21,6 +24,7 @@ class MainFragment : Fragment(),HomeFragment.IconMenu {
     private var click: InterfaceClick.home? = null
     var page = 0
     lateinit var back: InterfaceClick.OnBack
+    var homeViewModel: HomeViewModel?=null
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
@@ -42,6 +46,9 @@ class MainFragment : Fragment(),HomeFragment.IconMenu {
     }
 
     private fun init() {
+
+        homeViewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
+
         fm = activity!!.supportFragmentManager
         imMenu.setImageDrawable(resources.getDrawable(R.drawable.ic_menu))
         imMenu.setOnClickListener {
@@ -61,6 +68,19 @@ class MainFragment : Fragment(),HomeFragment.IconMenu {
         homeFragment.onAttach(this)
         replaceHomeFragment(fm, homeFragment)
 
+        getCart()
+    }
+
+    /**
+     * function get all cart
+     */
+    fun getCart(){
+        homeViewModel!!.getCart().observe(this, Observer { list->
+            if (list.isNotEmpty()) {
+                tvNumberProduct.text = list.size.toString()
+                tvNumberProduct.visibility = View.VISIBLE
+            }else  tvNumberProduct.visibility = View.GONE
+        })
     }
 
     override fun setIcon() {

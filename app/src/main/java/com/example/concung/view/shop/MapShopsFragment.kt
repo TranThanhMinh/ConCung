@@ -1,7 +1,10 @@
 package com.example.concung.view.shop
 
 import android.Manifest
+import android.annotation.SuppressLint
+import android.app.ActionBar
 import android.content.pm.PackageManager
+import android.content.res.Resources
 import android.graphics.Color
 import android.location.Address
 import android.location.Geocoder
@@ -15,11 +18,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.concung.R
 import com.example.concung.model.shop.AddressShop
+import com.example.concung.view.adapter.DistanceAdapter
+import com.example.concung.view.adapter.ShopsAdapter
 import com.example.concung.viewmodel.HomeViewModel
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
@@ -57,16 +64,18 @@ class MapShopsFragment : Fragment(), OnMapReadyCallback,
 
     var mGoogleApiClient: GoogleApiClient? = null
     var mLocationRequest: LocationRequest? = null
-    private val distance = arrayOf("10", "20", "100", "200")
-    var location2: LatLng? = null
+    private var listDistance: ArrayList<String>? = null
+    private var location2: LatLng? = null
     var current: LatLng? = null
 
     var number = 0
     var dis = 10
-
+    var location: Location? = null
     private var listShop: List<AddressShop>? = null
+    private var listShopSort: List<AddressShop>? = null
 
     var homeViewModel: HomeViewModel? = null
+    var shopsAdapter: ShopsAdapter? = null
 
     companion object {
         private var mMap: GoogleMap? = null
@@ -76,6 +85,7 @@ class MapShopsFragment : Fragment(), OnMapReadyCallback,
         return inflater.inflate(R.layout.map_shop_fragment, container, false)
     }
 
+    @SuppressLint("WrongConstant")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // Get the SupportMapFragment and request notification when the map is ready to be used.
@@ -83,10 +93,43 @@ class MapShopsFragment : Fragment(), OnMapReadyCallback,
         mapFragment?.getMapAsync(this)
 
         homeViewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
+
+        tvNumber.text = "Siêu thị gần nhất"
+
+        listDistance = ArrayList()
+        listDistance!!.add("10")
+        listDistance!!.add("50")
+        listDistance!!.add("100")
+        listDistance!!.add("200")
+
+        //Creating the ArrayAdapter instance having the country list
+        val aa = DistanceAdapter(context!!, listDistance!!)
+        //Setting the ArrayAdapter data on the Spinner
+        spDistance.adapter = aa
+
+        spDistance.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                dis = listDistance!![position].toInt()
+                if (listShop != null) {
+                    distanceShop(location!!)
+                }
+            }
+        }
+
+        var layout = LinearLayoutManager(context)
+        layout.orientation = LinearLayout.VERTICAL
+        rvShops.layoutManager = layout
+
+        shopsAdapter = ShopsAdapter(context!!)
+        rvShops.adapter = shopsAdapter
     }
 
     override fun onMapReady(googleMap: GoogleMap?) {
-        mMap = googleMap;
+        mMap = googleMap
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(context!!,
                             Manifest.permission.ACCESS_FINE_LOCATION)
@@ -130,29 +173,8 @@ class MapShopsFragment : Fragment(), OnMapReadyCallback,
     }
 
     override fun onLocationChanged(location: Location?) {
-        //Creating the ArrayAdapter instance having the country list
-        val aa = ArrayAdapter(context!!, android.R.layout.simple_spinner_item, distance)
-        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        //Setting the ArrayAdapter data on the Spinner
-        //Setting the ArrayAdapter data on the Spinner
-        spDistance.adapter = aa
-
-        spDistance.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-
-            }
-
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                dis = distance[position].toInt()
-                if (listShop != null) {
-                    distanceShop(location!!)
-                }
-            }
-
-
-        }
-
         homeViewModel!!.getShop().observe(this, androidx.lifecycle.Observer { item ->
+            progress_bar.visibility = View.GONE
             if (item != null) {
                 listShop = item.getData()!!
                 distanceShop(location!!)
@@ -180,7 +202,8 @@ class MapShopsFragment : Fragment(), OnMapReadyCallback,
     /**
      * function show address to maps
      */
-    fun distanceShop(location:Location) {
+    fun distanceShop(location: Location) {
+        this.location = location
         // Set default position
         current = LatLng(location!!.latitude, location!!.longitude) // 14.0583° N, 108.2772° E
         val markerOptions = MarkerOptions()
@@ -191,15 +214,31 @@ class MapShopsFragment : Fragment(), OnMapReadyCallback,
         mMap!!.animateCamera(CameraUpdateFactory.newLatLngZoom(current, 13f))
 
         number = 0
-            for (i in listShop!!) {
-                location2 = getLocationFromAddress(i.getAddress())
-                if (calculationByDistance(current!!, location2!!) <= dis) {//shops in about 10km
-                    number += 1
-                    val vietnam2 = LatLng(location2!!.latitude, location2!!.longitude) // 14.0583° N, 108.2772° E
-                    mMap!!.addMarker(MarkerOptions().position(vietnam2).title(i.getAddress()))
-                }
+        listShopSort = ArrayList()
+        for (i in listShop!!) {
+            location2 = getLocationFromAddress(i.getAddress())
+            if (calculationByDistance(current!!, location2!!) <= dis) {//shops in about 10km
+                (listShopSort as ArrayList).add(i)
+                number += 1
+                val vietnam2 = LatLng(location2!!.latitude, location2!!.longitude) // 14.0583° N, 108.2772° E
+                mMap!!.addMarker(MarkerOptions().position(vietnam2).title(i.getAddress()))
             }
-            tvNumber.text = "$number Siêu thị gần nhất"
+        }
+        shopsAdapter!!.loadData(listShopSort!!, current)
+        tvNumber.text = "$number Siêu thị gần nhất"
+
+        try {
+            var layout = llMap.layoutParams
+            var heightShop = rvShops.height
+            var heightScreen = Resources.getSystem().displayMetrics.heightPixels / 2
+            if (llMap.height < heightShop) {
+                layout.height = heightScreen
+                llMap.layoutParams = layout
+            }
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+        }
+
     }
 
     private fun getNameCurrent(current: LatLng): String {

@@ -47,6 +47,18 @@
             android:layout_marginTop="15dp"
             android:src="@drawable/ic_cart" />
 
+        <TextView
+            android:id="@+id/tvNumberProduct"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginRight="2dp"
+            android:gravity="center"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/colorWhite"
+            android:background="@drawable/oval_number_cart"
+            android:text="1"/>
+
     </RelativeLayout>
     <FrameLayout
         android:id="@+id/flHome"

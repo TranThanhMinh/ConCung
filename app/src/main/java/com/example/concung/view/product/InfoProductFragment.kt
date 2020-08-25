@@ -24,6 +24,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.MenuItemCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Observer
@@ -36,8 +37,8 @@ import com.example.concung.dagger.Component.DaggerProductComponent
 import com.example.concung.dagger.Component.ProductComponent
 import com.example.concung.data.Cart
 import com.example.concung.data.ProductWatched
-import com.example.concung.model.home.RequestId
 import com.example.concung.model.comment.ResquetComment
+import com.example.concung.model.home.RequestId
 import com.example.concung.model.product.Product
 import com.example.concung.model.product.Promotion
 import com.example.concung.util.Utility
@@ -56,8 +57,6 @@ import com.example.concung.viewmodel.HomeViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.info_product.*
-import kotlinx.android.synthetic.main.info_product.progress_bar
-import kotlinx.android.synthetic.main.info_product.toolbar
 import kotlinx.android.synthetic.main.info_product_activity.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -417,6 +416,21 @@ class InfoProductFragment : Fragment(), CommentAdapter.ReplyComment, View.OnClic
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         inflater!!.inflate(R.menu.menu_cart, menu)
+        val item = menu!!.findItem(R.id.item_cart)
+        MenuItemCompat.setActionView(item, R.layout.icon_cart)
+        val notifCount = MenuItemCompat.getActionView(item) as RelativeLayout
+        val tvNumber = notifCount.findViewById<TextView>(R.id.tvNumber)
+        val imCart = notifCount.findViewById<ImageView>(R.id.imCart)
+        imCart.setOnClickListener {
+            if (id_user != null) {
+                val fm = activity!!.supportFragmentManager
+                Utility.replaceProductFragment(fm, CartFragment())
+            } else {
+                val intent = Intent(context, LoginActivity::class.java)
+                startActivityForResult(intent, 1)
+            }
+        }
+        tvNumber.text = "1"
         super.onCreateOptionsMenu(menu, inflater)
     }
 
